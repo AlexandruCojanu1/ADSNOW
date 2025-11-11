@@ -770,6 +770,57 @@
   }
 }
 
+/* Desktop reset to preserve original footer layout */
+@media (min-width: 1024px) {
+  .spline-footer {
+    min-height: clamp(220px, 32vh, 360px);
+    margin: 2rem auto;
+    border-radius: 2rem;
+    padding: 1rem 1.75rem 1.5rem;
+    width: calc(100vw - 4rem);
+    max-width: calc(100vw - 4rem);
+    gap: 0;
+  }
+
+  .spline-footer .content {
+    display: block;
+    padding: 1rem 1.75rem 1.5rem;
+    gap: 0;
+    justify-content: flex-start;
+  }
+
+  .spline-footer .content h1 {
+    position: absolute;
+    max-width: min(90%, 24rem);
+    margin-bottom: clamp(2rem, 5vh, 3.5rem);
+    font-size: clamp(1.35rem, 3.4vw, 2.1rem);
+    line-height: 1.2;
+  }
+
+  .spline-footer .content .text {
+    position: absolute;
+    top: clamp(5.5rem, 12vw, 8rem);
+    left: 0;
+    margin-bottom: 0;
+    font-size: clamp(0.7rem, 1.8vw, 0.95rem);
+  }
+
+  .spline-footer .spline-whatsapp {
+    position: absolute !important;
+    right: clamp(1.5rem, 3vw, 2.5rem);
+    top: clamp(1rem, 3vh, 1.75rem);
+    width: auto;
+    max-width: none;
+    padding: clamp(0.65rem, 1.6vw, 0.95rem) clamp(1.2rem, 2.5vw, 2rem);
+    text-align: center;
+  }
+
+  .spline-footer spline-viewer,
+  .spline-footer .spline-loader {
+    display: block !important;
+  }
+}
+
 /* Landscape Mobile */
 @media (max-height: 500px) and (orientation: landscape) {
   .hero-section,
