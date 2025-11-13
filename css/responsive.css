@@ -2,6 +2,11 @@
 
 /* Tablet and below (768px) */
 @media (max-width: 768px) {
+  /* Hide custom cursor on mobile */
+  .cursor {
+    display: none !important;
+  }
+
   /* Pill Nav - add more top space on mobile to prevent overlap */
   .pill-nav-container {
     top: 1rem;
@@ -9,11 +14,11 @@
 
   /* Hero Section - add more top margin to avoid pill nav overlap */
   .hero-section .hero h1 { 
-    font-size: clamp(2.5rem, 8vw, 4rem); 
+    font-size: clamp(2.125rem, 8vw, 3.4375rem); /* 34px - 55px Fibonacci */ 
   }
   
   .hero-section .hero h2 { 
-    font-size: clamp(0.95rem, 2.5vw, 1.05rem); 
+    font-size: clamp(1.3125rem, 2.5vw, 1.3125rem); /* 21px - 21px Fibonacci */ 
   }
   
   .hero-section .hero {
@@ -27,7 +32,7 @@
   }
 
   .hero-section .cta-full-title {
-    font-size: clamp(2.2rem, 10vw, 3.5rem);
+    font-size: clamp(2.125rem, 10vw, 3.4375rem); /* 34px - 55px Fibonacci */
   }
   
   /* Header */
@@ -65,11 +70,12 @@
     position: static !important;
     top: auto !important;
     text-align: left;
+    margin-left: 0 !important; /* Remove alignment on mobile */
   }
 
   .typing-title {
     text-align: left;
-    font-size: clamp(2.2rem, 10vw, 3.8rem);
+    font-size: clamp(2.125rem, 10vw, 3.4375rem); /* 34px - 55px Fibonacci */
   }
 
   .type-grid {
@@ -99,13 +105,14 @@
   }
 
   .type-card h3 {
-    font-size: clamp(1.15rem, 4.2vw, 1.45rem);
-    margin-bottom: 0.75rem;
+    font-size: clamp(1.3125rem, 4.2vw, 2.125rem); /* 21px - 34px Fibonacci */
+    margin-bottom: 0.8125rem; /* 13px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
 
   .type-card p {
-    font-size: clamp(0.92rem, 3vw, 1.05rem);
-    line-height: 1.6;
+    font-size: clamp(0.8125rem, 3vw, 1.3125rem); /* 13px - 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 
   .type-grid {
@@ -115,7 +122,7 @@
   
   /* Why Section - Tablet */
   .why-section {
-    padding: clamp(4rem, 10vw, 7rem) var(--spacing-medium);
+    padding: clamp(4rem, 10vw, 7rem) var(--spacing-medium) clamp(6rem, 14vw, 10rem);
     background: #E3EAFF;
   }
   
@@ -133,7 +140,8 @@
   .why-title {
     font-family: 'Inter', sans-serif;
     font-weight: 900;
-    font-size: clamp(2.4rem, 8vw, 4rem);
+    font-size: clamp(2.125rem, 8vw, 3.4375rem); /* 34px - 55px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
   
   .why-columns {
@@ -145,7 +153,8 @@
   
   .why-col {
     max-width: none;
-    font-size: clamp(0.98rem, 2.4vw, 1.1rem);
+    font-size: clamp(0.8125rem, 2.4vw, 1.3125rem); /* 13px - 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
   
   .about-section,
@@ -163,6 +172,12 @@
   .about-layout {
     grid-template-columns: 1fr;
     gap: clamp(2.5rem, 10vw, 3.75rem);
+  }
+
+  .visibility-intro,
+  .about-intro {
+    margin-left: 0 !important; /* Remove alignment on mobile */
+    justify-self: start;
   }
 
   /* Better spacing between "Un partener..." and dark section */
@@ -255,12 +270,13 @@
   }
 
   .spline-footer .content h1 {
-    font-size: clamp(1.8rem, 6vw, 2.8rem);
-    line-height: 1.15;
+    font-size: clamp(1.3125rem, 6vw, 2.125rem); /* 21px - 34px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
 
   .spline-footer .content .text {
-    font-size: clamp(0.9rem, 2.8vw, 1.05rem);
+    font-size: clamp(0.8125rem, 2.8vw, 1.3125rem); /* 13px - 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 
   .spline-footer .spline-whatsapp {
@@ -270,8 +286,9 @@
     max-width: 100%;
     text-align: center;
     margin-top: auto;
-    padding: clamp(0.85rem, 3vw, 1.1rem) clamp(1.5rem, 4vw, 2rem);
-    font-size: clamp(0.95rem, 3vw, 1.15rem);
+    padding: clamp(0.8125rem, 3vw, 1.3125rem) clamp(1.3125rem, 4vw, 2.125rem); /* 13px-21px, 21px-34px Fibonacci */
+    font-size: clamp(0.8125rem, 3vw, 1.3125rem); /* 13px - 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 
   .spline-footer .spline-phone {
@@ -279,7 +296,8 @@
     align-self: center;
     text-align: center;
     margin-top: 0.5rem;
-    font-size: clamp(0.85rem, 2.6vw, 1rem);
+    font-size: clamp(0.8125rem, 2.6vw, 1.3125rem); /* 13px - 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 
   .spline-footer .spline-cta {
@@ -321,11 +339,11 @@
   }
   
   .hero-section .hero h1 { 
-    font-size: clamp(2rem, 10vw, 2.8rem); 
+    font-size: clamp(2.125rem, 10vw, 2.125rem); /* 34px - 34px Fibonacci */ 
   }
   
   .hero-section .hero h2 { 
-    font-size: clamp(0.9rem, 3vw, 0.98rem); 
+    font-size: clamp(1.3125rem, 3vw, 1.3125rem); /* 21px - 21px Fibonacci */ 
   }
   
   .hero-section .hero {
@@ -339,8 +357,8 @@
   }
 
   .hero-section .cta-full-title {
-    font-size: clamp(1.9rem, 11vw, 3rem);
-    line-height: 1.05;
+    font-size: clamp(2.125rem, 11vw, 3.4375rem); /* 34px - 55px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
   
   /* Header and Contact */
@@ -371,7 +389,7 @@
   
   /* Why Section - Mobile */
   .why-section {
-    padding: clamp(3.25rem, 16vw, 5rem) var(--spacing-small);
+    padding: clamp(3.25rem, 16vw, 5rem) var(--spacing-small) clamp(5rem, 20vw, 8rem);
     background: #E3EAFF;
   }
 
@@ -389,7 +407,8 @@
   }
 
   .typing-title {
-    font-size: clamp(2rem, 11vw, 3.2rem);
+    font-size: clamp(2.125rem, 11vw, 3.4375rem); /* 34px - 55px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
 
   /* Fix blue cards on small mobile - better spacing and sizing */
@@ -411,14 +430,14 @@
   }
 
   .type-card h3 {
-    font-size: clamp(1.05rem, 4.8vw, 1.35rem);
-    line-height: 1.3;
-    margin-bottom: 0.65rem;
+    font-size: clamp(1.3125rem, 4.8vw, 2.125rem); /* 21px - 34px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
+    margin-bottom: 0.8125rem; /* 13px Fibonacci */
   }
 
   .type-card p {
-    font-size: clamp(0.88rem, 3.4vw, 1rem);
-    line-height: 1.55;
+    font-size: clamp(0.8125rem, 3.4vw, 1.3125rem); /* 13px - 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 
   .type-grid {
@@ -433,13 +452,13 @@
   .why-title {
     font-family: 'Inter', sans-serif;
     font-weight: 900;
-    font-size: clamp(2.1rem, 10vw, 3.1rem);
+    font-size: clamp(2.125rem, 10vw, 3.4375rem); /* 34px - 55px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
   
   .why-col {
-    font-size: clamp(0.95rem, 3.6vw, 1.05rem);
-  }
-  }
+    font-size: clamp(0.8125rem, 3.6vw, 1.3125rem); /* 13px - 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
   
   /* Decorative elements */
@@ -593,13 +612,14 @@
 
   .spline-footer .content h1 {
     margin-bottom: 0;
-    font-size: clamp(1.6rem, 6.5vw, 2.5rem);
-    line-height: 1.2;
+    font-size: clamp(1.3125rem, 6.5vw, 2.125rem); /* 21px - 34px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
 
   .spline-footer .content .text {
     margin-bottom: 0;
-    font-size: clamp(0.85rem, 3vw, 1rem);
+    font-size: clamp(0.8125rem, 3vw, 1.3125rem); /* 13px - 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 
   /* Hide 3D imagery in footer text on mobile */
@@ -620,12 +640,14 @@
   .spline-footer .spline-whatsapp {
     width: 100%;
     max-width: 100%;
-    padding: clamp(0.9rem, 3.5vw, 1.2rem) clamp(1.5rem, 4vw, 2rem);
-    font-size: clamp(0.9rem, 3.2vw, 1.1rem);
+    padding: clamp(0.8125rem, 3.5vw, 1.3125rem) clamp(1.3125rem, 4vw, 2.125rem); /* 13px-21px, 21px-34px Fibonacci */
+    font-size: clamp(0.8125rem, 3.2vw, 1.3125rem); /* 13px - 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 
   .spline-footer .spline-phone {
-    font-size: clamp(0.8rem, 2.8vw, 0.95rem);
+    font-size: clamp(0.8125rem, 2.8vw, 1.3125rem); /* 13px - 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 
   .spline-footer .spline-cta {
@@ -677,19 +699,23 @@
 /* Extra Small Mobile (360px and below) */
 @media (max-width: 360px) {
   .hero-section .hero h1 {
-    font-size: 1.8rem;
+    font-size: 2.125rem; /* 34px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
   
   .hero-section .hero h2 {
-    font-size: 0.85rem;
+    font-size: 1.3125rem; /* 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
   
   .cta-full-title {
-    font-size: 1.8rem;
+    font-size: 2.125rem; /* 34px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
   
   .typing-title {
-    font-size: 1.6rem;
+    font-size: 2.125rem; /* 34px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
   
   .step-card {
@@ -704,11 +730,13 @@
   }
 
   .type-card h3 {
-    font-size: 0.98rem;
+    font-size: 1.3125rem; /* 21px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
 
   .type-card p {
-    font-size: 0.82rem;
+    font-size: 0.8125rem; /* 13px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
   
   .spline-footer {
@@ -733,11 +761,13 @@
   }
 
   .spline-footer .content h1 {
-    font-size: 1.5rem;
+    font-size: 1.3125rem; /* 21px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
 
   .spline-footer .content .text {
-    font-size: 0.8rem;
+    font-size: 0.8125rem; /* 13px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 
   .spline-footer .content .text img,
@@ -756,8 +786,9 @@
   }
 
   .spline-footer .spline-whatsapp {
-    padding: 0.8rem 1.25rem;
-    font-size: 0.85rem;
+    padding: 0.8125rem 1.3125rem; /* 13px 21px Fibonacci */
+    font-size: 0.8125rem; /* 13px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 
   .spline-footer footer {
@@ -766,7 +797,8 @@
   }
 
   .spline-footer footer p {
-    font-size: 0.6rem;
+    font-size: 0.5rem; /* 8px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 }
 
@@ -792,9 +824,9 @@
   .spline-footer .content h1 {
     position: absolute;
     max-width: min(90%, 24rem);
-    margin-bottom: clamp(2rem, 5vh, 3.5rem);
-    font-size: clamp(1.35rem, 3.4vw, 2.1rem);
-    line-height: 1.2;
+    margin-bottom: clamp(2.125rem, 5vh, 3.4375rem); /* 34px - 55px Fibonacci */
+    font-size: clamp(1.3125rem, 3.4vw, 2.125rem); /* 21px - 34px Fibonacci */
+    line-height: 1.382; /* Golden ratio */
   }
 
   .spline-footer .content .text {
@@ -802,7 +834,8 @@
     top: clamp(5.5rem, 12vw, 8rem);
     left: 0;
     margin-bottom: 0;
-    font-size: clamp(0.7rem, 1.8vw, 0.95rem);
+    font-size: clamp(0.8125rem, 1.8vw, 1.3125rem); /* 13px - 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 
   .spline-footer .spline-whatsapp {
@@ -811,8 +844,10 @@
     top: clamp(1rem, 3vh, 1.75rem);
     width: auto;
     max-width: none;
-    padding: clamp(0.65rem, 1.6vw, 0.95rem) clamp(1.2rem, 2.5vw, 2rem);
+    padding: clamp(0.8125rem, 1.6vw, 1.3125rem) clamp(1.3125rem, 2.5vw, 2.125rem); /* 13px-21px, 21px-34px Fibonacci */
     text-align: center;
+    font-size: clamp(0.8125rem, 1.6vw, 1.3125rem); /* 13px - 21px Fibonacci */
+    line-height: 1.618; /* Golden ratio */
   }
 
   .spline-footer spline-viewer,

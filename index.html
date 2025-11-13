@@ -18,21 +18,21 @@
     <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpeg">
     
     <!-- CSS Files -->
-    <link rel="stylesheet" href="css/variables.css?v=4">
+    <link rel="stylesheet" href="css/variables.css?v=5">
     <link rel="stylesheet" href="css/base.css?v=4">
-    <link rel="stylesheet" href="css/hero.css?v=4">
-    <link rel="stylesheet" href="css/pill-nav.css?v=8">
+    <link rel="stylesheet" href="css/hero.css?v=11">
+    <link rel="stylesheet" href="css/pill-nav.css?v=9">
     <link rel="stylesheet" href="css/contact.css?v=4">
-    <link rel="stylesheet" href="css/sections.css?v=4">
-    <link rel="stylesheet" href="css/spline.css?v=4">
-    <link rel="stylesheet" href="css/responsive.css?v=13">
+    <link rel="stylesheet" href="css/sections.css?v=27">
+    <link rel="stylesheet" href="css/spline.css?v=5">
+    <link rel="stylesheet" href="css/responsive.css?v=17">
   </head>
   
   <body>
     <!-- Pill Navigation -->
     <div class="pill-nav-container">
       <nav class="pill-nav" aria-label="Primary">
-        <a class="pill-logo" href="#" aria-label="Home">
+        <a class="pill-logo" href="#top" aria-label="Home">
           <img src="assets/images/favicon.jpeg" alt="ALGO DIGITAL SOLUTIONS">
         </a>
         
@@ -66,7 +66,7 @@
               </a>
             </li>
             <li role="none">
-              <a role="menuitem" href="mailto:algodigitalsolutions@gmail.com" class="pill" aria-label="Contact">
+              <a role="menuitem" href="#contact" class="pill" aria-label="Contact">
                 <span class="hover-circle" aria-hidden="true"></span>
                 <span class="label-stack">
                   <span class="pill-label">Contact</span>
@@ -88,7 +88,7 @@
           <li><a href="#why" class="mobile-menu-link">De ce ADSNOW</a></li>
           <li><a href="#steps" class="mobile-menu-link">Etapele</a></li>
           <li><a href="#about" class="mobile-menu-link">Despre noi</a></li>
-          <li><a href="mailto:algodigitalsolutions@gmail.com" class="mobile-menu-link">Contact</a></li>
+          <li><a href="#contact" class="mobile-menu-link">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -101,31 +101,18 @@
       <div class="hero">
         <h1>Your Online Identity Advisor</h1>
         <h2 id="story-text">
-          Construim identități digitale pentru profesioniști și branduri care aduc valoare reală.<br>
+          Construim identități digitale pentru profesioniști și branduri care aduc valoare.<br>
           Nu vindem servicii. Alegem parteneri.
         </h2>
-      </div>
-
-      <div class="contact-info">
-        <p class="contact-heading">Get in touch</p>
-        <span class="contact-email">algodigitalsolutions@gmail.com</span>
-      </div>
-
-      <div class="footer-links">
-        <a href="#" class="footer-link">Web development</a>
-        <a href="#" class="footer-link">SEO & ADS</a>
-        <a href="#" class="footer-link">Social Media Management</a>
-        <a href="#" class="footer-link">Content Creation</a>
-        <a href="#" class="footer-link">Branding</a>
       </div>
       
       <!-- CTA Full Section (now part of hero) -->
       <div class="cta-full">
         <h1 class="cta-full-title">
           Let's see if we
-          <span class="cursor-icon" aria-hidden="true">
+          <a href="https://wa.me/40771587498" target="_blank" rel="noopener" class="cursor-icon" aria-label="Contactează-ne pe WhatsApp">
             <img src="assets/images/cursor.png" alt="cursor" loading="lazy" decoding="async" />
-          </span>
+          </a>
         </h1>
       </div>
     </section>
@@ -146,8 +133,8 @@
       </div>
     </section>
     
-    <!-- Typing Section -->
-    <section class="section type-nunito">
+    <!-- Typing Section / Steps -->
+    <section id="steps" class="section type-nunito">
       <div class="type-wrap">
         <div class="type-heading">
           <h2 class="typing-title">
@@ -180,7 +167,7 @@
         <div class="visibility-layout">
           <div class="visibility-intro">
             <h2 class="typing-title visibility-title">Vizibilitate. Stabilitate. Predictibilitate.</h2>
-            <p class="visibility-lead">Strategie digitală integrată (branding, web, social, SEO, Ads) construită să-ți ofere direcție clară.</p>
+            <p class="visibility-lead">Strategie digitală integrată (branding, web, social, SEO, ADS) construită să-ți ofere direcție clară.</p>
           </div>
           <div class="visibility-panel">
             <article class="visibility-item">
@@ -220,13 +207,13 @@
       </div>
     </section>
 
-    <!-- Spline Footer Section -->
+    <!-- Spline Footer Section / Contact -->
     <div class="cursor">
       <div class="big-circle"></div>
       <div class="small-circle"></div>
     </div>
 
-    <section class="section spline-footer hero" data-spline-src="https://unpkg.com/@splinetool/viewer@1.0.51/build/spline-viewer.js" data-split-type-src="https://unpkg.com/split-type">
+    <section id="contact" class="section spline-footer hero" data-spline-src="https://unpkg.com/@splinetool/viewer@1.0.51/build/spline-viewer.js" data-split-type-src="https://unpkg.com/split-type">
       <div class="spline-loader" aria-hidden="true">
         <div></div><div></div><div></div><div></div>
       </div>
@@ -287,7 +274,7 @@
     <script src="js/pill-nav.js" defer></script>
     <script src="js/scroll.js" defer></script>
     <script src="js/email.js" defer></script>
-    <script src="js/typing.js?v=6" defer></script>
+    <script src="js/typing.js?v=8" defer></script>
     <script type="module" src="js/three-metaballs.js?v=5"></script>
     <script src="js/spline-animations.js" defer></script>
     <script src="js/lazy-load.js" defer></script>

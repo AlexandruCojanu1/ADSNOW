@@ -46,16 +46,40 @@
   --font-secondary: "PPSupplyMono", monospace;
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* body text */
   
-  /* Font Sizes */
-  --font-size-small: 10px;
-  --font-size-regular: 1rem;
-  --font-size-medium: 1.5rem;
-  --font-size-large: 4rem;
+  /* Typography Scale - Fibonacci (8, 13, 21, 34, 55, 89, 144) */
+  --font-size-xs: 0.5rem;      /* 8px */
+  --font-size-sm: 0.8125rem;   /* 13px */
+  --font-size-base: 1.3125rem; /* 21px */
+  --font-size-md: 2.125rem;    /* 34px */
+  --font-size-lg: 3.4375rem;   /* 55px */
+  --font-size-xl: 5.5625rem;   /* 89px */
+  --font-size-2xl: 9rem;       /* 144px */
   
-  /* Spacing */
-  --spacing-small: 0.5rem;
-  --spacing-medium: 1rem;
-  --spacing-large: 2rem;
+  /* Legacy Font Sizes (for compatibility) */
+  --font-size-small: 0.8125rem;   /* 13px */
+  --font-size-regular: 1.3125rem; /* 21px */
+  --font-size-medium: 2.125rem;   /* 34px */
+  --font-size-large: 5.5625rem;   /* 89px */
+  
+  /* Line Heights - Golden Ratio (1.618) */
+  --line-height-tight: 1.382;
+  --line-height-normal: 1.618;
+  --line-height-relaxed: 1.8;
+  
+  /* Spacing Scale - Fibonacci */
+  --spacing-xs: 0.5rem;    /* 8px */
+  --spacing-sm: 0.8125rem; /* 13px */
+  --spacing-md: 1.3125rem; /* 21px */
+  --spacing-lg: 2.125rem;  /* 34px */
+  --spacing-xl: 3.4375rem; /* 55px */
+  --spacing-2xl: 5.5625rem; /* 89px */
+  --spacing-3xl: 9rem;     /* 144px */
+  
+  /* Legacy Spacing (for compatibility) */
+  --spacing-small: 0.8125rem;  /* 13px */
+  --spacing-medium: 1.3125rem; /* 21px */
+  --spacing-large: 2.125rem;   /* 34px */
+  --spacing-xlarge: 3.4375rem; /* 55px */
   
   /* Transitions */
   --transition-fast: 0.3s ease;

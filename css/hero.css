@@ -4,17 +4,17 @@
   padding: var(--spacing-large); 
   overflow: hidden;
   isolation: isolate; /* Create new stacking context */
-  min-height: 100vh;
+  min-height: auto; /* Removed 100vh to prevent bottom extension */
 }
 
-/* Grain overlay extended to cover entire hero section including CTA */
+/* Grain overlay - limited to content height */
 .hero-section::after {
   content: "";
   position: absolute; 
   top: 0; 
   left: 0; 
   width: 100%; 
-  height: 100%; /* Extended to cover full height */
+  height: 100%; /* Matches content height, no extension */
   opacity: 0.12; 
   pointer-events: none; 
   z-index: 1;
@@ -29,20 +29,20 @@
   top: 0; 
   left: 0; 
   width: 100%; 
-  height: 100vh; /* Limit to first screen only */
+  height: 100%; /* Matches section height, no 100vh extension */
   background: var(--background-dark); 
   z-index: 0; 
   pointer-events: none; 
 }
 
-/* Extend background to cover hero section and CTA, ending just below CTA text */
+/* Background limited to content height, no bottom extension */
 .hero-section::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100%; /* Matches content height, no extension */
   background: var(--background-dark);
   z-index: -1;
   pointer-events: none;
@@ -68,21 +68,21 @@
 .hero-section .hero h1 { 
   font-family: 'Inter', sans-serif; 
   font-weight: 900; 
-  font-size: clamp(3rem, 8vw, 6rem); 
-  line-height: 0.9; 
+  font-size: clamp(3.4375rem, 8vw, 5.5625rem); /* 55px - 89px Fibonacci */ 
+  line-height: 1.382; /* Golden ratio */
   letter-spacing: -0.02em; 
   color: var(--text-primary); 
   text-transform: none; 
-  margin: 0 0 1.4rem 0; 
+  margin: 0 0 1.3125rem 0; /* 21px Fibonacci */
 }
 
 .hero-section .hero h2 { 
   font-family: var(--font-sans); 
-  font-size: clamp(1rem, 2vw, 1.15rem); 
-  color: var(--text-secondary); 
+  font-size: clamp(1.3125rem, 2vw, 2.125rem); /* 21px - 34px Fibonacci */ 
+  color: #ffffff; 
   text-transform: none; 
   letter-spacing: 0.01em; 
-  line-height: 1.6; 
+  line-height: 1.618; /* Golden ratio */
   opacity: 0.95; 
   transition: opacity var(--transition-fast); 
   font-weight: 500; 
@@ -118,7 +118,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(4vh, 10vh, 12vh) var(--spacing-large) clamp(3vh, 5vh, 7vh);
+  padding: clamp(0.5vh, 3vh, 5vh) var(--spacing-large) clamp(3vh, 5vh, 7vh); /* Even more reduced top padding */
   text-align: center;
   z-index: 10;
   margin-top: 0;
@@ -128,10 +128,10 @@
 .hero-section .cta-full-title {
   font-family: 'Inter', sans-serif;
   font-weight: 900;
-  line-height: 0.9;
+  line-height: 1.382; /* Golden ratio */
   letter-spacing: -0.02em;
   color: #ffffff; /* White text for dark background */
-  font-size: clamp(2.8rem, 14vw, 11rem);
+  font-size: clamp(3.4375rem, 14vw, 5.5625rem); /* 55px - 89px Fibonacci */
 }
 
 .hero-section .cta-full-title .cursor-icon { 
@@ -139,7 +139,18 @@
   vertical-align: -0.15em; 
   width: 0.85em; 
   height: 0.85em; 
-  margin-left: 0.15em; 
+  margin-left: 0.15em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.hero-section .cta-full-title .cursor-icon:hover {
+  transform: scale(1.1);
+}
+
+.hero-section .cta-full-title .cursor-icon:active {
+  transform: scale(0.95);
 }
 
 .hero-section .cta-full-title .cursor-icon img { 
@@ -148,4 +159,5 @@
   display: block; 
   object-fit: contain;
   filter: drop-shadow(0 2px 8px rgba(255,255,255,0.2)) brightness(1.1);
+  pointer-events: none;
 }

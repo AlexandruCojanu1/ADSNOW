@@ -54,11 +54,7 @@
 // Reveal cards in Simplu/Transparent/Relevat section
 (function(){
   const cards = document.querySelectorAll('.type-card');
-  const heading = document.querySelector('.type-heading');
-  if (!cards.length || !heading || !('IntersectionObserver' in window)) return;
-
-  // Detect mobile device
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  if (!cards.length || !('IntersectionObserver' in window)) return;
 
   const io = new IntersectionObserver((entries)=>{
     entries.forEach((entry)=>{
@@ -70,40 +66,6 @@
     });
   }, { threshold: 0.35, rootMargin: '0px 0px -10% 0px' });
   cards.forEach((card)=>io.observe(card));
-
-  // Disable sticky title behavior on mobile
-  if (isMobile) {
-    heading.style.position = 'static';
-    return;
-  }
-
-  const typeGrid = document.querySelector('.type-grid');
-  const hideTrigger = typeGrid ? typeGrid.querySelector('.type-prompt') : null;
-  if (!hideTrigger || !typeGrid) return;
-
-  const revealObserver = new IntersectionObserver((entries)=>{
-    entries.forEach(entry => {
-      const ratio = entry.intersectionRatio;
-      if (ratio > 0.25) {
-        entry.target.classList.add('is-visible');
-      } else if (entry.boundingClientRect.top > entry.rootBounds.bottom) {
-        entry.target.classList.remove('is-visible');
-      }
-    });
-  }, { threshold: [0, 0.2, 0.4, 0.6, 0.8, 1], rootMargin: '0px 0px -20% 0px' });
-
-  cards.forEach(card => revealObserver.observe(card));
-
-  const headingHideObserver = new IntersectionObserver((entries)=>{
-    entries.forEach(entry => {
-      requestAnimationFrame(() => {
-        const passedTop = entry.boundingClientRect.top <= entry.rootBounds.top;
-        heading.classList.toggle('is-hidden', passedTop);
-      });
-    });
-  }, { threshold: 0, rootMargin: '-50% 0px 0px 0px' });
-
-  headingHideObserver.observe(hideTrigger);
 })();
 
 // Reveal panels in visibility/about sections
