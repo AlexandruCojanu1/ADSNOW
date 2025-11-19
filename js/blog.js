@@ -211,20 +211,44 @@
   }
   
   // Initialize
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      if (document.getElementById('blog-grid')) {
-        loadBlogPosts();
-      } else if (document.querySelector('.blog-post-container')) {
-        loadBlogPost();
-      }
-    });
-  } else {
-    if (document.getElementById('blog-grid')) {
-      loadBlogPosts();
-    } else if (document.querySelector('.blog-post-container')) {
+  console.log('📋 Initializing blog script...');
+  console.log('📋 Document ready state:', document.readyState);
+  console.log('📋 blog-grid element:', document.getElementById('blog-grid'));
+  console.log('📋 blog-post-container element:', document.querySelector('.blog-post-container'));
+  
+  function initBlog() {
+    console.log('🔧 Running initBlog...');
+    const blogGrid = document.getElementById('blog-grid');
+    const blogPostContainer = document.querySelector('.blog-post-container');
+    
+    if (blogGrid) {
+      console.log('✅ Found blog-grid, loading posts...');
+      loadBlogPosts(true); // Force refresh on load
+    } else if (blogPostContainer) {
+      console.log('✅ Found blog-post-container, loading post...');
       loadBlogPost();
+    } else {
+      console.warn('⚠️ No blog elements found!');
     }
   }
+  
+  if (document.readyState === 'loading') {
+    console.log('⏳ Waiting for DOMContentLoaded...');
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('✅ DOMContentLoaded fired');
+      initBlog();
+    });
+  } else {
+    console.log('✅ DOM already ready, initializing immediately');
+    initBlog();
+  }
+  
+  // Expose reload function globally for manual refresh
+  window.reloadBlogPosts = function() {
+    console.log('🔄 Manually reloading blog posts...');
+    loadBlogPosts(true);
+  };
+  
+  console.log('✅ blog.js initialization complete');
 })();
 
