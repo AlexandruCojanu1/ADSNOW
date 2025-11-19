@@ -120,27 +120,32 @@
       let data = { articles: [] };
       let loaded = false;
       
-      // Try relative path first
-      try {
-        const response = await fetch(ARTICLES_FILE);
-        if (response.ok) {
-          data = await response.json();
-          loaded = true;
-        }
-      } catch (error) {
-        console.warn('Could not load from relative path:', error);
-      }
+      // Try multiple paths
+      const pathsToTry = [
+        '/data/blog/articles.json?v=' + Date.now(), // Absolute with cache busting
+        '/data/blog/articles.json', // Absolute
+        '../data/blog/articles.json?v=' + Date.now(), // Relative with cache busting
+        '../data/blog/articles.json', // Relative
+        'data/blog/articles.json?v=' + Date.now(), // No leading slash
+        'data/blog/articles.json' // No leading slash
+      ];
       
-      // If relative path failed, try absolute path
-      if (!loaded) {
+      for (const path of pathsToTry) {
+        if (loaded) break;
+        
         try {
-          const response = await fetch('/data/blog/articles.json');
+          const response = await fetch(path);
           if (response.ok) {
-            data = await response.json();
-            loaded = true;
+            const jsonData = await response.json();
+            if (jsonData && jsonData.articles) {
+              data = jsonData;
+              loaded = true;
+              console.log('✅ Loaded articles from:', path);
+              break;
+            }
           }
         } catch (error) {
-          console.warn('Could not load from absolute path:', error);
+          console.warn('Could not load from', path, ':', error.message);
         }
       }
       
