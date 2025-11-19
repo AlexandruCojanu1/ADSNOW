@@ -1,13 +1,3 @@
 {
-  "articles": [
-    {
-      "title": "ADS NOW",
-      "date": "2025-11-19",
-      "category": null,
-      "excerpt": "testul testului testat",
-      "image": null,
-      "content": "<p>testul testului testat</p>",
-      "slug": "ads-now"
-    }
-  ]
+  "articles": []
 }
