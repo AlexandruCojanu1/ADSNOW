@@ -53,15 +53,28 @@
         if (loaded) break;
         
         try {
-          const response = await fetch(path);
+          const response = await fetch(path, {
+            cache: 'no-store', // Force no cache
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache'
+            }
+          });
+          
           if (response.ok) {
             const jsonData = await response.json();
-            if (jsonData && jsonData.articles) {
+            if (jsonData && jsonData.articles && Array.isArray(jsonData.articles)) {
               data = jsonData;
               loaded = true;
-              console.log('✅ Loaded articles from:', path, '- Found', data.articles.length, 'articles');
+              console.log('✅ Loaded articles from:', path);
+              console.log('📊 Found', data.articles.length, 'articles');
+              console.log('📝 Articles:', data.articles.map(a => a.title));
               break;
+            } else {
+              console.warn('Invalid JSON structure from', path, ':', jsonData);
             }
+          } else {
+            console.warn('HTTP', response.status, 'from', path);
           }
         } catch (error) {
           console.warn('Could not load from', path, ':', error.message);
