@@ -110,6 +110,13 @@
     }
   }
   
+  // Escape HTML helper
+  function escapeHTML(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+  
   // Load blog post content
   async function loadBlogPost() {
     const container = document.querySelector('.blog-post-container');
@@ -120,42 +127,64 @@
     const slug = path.split('/').pop().replace('.html', '');
     
     try {
-      const response = await fetch(ARTICLES_FILE);
-      if (!response.ok) {
-        throw new Error('Failed to load articles');
+      // Try multiple paths to find articles.json
+      let data = { articles: [] };
+      let loaded = false;
+      
+      // Try relative path first
+      try {
+        const response = await fetch(ARTICLES_FILE);
+        if (response.ok) {
+          data = await response.json();
+          loaded = true;
+        }
+      } catch (error) {
+        console.warn('Could not load from relative path:', error);
       }
       
-      const data = await response.json();
+      // If relative path failed, try absolute path
+      if (!loaded) {
+        try {
+          const response = await fetch('/data/blog/articles.json');
+          if (response.ok) {
+            data = await response.json();
+            loaded = true;
+          }
+        } catch (error) {
+          console.warn('Could not load from absolute path:', error);
+        }
+      }
+      
       const articles = data.articles || [];
       const article = articles.find(a => (a.slug || generateSlug(a.title)) === slug);
       
       if (!article) {
-        container.innerHTML = '<div class="blog-empty">Articolul nu a fost găsit.</div>';
+        container.innerHTML = '<div class="blog-empty">Articolul nu a fost găsit. Slug: ' + slug + '</div>';
         return;
       }
       
-      const imageUrl = article.image ? `../${article.image}` : null;
+      const imageUrl = article.image ? (article.image.startsWith('http') ? article.image : `../${article.image}`) : null;
       
       container.innerHTML = `
         <article class="blog-post">
           <header class="blog-post-header">
             <div class="blog-post-meta">
               <span class="blog-card-date">${formatDate(article.date)}</span>
-              ${article.category ? `<span class="blog-card-category">${article.category}</span>` : ''}
+              ${article.category ? `<span class="blog-card-category">${escapeHTML(article.category)}</span>` : ''}
             </div>
-            <h1 class="blog-post-title">${article.title}</h1>
-            ${imageUrl ? `<img src="${imageUrl}" alt="${article.title}" class="blog-post-image">` : ''}
+            <h1 class="blog-post-title">${escapeHTML(article.title)}</h1>
+            ${imageUrl ? `<img src="${imageUrl}" alt="${escapeHTML(article.title)}" class="blog-post-image" onerror="this.style.display='none'">` : ''}
           </header>
           <div class="blog-post-content">${article.content}</div>
           <footer class="blog-post-footer">
-            <a href="../blog/" class="blog-back-link">← Înapoi la blog</a>
+            <a href="index.html" class="blog-back-link">← Înapoi la blog</a>
           </footer>
         </article>
       `;
       
     } catch (error) {
       console.error('Error loading blog post:', error);
-      container.innerHTML = '<div class="blog-empty">Eroare la încărcarea articolului.</div>';
+      container.innerHTML = '<div class="blog-empty">Eroare la încărcarea articolului: ' + error.message + '</div>';
     }
   }
   
