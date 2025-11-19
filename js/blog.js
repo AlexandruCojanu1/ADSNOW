@@ -139,9 +139,13 @@
     const container = document.querySelector('.blog-post-container');
     if (!container) return;
     
-    // Get slug from URL
+    // Get slug from URL (remove .html if present, handle /blog/slug format)
     const path = window.location.pathname;
-    const slug = path.split('/').pop().replace('.html', '');
+    let slug = path.split('/').pop();
+    // Remove .html extension if present
+    slug = slug.replace('.html', '');
+    // If path is /blog/slug, slug is already extracted
+    console.log('📄 Loading blog post with slug:', slug);
     
     try {
       // Try multiple paths to find articles.json
