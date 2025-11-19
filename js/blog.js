@@ -27,12 +27,50 @@
     if (!grid) return;
     
     try {
-      const response = await fetch(ARTICLES_FILE);
-      if (!response.ok) {
-        throw new Error('Failed to load articles');
+      // Try multiple paths to find articles.json
+      let data = { articles: [] };
+      let loaded = false;
+      
+      // Try relative path first
+      try {
+        const response = await fetch(ARTICLES_FILE);
+        if (response.ok) {
+          data = await response.json();
+          loaded = true;
+          console.log('Loaded articles from:', ARTICLES_FILE);
+        }
+      } catch (error) {
+        console.warn('Could not load from relative path:', error);
       }
       
-      const data = await response.json();
+      // If relative path failed, try absolute path
+      if (!loaded) {
+        try {
+          const response = await fetch('/data/blog/articles.json');
+          if (response.ok) {
+            data = await response.json();
+            loaded = true;
+            console.log('Loaded articles from: /data/blog/articles.json');
+          }
+        } catch (error) {
+          console.warn('Could not load from absolute path:', error);
+        }
+      }
+      
+      // If still not loaded, try with cache busting
+      if (!loaded) {
+        try {
+          const response = await fetch(ARTICLES_FILE + '?v=' + Date.now());
+          if (response.ok) {
+            data = await response.json();
+            loaded = true;
+            console.log('Loaded articles with cache busting');
+          }
+        } catch (error) {
+          console.warn('Could not load with cache busting:', error);
+        }
+      }
+      
       const articles = data.articles || [];
       
       // Sort by date (newest first)
@@ -43,21 +81,24 @@
         return;
       }
       
+      console.log(`Displaying ${articles.length} articles`);
+      
       grid.innerHTML = articles.map(article => {
         const slug = article.slug || generateSlug(article.title);
-        const imageUrl = article.image ? `../${article.image}` : '../assets/images/favicon.jpeg';
-        const excerpt = article.excerpt || article.content.substring(0, 150) + '...';
+        const imageUrl = article.image ? (article.image.startsWith('http') ? article.image : `../${article.image}`) : '../assets/images/favicon.jpeg';
+        // Clean HTML tags from excerpt
+        const excerptText = article.excerpt || (article.content ? article.content.replace(/<[^>]*>/g, '').substring(0, 150) + '...' : '');
         
         return `
           <a href="${slug}.html" class="blog-card">
-            <img src="${imageUrl}" alt="${article.title}" class="blog-card-image" loading="lazy">
+            <img src="${imageUrl}" alt="${article.title}" class="blog-card-image" loading="lazy" onerror="this.src='../assets/images/favicon.jpeg'">
             <div class="blog-card-content">
               <div class="blog-card-meta">
                 <span class="blog-card-date">${formatDate(article.date)}</span>
                 ${article.category ? `<span class="blog-card-category">${article.category}</span>` : ''}
               </div>
               <h2 class="blog-card-title">${article.title}</h2>
-              <p class="blog-card-excerpt">${excerpt}</p>
+              <p class="blog-card-excerpt">${excerptText}</p>
             </div>
           </a>
         `;
@@ -65,7 +106,7 @@
       
     } catch (error) {
       console.error('Error loading blog posts:', error);
-      grid.innerHTML = '<div class="blog-empty">Eroare la încărcarea articolelor.</div>';
+      grid.innerHTML = '<div class="blog-empty">Eroare la încărcarea articolelor: ' + error.message + '</div>';
     }
   }
   

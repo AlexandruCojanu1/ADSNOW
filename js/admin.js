@@ -453,12 +453,13 @@
       showMessage('Se salvează articolul pe GitHub...', 'success');
       
       // Retry logic for handling SHA conflicts
-      let retries = 3;
+      let retries = 5; // Increased retries
       let lastError = null;
+      let success = false;
       
-      while (retries > 0) {
+      while (retries > 0 && !success) {
         try {
-          // Always reload fresh data from GitHub before saving
+          // Always reload fresh data from GitHub before saving (critical for SHA)
           let data = { articles: [] };
           let articlesSha = null;
           
@@ -467,19 +468,37 @@
             if (fileData) {
               data = JSON.parse(fileData.content);
               articlesSha = fileData.sha;
+              console.log('Loaded fresh SHA:', articlesSha.substring(0, 8) + '...');
+            } else {
+              console.log('No existing articles file, will create new one');
             }
           } catch (error) {
-            console.warn('Could not load existing articles:', error);
+            if (error.message.includes('404')) {
+              console.log('Articles file does not exist, will create new one');
+            } else {
+              console.warn('Could not load existing articles:', error);
+            }
           }
           
-          // Add new article
+          // Check if article already exists (avoid duplicates)
           const slug = generateSlug(articleData.title);
-          const newArticle = {
-            ...articleData,
-            slug: slug
-          };
-          
-          data.articles.push(newArticle);
+          const existingIndex = data.articles.findIndex(a => (a.slug || generateSlug(a.title)) === slug);
+          if (existingIndex !== -1) {
+            // Article already exists, update it instead
+            data.articles[existingIndex] = {
+              ...articleData,
+              slug: slug
+            };
+            console.log('Article already exists, updating...');
+          } else {
+            // Add new article
+            const newArticle = {
+              ...articleData,
+              slug: slug
+            };
+            data.articles.push(newArticle);
+            console.log('Adding new article...');
+          }
           
           // Save articles.json to GitHub
           const jsonStr = JSON.stringify(data, null, 2);
@@ -491,22 +510,27 @@
           );
           
           // Success - break out of retry loop
-          break;
+          success = true;
+          console.log('Article saved successfully!');
           
         } catch (error) {
           lastError = error;
+          console.error(`Attempt failed (${retries} retries left):`, error.message);
+          
           if (error.message.includes('409') && retries > 1) {
-            // SHA conflict - wait a bit and retry
-            console.log(`SHA conflict, retrying... (${retries - 1} retries left)`);
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            // SHA conflict - wait longer and retry with fresh SHA
+            const waitTime = (6 - retries) * 500; // Increasing wait time
+            console.log(`SHA conflict detected, waiting ${waitTime}ms before retry...`);
+            await new Promise(resolve => setTimeout(resolve, waitTime));
             retries--;
           } else {
+            // Non-409 error or last retry - throw immediately
             throw error;
           }
         }
       }
       
-      if (lastError && retries === 0) {
+      if (!success && lastError) {
         throw lastError;
       }
       
