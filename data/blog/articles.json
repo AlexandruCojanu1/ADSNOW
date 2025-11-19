@@ -1,15 +1,6 @@
 {
   "articles": [
     {
-      "title": "test",
-      "date": "2025-11-19",
-      "category": null,
-      "excerpt": "test",
-      "image": null,
-      "content": "<p>test</p>",
-      "slug": "test"
-    },
-    {
       "title": "alex",
       "date": "2025-11-19",
       "category": null,
