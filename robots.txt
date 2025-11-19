@@ -1,0 +1,19 @@
+# robots.txt for adsnow.ro
+
+User-agent: *
+Allow: /
+
+# Disallow admin panel
+Disallow: /admin.html
+
+# Allow all CSS, JS, and assets
+Allow: /css/
+Allow: /js/
+Allow: /assets/
+
+# Sitemap location
+Sitemap: https://www.adsnow.ro/sitemap.xml
+
+# Crawl-delay (optional, helps prevent server overload)
+Crawl-delay: 1
+
