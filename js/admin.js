@@ -703,26 +703,23 @@
     const data = fileData ? JSON.parse(fileData.content) : { articles: [] };
     const article = data.articles.find(a => (a.slug || generateSlug(a.title)) === slug);
     
-    if (!article) {
-      // Article already deleted or not found, try to delete HTML anyway
-      try {
-      
-      // Try to delete blog post HTML file (optional - may fail if file doesn't exist)
-      try {
-        const blogFileData = await getGitHubFile(`blog/${slug}.html`);
-        if (blogFileData) {
-          // Delete by updating with empty content and same SHA
-          await updateGitHubFile(
-            `blog/${slug}.html`,
-            '',
-            blogFileData.sha,
-            `Delete blog post page: ${article.title}`
-          );
-        }
-      } catch (error) {
-        // File might not exist, that's okay
-        console.warn('Could not delete blog post HTML file (may not exist):', error);
+    // Try to delete blog post HTML file (optional - may fail if file doesn't exist)
+    try {
+      const blogFileData = await getGitHubFile(`blog/${slug}.html`);
+      if (blogFileData) {
+        // Delete by updating with empty content and same SHA
+        const articleTitle = article ? article.title : slug;
+        await updateGitHubFile(
+          `blog/${slug}.html`,
+          '',
+          blogFileData.sha,
+          `Delete blog post page: ${articleTitle}`
+        );
       }
+    } catch (error) {
+      // File might not exist, that's okay
+      console.warn('Could not delete blog post HTML file (may not exist):', error);
+    }
       
       showMessage('✅ Articolul a fost șters de pe GitHub!', 'success');
       
