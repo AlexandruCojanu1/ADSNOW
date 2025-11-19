@@ -427,7 +427,7 @@
           </header>
           <div class="blog-post-content">${article.content}</div>
           <footer class="blog-post-footer">
-            <a href="index.html" class="blog-back-link">← Înapoi la blog</a>
+            <a href="/blog" class="blog-back-link">← Înapoi la blog</a>
           </footer>
         </article>
       </div>

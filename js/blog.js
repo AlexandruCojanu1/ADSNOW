@@ -104,7 +104,7 @@
         console.log(`Rendering article ${index + 1}:`, article.title, 'slug:', slug);
         
         return `
-          <a href="${slug}.html" class="blog-card">
+          <a href="/blog/${slug}" class="blog-card">
             <img src="${imageUrl}" alt="${article.title}" class="blog-card-image" loading="lazy" onerror="this.src='../assets/images/favicon.jpeg'">
             <div class="blog-card-content">
               <div class="blog-card-meta">
@@ -199,7 +199,7 @@
           </header>
           <div class="blog-post-content">${article.content}</div>
           <footer class="blog-post-footer">
-            <a href="index.html" class="blog-back-link">← Înapoi la blog</a>
+            <a href="/blog" class="blog-back-link">← Înapoi la blog</a>
           </footer>
         </article>
       `;

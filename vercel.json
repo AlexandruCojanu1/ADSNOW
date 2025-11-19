@@ -57,6 +57,10 @@
   ],
   "rewrites": [
     {
+      "source": "/blog/:slug",
+      "destination": "/blog/:slug.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/$1"
     }
