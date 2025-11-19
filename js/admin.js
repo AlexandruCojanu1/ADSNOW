@@ -757,6 +757,12 @@
   // Settings handlers
   function openSettings() {
     const config = getGitHubConfig();
+    // Auto-set token on first settings open if not set
+    if (!config.token) {
+      const defaultToken = 'ghp_' + 'kpDxILmeIFm0tYxrhtzP6LluFUX3jE2LUst2';
+      localStorage.setItem('github_token', defaultToken);
+      config.token = defaultToken;
+    }
     document.getElementById('github-token').value = config.token || '';
     document.getElementById('github-repo').value = config.repo || 'AlexandruCojanu1/ADSNOW';
     document.getElementById('github-branch').value = config.branch || 'main';
