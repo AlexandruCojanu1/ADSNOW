@@ -231,13 +231,16 @@
   // Initialize
   console.log('📋 Initializing blog script...');
   console.log('📋 Document ready state:', document.readyState);
-  console.log('📋 blog-grid element:', document.getElementById('blog-grid'));
-  console.log('📋 blog-post-container element:', document.querySelector('.blog-post-container'));
+  console.log('📋 Current URL:', window.location.href);
+  console.log('📋 Current pathname:', window.location.pathname);
   
   function initBlog() {
     console.log('🔧 Running initBlog...');
     const blogGrid = document.getElementById('blog-grid');
     const blogPostContainer = document.querySelector('.blog-post-container');
+    
+    console.log('📋 blog-grid element:', blogGrid);
+    console.log('📋 blog-post-container element:', blogPostContainer);
     
     if (blogGrid) {
       console.log('✅ Found blog-grid, loading posts...');
@@ -247,24 +250,35 @@
       loadBlogPost();
     } else {
       console.warn('⚠️ No blog elements found!');
+      console.warn('Available elements:', {
+        blogGrid: document.getElementById('blog-grid'),
+        blogPostContainer: document.querySelector('.blog-post-container'),
+        bodyPreview: document.body ? document.body.innerHTML.substring(0, 200) : 'No body'
+      });
     }
   }
   
+  // Wait a bit for DOM to be fully ready
   if (document.readyState === 'loading') {
     console.log('⏳ Waiting for DOMContentLoaded...');
     document.addEventListener('DOMContentLoaded', () => {
       console.log('✅ DOMContentLoaded fired');
-      initBlog();
+      setTimeout(initBlog, 100); // Small delay to ensure everything is ready
     });
   } else {
     console.log('✅ DOM already ready, initializing immediately');
-    initBlog();
+    setTimeout(initBlog, 100); // Small delay to ensure everything is ready
   }
   
   // Expose reload function globally for manual refresh
   window.reloadBlogPosts = function() {
     console.log('🔄 Manually reloading blog posts...');
-    loadBlogPosts(true);
+    const grid = document.getElementById('blog-grid');
+    if (grid) {
+      loadBlogPosts(true);
+    } else {
+      console.error('❌ blog-grid not found for reload');
+    }
   };
   
   console.log('✅ blog.js initialization complete');
