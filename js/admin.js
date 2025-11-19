@@ -271,7 +271,7 @@
     };
   }
   
-  // GitHub API: Update file
+  // GitHub API: Update or create file
   async function updateGitHubFile(path, content, sha, message) {
     const config = getGitHubConfig();
     if (!config.token) {
@@ -285,7 +285,9 @@
       branch: config.branch
     };
     
-    if (sha) {
+    // Only include SHA if file exists (for updates)
+    // For new files, don't include SHA (undefined or null means new file)
+    if (sha !== null && sha !== undefined && sha !== '') {
       body.sha = sha;
     }
     
@@ -300,8 +302,9 @@
     });
     
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(`GitHub API error: ${response.status} - ${error.message || response.statusText}`);
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage = errorData.message || errorData.error || response.statusText;
+      throw new Error(`GitHub API error: ${response.status} - ${errorMessage}`);
     }
     
     return await response.json();
@@ -477,16 +480,28 @@
       await updateGitHubFile(
         ARTICLES_FILE,
         jsonStr,
-        articlesSha,
+        articlesSha || undefined, // Use undefined instead of null for new files
         `Add blog post: ${articleData.title}`
       );
       
       // Generate and save blog post HTML
       const blogPostHTML = generateBlogPostHTML(newArticle);
+      // Check if blog post HTML already exists
+      let blogPostSha = null;
+      try {
+        const existingBlogPost = await getGitHubFile(`blog/${slug}.html`);
+        if (existingBlogPost) {
+          blogPostSha = existingBlogPost.sha;
+        }
+      } catch (error) {
+        // File doesn't exist, that's fine - we'll create it
+        console.log('Blog post HTML does not exist, will create new file');
+      }
+      
       await updateGitHubFile(
         `blog/${slug}.html`,
         blogPostHTML,
-        null,
+        blogPostSha || undefined, // Use undefined instead of null
         `Add blog post page: ${articleData.title}`
       );
       
