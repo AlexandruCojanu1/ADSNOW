@@ -31,43 +31,32 @@
       let data = { articles: [] };
       let loaded = false;
       
-      // Try relative path first
-      try {
-        const response = await fetch(ARTICLES_FILE);
-        if (response.ok) {
-          data = await response.json();
-          loaded = true;
-          console.log('Loaded articles from:', ARTICLES_FILE);
-        }
-      } catch (error) {
-        console.warn('Could not load from relative path:', error);
-      }
+      // Try absolute path first (works better on Vercel)
+      const pathsToTry = [
+        '/data/blog/articles.json?v=' + Date.now(), // Absolute with cache busting
+        '/data/blog/articles.json', // Absolute
+        '../data/blog/articles.json?v=' + Date.now(), // Relative with cache busting
+        '../data/blog/articles.json', // Relative
+        'data/blog/articles.json?v=' + Date.now(), // No leading slash
+        'data/blog/articles.json' // No leading slash
+      ];
       
-      // If relative path failed, try absolute path
-      if (!loaded) {
+      for (const path of pathsToTry) {
+        if (loaded) break;
+        
         try {
-          const response = await fetch('/data/blog/articles.json');
+          const response = await fetch(path);
           if (response.ok) {
-            data = await response.json();
-            loaded = true;
-            console.log('Loaded articles from: /data/blog/articles.json');
+            const jsonData = await response.json();
+            if (jsonData && jsonData.articles) {
+              data = jsonData;
+              loaded = true;
+              console.log('✅ Loaded articles from:', path, '- Found', data.articles.length, 'articles');
+              break;
+            }
           }
         } catch (error) {
-          console.warn('Could not load from absolute path:', error);
-        }
-      }
-      
-      // If still not loaded, try with cache busting
-      if (!loaded) {
-        try {
-          const response = await fetch(ARTICLES_FILE + '?v=' + Date.now());
-          if (response.ok) {
-            data = await response.json();
-            loaded = true;
-            console.log('Loaded articles with cache busting');
-          }
-        } catch (error) {
-          console.warn('Could not load with cache busting:', error);
+          console.warn('Could not load from', path, ':', error.message);
         }
       }
       
