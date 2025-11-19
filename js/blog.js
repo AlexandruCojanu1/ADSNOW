@@ -2,6 +2,8 @@
 (function() {
   'use strict';
   
+  console.log('🚀 blog.js script loaded');
+  
   const ARTICLES_FILE = '../data/blog/articles.json';
   
   // Format date
