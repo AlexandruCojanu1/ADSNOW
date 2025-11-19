@@ -22,23 +22,31 @@
   }
   
   // Load and display blog posts
-  async function loadBlogPosts() {
+  async function loadBlogPosts(forceRefresh = false) {
     const grid = document.getElementById('blog-grid');
     if (!grid) return;
+    
+    // Show loading state
+    if (forceRefresh) {
+      grid.innerHTML = '<div class="blog-empty">Se încarcă articolele...</div>';
+    }
     
     try {
       // Try multiple paths to find articles.json
       let data = { articles: [] };
       let loaded = false;
       
+      // Always use cache busting with timestamp
+      const cacheBuster = forceRefresh ? Date.now() : '?v=' + Date.now();
+      
       // Try absolute path first (works better on Vercel)
       const pathsToTry = [
-        '/data/blog/articles.json?v=' + Date.now(), // Absolute with cache busting
-        '/data/blog/articles.json', // Absolute
-        '../data/blog/articles.json?v=' + Date.now(), // Relative with cache busting
-        '../data/blog/articles.json', // Relative
-        'data/blog/articles.json?v=' + Date.now(), // No leading slash
-        'data/blog/articles.json' // No leading slash
+        '/data/blog/articles.json' + cacheBuster, // Absolute with cache busting
+        '/data/blog/articles.json', // Absolute fallback
+        '../data/blog/articles.json' + cacheBuster, // Relative with cache busting
+        '../data/blog/articles.json', // Relative fallback
+        'data/blog/articles.json' + cacheBuster, // No leading slash with cache busting
+        'data/blog/articles.json' // No leading slash fallback
       ];
       
       for (const path of pathsToTry) {
