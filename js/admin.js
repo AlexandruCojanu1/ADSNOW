@@ -177,20 +177,33 @@
           const fileData = await getGitHubFile(ARTICLES_FILE);
           if (fileData) {
             data = JSON.parse(fileData.content);
+            console.log('Loaded articles from GitHub:', data.articles.length);
+          } else {
+            console.log('No articles file found on GitHub');
           }
         } catch (error) {
           console.warn('Could not load from GitHub, trying local:', error);
           // Fallback to local
-          const response = await fetch(ARTICLES_FILE);
-          if (response.ok) {
-            data = await response.json();
+          try {
+            const response = await fetch(ARTICLES_FILE);
+            if (response.ok) {
+              data = await response.json();
+              console.log('Loaded articles from local:', data.articles.length);
+            }
+          } catch (localError) {
+            console.error('Could not load from local either:', localError);
           }
         }
       } else {
         // Load from local
-        const response = await fetch(ARTICLES_FILE);
-        if (response.ok) {
-          data = await response.json();
+        try {
+          const response = await fetch(ARTICLES_FILE);
+          if (response.ok) {
+            data = await response.json();
+            console.log('Loaded articles from local:', data.articles.length);
+          }
+        } catch (error) {
+          console.error('Error loading articles from local:', error);
         }
       }
       
@@ -473,12 +486,18 @@
         `Add blog post page: ${articleData.title}`
       );
       
-      showMessage('✅ Articolul a fost publicat cu succes pe GitHub! Vercel va redeploya automat.', 'success');
+      showMessage('✅ Articolul a fost publicat cu succes pe GitHub! Vercel va redeploya automat în câteva secunde.', 'success');
       
-      // Reload articles list
-      setTimeout(() => {
-        loadArticles();
-      }, 1000);
+      // Reload articles list from GitHub (wait a bit for GitHub to process)
+      setTimeout(async () => {
+        try {
+          await loadArticles();
+        } catch (error) {
+          console.error('Error reloading articles:', error);
+          // Try again after a bit more time
+          setTimeout(() => loadArticles(), 2000);
+        }
+      }, 1500);
       
       // Reset form
       document.getElementById('article-form').reset();
@@ -539,8 +558,8 @@
     }
   }
   
-  // Delete article
-  window.deleteArticle = async function(index) {
+  // Delete article by slug (more reliable than index)
+  window.deleteArticleBySlug = async function(slug) {
     if (!confirm('Ești sigur că vrei să ștergi acest articol?')) {
       return;
     }
@@ -550,10 +569,10 @@
       
       if (config.token) {
         // Delete from GitHub
-        await deleteArticleFromGitHub(index);
+        await deleteArticleFromGitHubBySlug(slug);
       } else {
         // Fallback to local
-        await deleteArticleLocal(index);
+        await deleteArticleLocalBySlug(slug);
       }
     } catch (error) {
       console.error('Error deleting article:', error);
@@ -561,8 +580,11 @@
     }
   };
   
-  // Delete article from GitHub
-  async function deleteArticleFromGitHub(index) {
+  // Legacy function for backward compatibility
+  window.deleteArticle = window.deleteArticleBySlug;
+  
+  // Delete article from GitHub by slug
+  async function deleteArticleFromGitHubBySlug(slug) {
     try {
       const fileData = await getGitHubFile(ARTICLES_FILE);
       if (!fileData) {
@@ -570,13 +592,14 @@
       }
       
       const data = JSON.parse(fileData.content);
-      if (index >= data.articles.length) {
-        throw new Error('Index invalid.');
+      const articleIndex = data.articles.findIndex(a => (a.slug || generateSlug(a.title)) === slug);
+      
+      if (articleIndex === -1) {
+        throw new Error('Articolul nu a fost găsit.');
       }
       
-      const article = data.articles[index];
-      const slug = article.slug || generateSlug(article.title);
-      data.articles.splice(index, 1);
+      const article = data.articles[articleIndex];
+      data.articles.splice(articleIndex, 1);
       
       // Update articles.json
       const jsonStr = JSON.stringify(data, null, 2);
@@ -615,8 +638,8 @@
     }
   }
   
-  // Delete article locally
-  async function deleteArticleLocal(index) {
+  // Delete article locally by slug
+  async function deleteArticleLocalBySlug(slug) {
     try {
       const response = await fetch(ARTICLES_FILE);
       let data = { articles: [] };
@@ -625,7 +648,12 @@
         data = await response.json();
       }
       
-      data.articles.splice(index, 1);
+      const articleIndex = data.articles.findIndex(a => (a.slug || generateSlug(a.title)) === slug);
+      if (articleIndex === -1) {
+        throw new Error('Articolul nu a fost găsit.');
+      }
+      
+      data.articles.splice(articleIndex, 1);
       
       const jsonStr = JSON.stringify(data, null, 2);
       const blob = new Blob([jsonStr], { type: 'application/json' });
