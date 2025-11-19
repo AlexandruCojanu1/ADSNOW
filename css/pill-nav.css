@@ -40,6 +40,12 @@
     width: 100%;
     justify-content: space-between;
     background: transparent;
+    gap: var(--pill-gap);
+  }
+  
+  .mobile-blog-link {
+    display: inline-flex !important;
+    height: var(--nav-h);
   }
 }
 
