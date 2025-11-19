@@ -453,7 +453,7 @@
       showMessage('Se salvează articolul pe GitHub...', 'success');
       
       // Retry logic for handling SHA conflicts
-      let retries = 5; // Increased retries
+      let retries = 8; // Increased retries
       let lastError = null;
       let success = false;
       
@@ -468,7 +468,7 @@
             if (fileData) {
               data = JSON.parse(fileData.content);
               articlesSha = fileData.sha;
-              console.log('Loaded fresh SHA:', articlesSha.substring(0, 8) + '...');
+              console.log(`[Attempt ${9 - retries}/8] Loaded fresh SHA:`, articlesSha.substring(0, 8) + '...');
             } else {
               console.log('No existing articles file, will create new one');
             }
@@ -511,16 +511,18 @@
           
           // Success - break out of retry loop
           success = true;
-          console.log('Article saved successfully!');
+          console.log('✅ Article saved successfully!');
           
         } catch (error) {
           lastError = error;
-          console.error(`Attempt failed (${retries} retries left):`, error.message);
+          const is409 = error.message.includes('409');
+          console.error(`[Attempt ${9 - retries}/8] Failed:`, error.message, is409 ? '(SHA conflict)' : '');
           
-          if (error.message.includes('409') && retries > 1) {
+          if (is409 && retries > 1) {
             // SHA conflict - wait longer and retry with fresh SHA
-            const waitTime = (6 - retries) * 500; // Increasing wait time
-            console.log(`SHA conflict detected, waiting ${waitTime}ms before retry...`);
+            // Progressive backoff: 1s, 2s, 3s, 4s, 5s, 6s, 7s
+            const waitTime = (9 - retries) * 1000;
+            console.log(`⏳ SHA conflict detected, waiting ${waitTime}ms before retry...`);
             await new Promise(resolve => setTimeout(resolve, waitTime));
             retries--;
           } else {
@@ -551,26 +553,52 @@
         slug: slug
       };
       
-      // Generate and save blog post HTML
+      // Generate and save blog post HTML with retry logic
       const blogPostHTML = generateBlogPostHTML(newArticle);
-      // Check if blog post HTML already exists
-      let blogPostSha = null;
-      try {
-        const existingBlogPost = await getGitHubFile(`blog/${slug}.html`);
-        if (existingBlogPost) {
-          blogPostSha = existingBlogPost.sha;
-        }
-      } catch (error) {
-        // File doesn't exist, that's fine - we'll create it
-        console.log('Blog post HTML does not exist, will create new file');
-      }
+      let blogPostSuccess = false;
+      let blogPostRetries = 5;
       
-      await updateGitHubFile(
-        `blog/${slug}.html`,
-        blogPostHTML,
-        blogPostSha || undefined, // Use undefined instead of null
-        `Add blog post page: ${articleData.title}`
-      );
+      while (blogPostRetries > 0 && !blogPostSuccess) {
+        try {
+          // Check if blog post HTML already exists
+          let blogPostSha = null;
+          try {
+            const existingBlogPost = await getGitHubFile(`blog/${slug}.html`);
+            if (existingBlogPost) {
+              blogPostSha = existingBlogPost.sha;
+              console.log('Blog post HTML exists, will update with SHA:', blogPostSha.substring(0, 8) + '...');
+            }
+          } catch (error) {
+            // File doesn't exist, that's fine - we'll create it
+            console.log('Blog post HTML does not exist, will create new file');
+          }
+          
+          await updateGitHubFile(
+            `blog/${slug}.html`,
+            blogPostHTML,
+            blogPostSha || undefined, // Use undefined instead of null
+            `Add blog post page: ${articleData.title}`
+          );
+          
+          blogPostSuccess = true;
+          console.log('✅ Blog post HTML saved successfully!');
+          
+        } catch (error) {
+          const is409 = error.message.includes('409');
+          console.error(`[HTML Save Attempt ${6 - blogPostRetries}/5] Failed:`, error.message, is409 ? '(SHA conflict)' : '');
+          
+          if (is409 && blogPostRetries > 1) {
+            const waitTime = (6 - blogPostRetries) * 1000;
+            console.log(`⏳ SHA conflict on HTML save, waiting ${waitTime}ms before retry...`);
+            await new Promise(resolve => setTimeout(resolve, waitTime));
+            blogPostRetries--;
+          } else {
+            // Log error but don't fail the entire operation
+            console.warn('⚠️ Could not save blog post HTML, but article was saved:', error);
+            break;
+          }
+        }
+      }
       
       showMessage('✅ Articolul a fost publicat cu succes pe GitHub! Vercel va redeploya automat în câteva secunde.', 'success');
       
@@ -672,10 +700,11 @@
   // Delete article from GitHub by slug
   async function deleteArticleFromGitHubBySlug(slug) {
     // Retry logic for handling SHA conflicts
-    let retries = 3;
+    let retries = 8;
     let lastError = null;
+    let success = false;
     
-    while (retries > 0) {
+    while (retries > 0 && !success) {
       try {
         // Always reload fresh data from GitHub before deleting
         const fileData = await getGitHubFile(ARTICLES_FILE);
@@ -703,22 +732,29 @@
         );
         
         // Success - break out of retry loop
-        break;
+        success = true;
+        console.log('✅ Article deleted successfully!');
         
       } catch (error) {
         lastError = error;
-        if (error.message.includes('409') && retries > 1) {
-          // SHA conflict - wait a bit and retry
-          console.log(`SHA conflict on delete, retrying... (${retries - 1} retries left)`);
-          await new Promise(resolve => setTimeout(resolve, 1000));
+        const is409 = error.message.includes('409');
+        console.error(`[Delete Attempt ${9 - retries}/8] Failed:`, error.message, is409 ? '(SHA conflict)' : '');
+        
+        if (is409 && retries > 1) {
+          // SHA conflict - wait longer and retry with fresh SHA
+          // Progressive backoff: 1s, 2s, 3s, 4s, 5s, 6s, 7s
+          const waitTime = (9 - retries) * 1000;
+          console.log(`⏳ SHA conflict on delete, waiting ${waitTime}ms before retry...`);
+          await new Promise(resolve => setTimeout(resolve, waitTime));
           retries--;
         } else {
+          // Non-409 error or last retry - throw immediately
           throw error;
         }
       }
     }
     
-    if (lastError && retries === 0) {
+    if (!success && lastError) {
       throw lastError;
     }
     
