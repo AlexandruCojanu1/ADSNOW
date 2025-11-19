@@ -39,15 +39,19 @@
       let loaded = false;
       
       // Always use cache busting with timestamp
-      const cacheBuster = forceRefresh ? Date.now() : '?v=' + Date.now();
+      const timestamp = Date.now();
+      const cacheBuster = '?v=' + timestamp + '&_=' + timestamp;
       
       // Try absolute path first (works better on Vercel)
       const pathsToTry = [
         '/data/blog/articles.json' + cacheBuster, // Absolute with cache busting
+        '/data/blog/articles.json?v=' + timestamp, // Absolute with simple cache busting
         '/data/blog/articles.json', // Absolute fallback
         '../data/blog/articles.json' + cacheBuster, // Relative with cache busting
+        '../data/blog/articles.json?v=' + timestamp, // Relative with simple cache busting
         '../data/blog/articles.json', // Relative fallback
         'data/blog/articles.json' + cacheBuster, // No leading slash with cache busting
+        'data/blog/articles.json?v=' + timestamp, // No leading slash with simple cache busting
         'data/blog/articles.json' // No leading slash fallback
       ];
       
