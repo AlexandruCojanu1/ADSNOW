@@ -1,15 +1,6 @@
 {
   "articles": [
     {
-      "title": "alx",
-      "date": "2025-11-19",
-      "category": null,
-      "excerpt": "alx",
-      "image": null,
-      "content": "<p>alx</p>",
-      "slug": "alx"
-    },
-    {
       "title": "vai",
       "date": "2025-11-19",
       "category": null,
