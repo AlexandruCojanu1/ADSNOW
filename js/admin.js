@@ -217,8 +217,12 @@
         return;
       }
       
+      // Store articles globally for reference
+      window._articlesList = articles;
+      
       listDiv.innerHTML = articles.map((article, index) => {
         const date = new Date(article.date).toLocaleDateString('ro-RO');
+        const slug = article.slug || generateSlug(article.title);
         return `
           <div class="article-item">
             <div class="article-item-info">
@@ -226,7 +230,7 @@
               <div class="article-item-meta">${date} ${article.category ? '• ' + article.category : ''}</div>
             </div>
             <div class="article-item-actions">
-              <button class="admin-button admin-button-secondary" onclick="deleteArticle(${index})">Șterge</button>
+              <button class="admin-button admin-button-secondary" onclick="deleteArticleBySlug('${slug}')">Șterge</button>
             </div>
           </div>
         `;
