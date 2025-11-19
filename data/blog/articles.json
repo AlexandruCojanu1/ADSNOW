@@ -4,15 +4,24 @@
       "title": "Bun venit pe blog-ul ADS Now",
       "date": "2025-01-20",
       "category": "Marketing Digital",
-      "excerpt": "Primul nostru articol despre marketing digital Èi creare website-uri.",
+      "excerpt": "Primul nostru articol despre marketing digital ÃÂi creare website-uri.",
       "image": "assets/images/favicon.jpeg",
-      "content": "<p>Bun venit pe blog-ul ADS Now! Aici vei gÄsi articole despre marketing digital, creare website-uri, SEO Èi strategii online.</p><h2>Despre noi</h2><p>Suntem o agenÈie de creaÈie Èi strategie digitalÄ din BraÈov, axatÄ pe performanÈÄ Èi calitate.</p><h3>Serviciile noastre</h3><ul><li>Creare website-uri</li><li>Marketing digital</li><li>SEO</li><li>Branding</li><li>Strategie digitalÄ</li></ul><p>ContacteazÄ-ne pentru a discuta despre proiectul tÄu!</p>",
+      "content": "<p>Bun venit pe blog-ul ADS Now! Aici vei gÃÂsi articole despre marketing digital, creare website-uri, SEO ÃÂi strategii online.</p><h2>Despre noi</h2><p>Suntem o agenÃÂie de creaÃÂie ÃÂi strategie digitalÃÂ din BraÃÂov, axatÃÂ pe performanÃÂÃÂ ÃÂi calitate.</p><h3>Serviciile noastre</h3><ul><li>Creare website-uri</li><li>Marketing digital</li><li>SEO</li><li>Branding</li><li>Strategie digitalÃÂ</li></ul><p>ContacteazÃÂ-ne pentru a discuta despre proiectul tÃÂu!</p>",
       "slug": "bun-venit-pe-blog-ul-ads-now"
     },
     {
       "title": "test",
       "date": "2025-11-19",
       "category": "Marketing Digital",
+      "excerpt": "test",
+      "image": null,
+      "content": "<p>test</p>",
+      "slug": "test"
+    },
+    {
+      "title": "test",
+      "date": "2025-11-19",
+      "category": null,
       "excerpt": "test",
       "image": null,
       "content": "<p>test</p>",
