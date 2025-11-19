@@ -59,16 +59,24 @@
         if (loaded) break;
         
         try {
+          console.log(`🔍 Trying to load from: ${path}`);
           const response = await fetch(path, {
+            method: 'GET',
             cache: 'no-store', // Force no cache
+            mode: 'cors', // Explicit CORS mode
+            credentials: 'omit', // Don't send credentials
             headers: {
               'Cache-Control': 'no-cache, no-store, must-revalidate',
-              'Pragma': 'no-cache'
+              'Pragma': 'no-cache',
+              'Accept': 'application/json'
             }
           });
           
+          console.log(`📡 Response status: ${response.status} ${response.statusText} for ${path}`);
+          
           if (response.ok) {
             const jsonData = await response.json();
+            console.log(`📦 Received data:`, jsonData);
             if (jsonData && jsonData.articles && Array.isArray(jsonData.articles)) {
               data = jsonData;
               loaded = true;
@@ -77,13 +85,17 @@
               console.log('📝 Articles:', data.articles.map(a => a.title));
               break;
             } else {
-              console.warn('Invalid JSON structure from', path, ':', jsonData);
+              console.warn('❌ Invalid JSON structure from', path, ':', jsonData);
+              console.warn('Expected: { articles: [...] }, Got:', typeof jsonData, jsonData);
             }
           } else {
-            console.warn('HTTP', response.status, 'from', path);
+            const errorText = await response.text().catch(() => '');
+            console.warn(`❌ HTTP ${response.status} ${response.statusText} from ${path}`);
+            console.warn('Response body:', errorText.substring(0, 200));
           }
         } catch (error) {
-          console.warn('Could not load from', path, ':', error.message);
+          console.warn(`❌ Could not load from ${path}:`, error.message);
+          console.warn('Error details:', error);
         }
       }
       
