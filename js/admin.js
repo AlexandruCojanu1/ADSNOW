@@ -452,37 +452,80 @@
       
       showMessage('Se salvează articolul pe GitHub...', 'success');
       
-      // Load existing articles from GitHub
-      let data = { articles: [] };
-      let articlesSha = null;
+      // Retry logic for handling SHA conflicts
+      let retries = 3;
+      let lastError = null;
       
+      while (retries > 0) {
+        try {
+          // Always reload fresh data from GitHub before saving
+          let data = { articles: [] };
+          let articlesSha = null;
+          
+          try {
+            const fileData = await getGitHubFile(ARTICLES_FILE);
+            if (fileData) {
+              data = JSON.parse(fileData.content);
+              articlesSha = fileData.sha;
+            }
+          } catch (error) {
+            console.warn('Could not load existing articles:', error);
+          }
+          
+          // Add new article
+          const slug = generateSlug(articleData.title);
+          const newArticle = {
+            ...articleData,
+            slug: slug
+          };
+          
+          data.articles.push(newArticle);
+          
+          // Save articles.json to GitHub
+          const jsonStr = JSON.stringify(data, null, 2);
+          await updateGitHubFile(
+            ARTICLES_FILE,
+            jsonStr,
+            articlesSha || undefined, // Use undefined instead of null for new files
+            `Add blog post: ${articleData.title}`
+          );
+          
+          // Success - break out of retry loop
+          break;
+          
+        } catch (error) {
+          lastError = error;
+          if (error.message.includes('409') && retries > 1) {
+            // SHA conflict - wait a bit and retry
+            console.log(`SHA conflict, retrying... (${retries - 1} retries left)`);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            retries--;
+          } else {
+            throw error;
+          }
+        }
+      }
+      
+      if (lastError && retries === 0) {
+        throw lastError;
+      }
+      
+      // Reload fresh data for blog post HTML generation
+      let data = { articles: [] };
       try {
         const fileData = await getGitHubFile(ARTICLES_FILE);
         if (fileData) {
           data = JSON.parse(fileData.content);
-          articlesSha = fileData.sha;
         }
       } catch (error) {
-        console.warn('Could not load existing articles:', error);
+        console.warn('Could not reload articles:', error);
       }
       
-      // Add new article
       const slug = generateSlug(articleData.title);
-      const newArticle = {
+      const newArticle = data.articles.find(a => (a.slug || generateSlug(a.title)) === slug) || {
         ...articleData,
         slug: slug
       };
-      
-      data.articles.push(newArticle);
-      
-      // Save articles.json to GitHub
-      const jsonStr = JSON.stringify(data, null, 2);
-      await updateGitHubFile(
-        ARTICLES_FILE,
-        jsonStr,
-        articlesSha || undefined, // Use undefined instead of null for new files
-        `Add blog post: ${articleData.title}`
-      );
       
       // Generate and save blog post HTML
       const blogPostHTML = generateBlogPostHTML(newArticle);
@@ -604,30 +647,65 @@
   
   // Delete article from GitHub by slug
   async function deleteArticleFromGitHubBySlug(slug) {
-    try {
-      const fileData = await getGitHubFile(ARTICLES_FILE);
-      if (!fileData) {
-        throw new Error('Nu s-au găsit articole.');
+    // Retry logic for handling SHA conflicts
+    let retries = 3;
+    let lastError = null;
+    
+    while (retries > 0) {
+      try {
+        // Always reload fresh data from GitHub before deleting
+        const fileData = await getGitHubFile(ARTICLES_FILE);
+        if (!fileData) {
+          throw new Error('Nu s-au găsit articole.');
+        }
+        
+        const data = JSON.parse(fileData.content);
+        const articleIndex = data.articles.findIndex(a => (a.slug || generateSlug(a.title)) === slug);
+        
+        if (articleIndex === -1) {
+          throw new Error('Articolul nu a fost găsit.');
+        }
+        
+        const article = data.articles[articleIndex];
+        data.articles.splice(articleIndex, 1);
+        
+        // Update articles.json with fresh SHA
+        const jsonStr = JSON.stringify(data, null, 2);
+        await updateGitHubFile(
+          ARTICLES_FILE,
+          jsonStr,
+          fileData.sha, // Use fresh SHA
+          `Delete blog post: ${article.title}`
+        );
+        
+        // Success - break out of retry loop
+        break;
+        
+      } catch (error) {
+        lastError = error;
+        if (error.message.includes('409') && retries > 1) {
+          // SHA conflict - wait a bit and retry
+          console.log(`SHA conflict on delete, retrying... (${retries - 1} retries left)`);
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          retries--;
+        } else {
+          throw error;
+        }
       }
-      
-      const data = JSON.parse(fileData.content);
-      const articleIndex = data.articles.findIndex(a => (a.slug || generateSlug(a.title)) === slug);
-      
-      if (articleIndex === -1) {
-        throw new Error('Articolul nu a fost găsit.');
-      }
-      
-      const article = data.articles[articleIndex];
-      data.articles.splice(articleIndex, 1);
-      
-      // Update articles.json
-      const jsonStr = JSON.stringify(data, null, 2);
-      await updateGitHubFile(
-        ARTICLES_FILE,
-        jsonStr,
-        fileData.sha,
-        `Delete blog post: ${article.title}`
-      );
+    }
+    
+    if (lastError && retries === 0) {
+      throw lastError;
+    }
+    
+    // Get article info for HTML deletion
+    const fileData = await getGitHubFile(ARTICLES_FILE);
+    const data = fileData ? JSON.parse(fileData.content) : { articles: [] };
+    const article = data.articles.find(a => (a.slug || generateSlug(a.title)) === slug);
+    
+    if (!article) {
+      // Article already deleted or not found, try to delete HTML anyway
+      try {
       
       // Try to delete blog post HTML file (optional - may fail if file doesn't exist)
       try {
