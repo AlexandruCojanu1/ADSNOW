@@ -83,17 +83,31 @@
         }
       }
       
+      if (!loaded) {
+        grid.innerHTML = '<div class="blog-empty">❌ Nu s-au putut încărca articolele. Verifică consola pentru detalii.<br><br><button onclick="window.reloadBlogPosts()" style="padding: 10px 20px; background: #2E5E99; color: white; border: none; border-radius: 5px; cursor: pointer;">Reîncearcă</button></div>';
+        console.error('❌ Failed to load articles from all paths');
+        console.error('Tried paths:', pathsToTry);
+        return;
+      }
+      
       const articles = data.articles || [];
+      
+      if (!Array.isArray(articles)) {
+        grid.innerHTML = '<div class="blog-empty">❌ Format invalid pentru articole. Verifică consola.</div>';
+        console.error('❌ Articles is not an array:', articles);
+        return;
+      }
       
       // Sort by date (newest first)
       articles.sort((a, b) => new Date(b.date) - new Date(a.date));
       
       if (articles.length === 0) {
         grid.innerHTML = '<div class="blog-empty">Nu există articole publicate încă.</div>';
+        console.log('⚠️ No articles found in JSON');
         return;
       }
       
-      console.log(`Displaying ${articles.length} articles`);
+      console.log(`✅ Displaying ${articles.length} articles`);
       
       const cardsHTML = articles.map((article, index) => {
         const slug = article.slug || generateSlug(article.title);
