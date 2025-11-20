@@ -810,16 +810,12 @@
       // File might not exist, that's okay
       console.warn('Could not delete blog post HTML file (may not exist):', error);
     }
-      
-      showMessage('✅ Articolul a fost șters de pe GitHub!', 'success');
-      
-      setTimeout(() => {
-        loadArticles();
-      }, 1000);
-      
-    } catch (error) {
-      throw error;
-    }
+    
+    showMessage('✅ Articolul a fost șters de pe GitHub!', 'success');
+    
+    setTimeout(() => {
+      loadArticles();
+    }, 1000);
   }
   
   // Delete article locally by slug
