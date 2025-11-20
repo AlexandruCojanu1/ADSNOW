@@ -46,30 +46,60 @@
   
   // Show/hide screens
   function showLogin() {
-    document.getElementById('login-screen').style.display = 'flex';
-    document.getElementById('admin-panel').style.display = 'none';
+    const loginScreen = document.getElementById('login-screen');
+    const adminPanel = document.getElementById('admin-panel');
+    if (loginScreen) loginScreen.style.display = 'flex';
+    if (adminPanel) adminPanel.style.display = 'none';
+    // Clear password field
+    const passwordInput = document.getElementById('admin-password');
+    if (passwordInput) passwordInput.value = '';
   }
   
   function showAdmin() {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('admin-panel').style.display = 'block';
+    const loginScreen = document.getElementById('login-screen');
+    const adminPanel = document.getElementById('admin-panel');
+    if (loginScreen) loginScreen.style.display = 'none';
+    if (adminPanel) adminPanel.style.display = 'block';
+  }
+  
+  // Reset session (for debugging)
+  function resetSession() {
+    sessionStorage.removeItem('admin_authenticated');
+    showLogin();
   }
   
   // Login handler
   function handleLogin(e) {
     e.preventDefault();
-    const password = document.getElementById('admin-password').value;
+    const passwordInput = document.getElementById('admin-password');
+    const password = passwordInput.value.trim();
     const errorDiv = document.getElementById('login-error');
     
+    // Clear any previous errors
+    errorDiv.style.display = 'none';
+    errorDiv.textContent = '';
+    
+    if (!password) {
+      errorDiv.textContent = 'Te rog introdu parola';
+      errorDiv.style.display = 'block';
+      return;
+    }
+    
+    // Debug logging (remove in production)
+    console.log('Login attempt - password length:', password.length);
+    
     if (password === ADMIN_PASSWORD) {
+      console.log('Login successful');
       setAuthenticated(true);
       showAdmin();
       loadArticles();
-      errorDiv.style.display = 'none';
-      document.getElementById('admin-password').value = '';
+      passwordInput.value = '';
     } else {
-      errorDiv.textContent = 'Parolă incorectă';
+      console.log('Login failed - password mismatch');
+      errorDiv.textContent = 'Parolă incorectă. Te rog încearcă din nou.';
       errorDiv.style.display = 'block';
+      passwordInput.value = '';
+      passwordInput.focus();
     }
   }
   
@@ -985,24 +1015,58 @@
     }
     
     // Set default date to today
-    document.getElementById('article-date').value = new Date().toISOString().split('T')[0];
+    const dateInput = document.getElementById('article-date');
+    if (dateInput) {
+      dateInput.value = new Date().toISOString().split('T')[0];
+    }
     
     // Load GitHub config into settings
     const config = getGitHubConfig();
-    if (document.getElementById('github-repo')) {
-      document.getElementById('github-repo').value = config.repo;
-      document.getElementById('github-branch').value = config.branch;
+    const repoInput = document.getElementById('github-repo');
+    const branchInput = document.getElementById('github-branch');
+    if (repoInput) repoInput.value = config.repo;
+    if (branchInput) branchInput.value = config.branch;
+    
+    // Event listeners - with null checks
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+      loginForm.addEventListener('submit', handleLogin);
     }
     
-    // Event listeners
-    document.getElementById('login-form').addEventListener('submit', handleLogin);
-    document.getElementById('logout-btn').addEventListener('click', handleLogout);
-    document.getElementById('article-form').addEventListener('submit', handleFormSubmit);
-    document.getElementById('preview-btn').addEventListener('click', showPreview);
-    document.getElementById('close-preview').addEventListener('click', closePreview);
-    document.getElementById('settings-btn').addEventListener('click', openSettings);
-    document.getElementById('close-settings').addEventListener('click', closeSettings);
-    document.getElementById('save-settings').addEventListener('click', saveSettings);
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', handleLogout);
+    }
+    
+    const articleForm = document.getElementById('article-form');
+    if (articleForm) {
+      articleForm.addEventListener('submit', handleFormSubmit);
+    }
+    
+    const previewBtn = document.getElementById('preview-btn');
+    if (previewBtn) {
+      previewBtn.addEventListener('click', showPreview);
+    }
+    
+    const closePreviewBtn = document.getElementById('close-preview');
+    if (closePreviewBtn) {
+      closePreviewBtn.addEventListener('click', closePreview);
+    }
+    
+    const settingsBtn = document.getElementById('settings-btn');
+    if (settingsBtn) {
+      settingsBtn.addEventListener('click', openSettings);
+    }
+    
+    const closeSettingsBtn = document.getElementById('close-settings');
+    if (closeSettingsBtn) {
+      closeSettingsBtn.addEventListener('click', closeSettings);
+    }
+    
+    const saveSettingsBtn = document.getElementById('save-settings');
+    if (saveSettingsBtn) {
+      saveSettingsBtn.addEventListener('click', saveSettings);
+    }
     
     // Close modals on background click
     document.getElementById('preview-modal').addEventListener('click', function(e) {
