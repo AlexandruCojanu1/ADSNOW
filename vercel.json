@@ -64,18 +64,5 @@
       "source": "/(.*)",
       "destination": "/$1"
     }
-  ],
-  "redirects": [
-    {
-      "source": "/sitemap.xml",
-      "destination": "/public/sitemap.xml",
-      "permanent": true
-    },
-    {
-      "source": "/robots.txt",
-      "destination": "/public/robots.txt",
-      "permanent": true
-    }
   ]
 }
-
