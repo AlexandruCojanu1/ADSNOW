@@ -1,13 +1,3 @@
 {
-  "articles": [
-    {
-      "title": "test",
-      "date": "2025-12-15",
-      "category": "SEO",
-      "excerpt": "test",
-      "image": null,
-      "content": "<p>testul testului</p>",
-      "slug": "test"
-    }
-  ]
+  "articles": []
 }
