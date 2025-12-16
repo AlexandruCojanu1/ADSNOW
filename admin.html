@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="css/variables.css?v=5">
     <link rel="stylesheet" href="css/base.css?v=4">
     <link rel="stylesheet" href="css/admin.css?v=1">
+    
+    <!-- CodeMirror 6 for HTML Editor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/theme/monokai.css">
   </head>
   
   <body>
@@ -150,14 +154,9 @@
               </div>
 
               <div class="form-group">
-                <label for="article-content">Conținut *</label>
-                <textarea 
-                  id="article-content" 
-                  rows="15"
-                  required
-                  placeholder="Scrie conținutul articolului aici în format text simplu.&#10;&#10;Liniile goale separă paragrafe.&#10;Liniile care încep cu - sau * devin liste.&#10;Link-urile se convertesc automat."
-                ></textarea>
-                <small>Scrie text simplu - formatarea se face automat. Liniile goale separă paragrafe. Liniile care încep cu - sau * devin liste.</small>
+                <label for="article-content">Conținut HTML *</label>
+                <div id="article-content-editor" class="code-editor-wrapper"></div>
+                <small>Scrie HTML direct aici. Folosește tag-uri HTML standard (p, h1-h6, ul, ol, li, a, img, strong, em, etc.)</small>
               </div>
 
               <div class="form-actions">
@@ -190,7 +189,14 @@
       </div>
     </div>
 
-    <script src="js/admin.js?v=3"></script>
+    <!-- CodeMirror 5 Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/xml/xml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/edit/closetag.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/edit/matchtags.js"></script>
+    
+    <script src="js/admin.js?v=4"></script>
   </body>
 </html>
 

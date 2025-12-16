@@ -271,6 +271,32 @@
   font-size: var(--font-size-xs);
 }
 
+/* Code Editor */
+.code-editor-wrapper {
+  border: 2px solid #E3EAFF;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #1e1e1e;
+  min-height: 400px;
+  margin-top: var(--spacing-xs);
+}
+
+.code-editor-wrapper .CodeMirror {
+  height: 400px;
+  font-size: 14px;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  line-height: 1.5;
+}
+
+.code-editor-wrapper .CodeMirror-focused {
+  outline: none;
+  border-color: #2E5E99;
+}
+
+.code-editor-wrapper .CodeMirror-scroll {
+  min-height: 400px;
+}
+
 /* Modal */
 .admin-modal {
   position: fixed;

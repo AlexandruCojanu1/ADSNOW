@@ -10,6 +10,9 @@
   const DEFAULT_GITHUB_REPO = 'AlexandruCojanu1/ADSNOW';
   const DEFAULT_GITHUB_BRANCH = 'main';
   
+  // CodeMirror editor instance
+  let codeEditor = null;
+  
   function getGitHubConfig() {
     // Initialize defaults if not set
     if (!localStorage.getItem('github_repo')) {
@@ -93,6 +96,8 @@
       setAuthenticated(true);
       showAdmin();
       loadArticles();
+      // Initialize editor after login
+      setTimeout(initCodeEditor, 100);
       passwordInput.value = '';
     } else {
       console.log('Login failed - password mismatch');
@@ -775,6 +780,8 @@
       // Reset form
       document.getElementById('article-form').reset();
       document.getElementById('article-date').value = new Date().toISOString().split('T')[0];
+      // Reset editor
+      setEditorValue('<p>Scrie HTML aici...</p>');
       
     } catch (error) {
       console.error('Error saving article:', error);
@@ -1025,7 +1032,8 @@
     const category = document.getElementById('article-category').value;
     const excerpt = document.getElementById('article-excerpt').value;
     const image = document.getElementById('article-image').value;
-    const content = document.getElementById('article-content').value;
+    // Get HTML content from CodeMirror editor
+    const content = codeEditor ? codeEditor.getValue().trim() : '';
     
     if (!title || !date || !content) {
       showMessage('Completează titlul, data și conținutul pentru preview', 'error');
@@ -1038,9 +1046,7 @@
       day: 'numeric' 
     });
     
-    // Convert plain text to HTML
-    const formattedContent = textToHTML(content);
-    
+    // Use HTML directly from editor (no conversion needed)
     const previewHTML = `
       <article class="blog-post">
         <header class="blog-post-header">
@@ -1051,7 +1057,7 @@
           <h1 class="blog-post-title">${escapeHTML(title)}</h1>
           ${image ? `<img src="${image.startsWith('http') ? image : '../' + image}" alt="${escapeHTML(title)}" class="blog-post-image">` : ''}
         </header>
-        <div class="blog-post-content">${formattedContent}</div>
+        <div class="blog-post-content">${content}</div>
       </article>
     `;
     
@@ -1073,23 +1079,23 @@
     const category = document.getElementById('article-category').value;
     const excerpt = document.getElementById('article-excerpt').value.trim();
     const image = document.getElementById('article-image').value.trim();
-    const content = document.getElementById('article-content').value.trim();
+    
+    // Get HTML content from CodeMirror editor
+    const content = codeEditor ? codeEditor.getValue().trim() : '';
     
     if (!title || !date || !content) {
       showMessage('Completează toate câmpurile obligatorii (Titlu, Data, Conținut)', 'error');
       return;
     }
     
-    // Convert plain text to HTML
-    const formattedContent = textToHTML(content);
-    
+    // Use HTML directly from editor (no conversion needed)
     const articleData = {
       title: title,
       date: date,
       category: category || null,
       excerpt: excerpt || null,
       image: image || null,
-      content: formattedContent
+      content: content // Already HTML, no conversion
     };
     
     saveArticle(articleData);
@@ -1141,11 +1147,51 @@
     closeSettings();
   }
   
+  // Initialize CodeMirror editor
+  function initCodeEditor() {
+    const editorContainer = document.getElementById('article-content-editor');
+    if (!editorContainer) return;
+    
+    // Wait for CodeMirror to be available
+    if (typeof CodeMirror === 'undefined') {
+      console.error('CodeMirror not loaded');
+      return;
+    }
+    
+    // Clear container first
+    editorContainer.innerHTML = '';
+    
+    codeEditor = CodeMirror(editorContainer, {
+      value: '<p>Scrie HTML aici...</p>',
+      mode: 'htmlmixed',
+      theme: 'monokai',
+      lineNumbers: true,
+      lineWrapping: true,
+      autoCloseTags: true,
+      matchTags: { bothTags: true },
+      indentUnit: 2,
+      indentWithTabs: false,
+      tabSize: 2
+    });
+    
+    // Set minimum height
+    codeEditor.setSize('100%', '400px');
+  }
+  
+  // Set editor value (helper function)
+  function setEditorValue(value) {
+    if (codeEditor) {
+      codeEditor.setValue(value || '<p>Scrie HTML aici...</p>');
+    }
+  }
+  
   function init() {
     // Check authentication
     if (isAuthenticated()) {
       showAdmin();
       loadArticles();
+      // Initialize editor when admin panel is shown
+      setTimeout(initCodeEditor, 100);
     } else {
       showLogin();
     }
