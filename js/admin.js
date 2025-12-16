@@ -779,11 +779,45 @@
       }
       
       // Update sitemap.xml with all articles (including the new one)
+      // Add delay and retry logic to ensure GitHub has propagated the changes
       try {
-        const fileData = await getGitHubFile(ARTICLES_FILE);
-        if (fileData) {
-          const allArticles = JSON.parse(fileData.content);
-          await updateSitemap(allArticles.articles || []);
+        let articlesData = null;
+        let retries = 5;
+        
+        while (retries > 0 && !articlesData) {
+          try {
+            // Wait a bit for GitHub to propagate changes
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            const fileData = await getGitHubFile(ARTICLES_FILE);
+            if (fileData) {
+              const allArticles = JSON.parse(fileData.content);
+              
+              // Verify the article we just saved is in the list
+              const articleSlug = generateSlug(articleData.title);
+              const articleExists = allArticles.articles.some(a => 
+                (a.slug || generateSlug(a.title)) === articleSlug
+              );
+              
+              if (articleExists) {
+                console.log(`✅ Verified article exists in articles.json, updating sitemap...`);
+                articlesData = allArticles;
+                await updateSitemap(allArticles.articles || []);
+              } else {
+                console.warn(`⚠️ Article not yet in articles.json, retrying... (${6 - retries}/5)`);
+                retries--;
+              }
+            } else {
+              retries--;
+            }
+          } catch (error) {
+            console.warn(`Error loading articles for sitemap (attempt ${6 - retries}/5):`, error);
+            retries--;
+          }
+        }
+        
+        if (!articlesData) {
+          console.error('❌ Could not verify article in articles.json after all retries');
         }
       } catch (error) {
         console.warn('Could not update sitemap:', error);
