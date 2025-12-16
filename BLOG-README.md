@@ -5,6 +5,8 @@
 1. **Pagina Blog** (`/blog/index.html`) - Afișează toate articolele publicate
 2. **Admin Panel** (`/admin.html`) - Interfață pentru adăugarea și gestionarea articolelor
 3. **Paginile individuale** - Generate automat pentru fiecare articol
+4. **Sitemap.xml automat** - Se actualizează automat când publici un articol nou
+5. **Google Indexing API** - Script pentru notificarea automată a Google când publici un articol
 
 ## Cum să adaugi un articol nou
 
@@ -22,16 +24,18 @@
 
 ### Pasul 3: Publică articolul
 1. Click pe "Publică articol"
-2. Fișierul `articles.json` va fi descărcat automat
-3. Înlocuiește fișierul `data/blog/articles.json` cu cel descărcat
+2. Articolul va fi salvat automat pe GitHub (dacă ai configurat GitHub Token)
+3. **Sitemap.xml se actualizează automat** cu noul articol
+4. Pagina HTML a articolului este generată automat
 
-### Pasul 4: Generează paginile HTML
-Rulează în terminal:
+### Pasul 4: Notifică Google (Opțional)
+După ce ai publicat articolul, rulează scriptul pentru Google Indexing:
+
 ```bash
-node build-blog.js
+node index-google.js https://www.adsnow.ro/blog/slug-articol
 ```
 
-Aceasta va genera paginile HTML pentru toate articolele din `articles.json`.
+**Notă:** Pentru prima utilizare, vezi `GOOGLE-INDEXING-SETUP.md` pentru configurare.
 
 ## Structura fișierelor
 
@@ -46,6 +50,8 @@ Aceasta va genera paginile HTML pentru toate articolele din `articles.json`.
 
 /admin.html               # Admin panel
 /build-blog.js            # Script pentru generarea paginilor HTML
+/index-google.js          # Script pentru Google Indexing API
+/sitemap.xml              # Sitemap generat automat
 ```
 
 ## Formatul unui articol în JSON
@@ -75,6 +81,8 @@ const ADMIN_PASSWORD = 'parola-ta-noua';
 - Slug-ul este generat automat din titlu (fără diacritice, cu cratime)
 - Pentru imagini, poți folosi URL-uri externe sau path-uri relative către `assets/images/blog/`
 - Conținutul suportă HTML complet (h2, h3, p, ul, ol, img, a, strong, em, etc.)
+- **Sitemap.xml se actualizează automat** când publici sau ștergi un articol
+- Pentru Google Indexing, vezi `GOOGLE-INDEXING-SETUP.md` pentru configurare completă
 
 ## Troubleshooting
 
