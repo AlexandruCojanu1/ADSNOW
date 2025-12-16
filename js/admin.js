@@ -779,9 +779,8 @@
       
       // Reset form
       document.getElementById('article-form').reset();
-      document.getElementById('article-date').value = new Date().toISOString().split('T')[0];
       // Reset editor
-      setEditorValue('<p>Scrie HTML aici...</p>');
+      setEditorValue('<h1>Titlul articolului</h1>\n<p>Scrie conținutul HTML aici...</p>');
       
     } catch (error) {
       console.error('Error saving article:', error);
@@ -1027,35 +1026,31 @@
   
   // Preview article
   function showPreview() {
-    const title = document.getElementById('article-title').value;
-    const date = document.getElementById('article-date').value;
-    const category = document.getElementById('article-category').value;
-    const excerpt = document.getElementById('article-excerpt').value;
-    const image = document.getElementById('article-image').value;
     // Get HTML content from CodeMirror editor
     const content = codeEditor ? codeEditor.getValue().trim() : '';
     
-    if (!title || !date || !content) {
-      showMessage('Completează titlul, data și conținutul pentru preview', 'error');
+    if (!content) {
+      showMessage('Completează conținutul HTML pentru preview', 'error');
       return;
     }
     
+    const date = new Date().toISOString().split('T')[0];
     const formattedDate = new Date(date).toLocaleDateString('ro-RO', { 
       year: 'numeric', 
       month: 'long', 
       day: 'numeric' 
     });
     
-    // Use HTML directly from editor (no conversion needed)
+    // Extract title from HTML
+    const title = extractTitleFromHTML(content);
+    
+    // Use HTML directly from editor - wrap in blog post structure
     const previewHTML = `
       <article class="blog-post">
         <header class="blog-post-header">
           <div class="blog-post-meta">
             <span class="blog-card-date">${formattedDate}</span>
-            ${category ? `<span class="blog-card-category">${category}</span>` : ''}
           </div>
-          <h1 class="blog-post-title">${escapeHTML(title)}</h1>
-          ${image ? `<img src="${image.startsWith('http') ? image : '../' + image}" alt="${escapeHTML(title)}" class="blog-post-image">` : ''}
         </header>
         <div class="blog-post-content">${content}</div>
       </article>
@@ -1070,32 +1065,56 @@
     document.getElementById('preview-modal').style.display = 'none';
   }
   
+  // Extract title from HTML (first h1 tag)
+  function extractTitleFromHTML(html) {
+    if (!html) return 'Articol fără titlu';
+    
+    // Try to find h1 tag
+    const h1Match = html.match(/<h1[^>]*>(.*?)<\/h1>/i);
+    if (h1Match && h1Match[1]) {
+      // Remove HTML tags from title and decode entities
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = h1Match[1];
+      return tempDiv.textContent || tempDiv.innerText || 'Articol fără titlu';
+    }
+    
+    // Fallback: try h2
+    const h2Match = html.match(/<h2[^>]*>(.*?)<\/h2>/i);
+    if (h2Match && h2Match[1]) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = h2Match[1];
+      return tempDiv.textContent || tempDiv.innerText || 'Articol fără titlu';
+    }
+    
+    return 'Articol fără titlu';
+  }
+  
   // Handle form submission
   function handleFormSubmit(e) {
     e.preventDefault();
     
-    const title = document.getElementById('article-title').value.trim();
-    const date = document.getElementById('article-date').value;
-    const category = document.getElementById('article-category').value;
-    const excerpt = document.getElementById('article-excerpt').value.trim();
-    const image = document.getElementById('article-image').value.trim();
-    
     // Get HTML content from CodeMirror editor
     const content = codeEditor ? codeEditor.getValue().trim() : '';
     
-    if (!title || !date || !content) {
-      showMessage('Completează toate câmpurile obligatorii (Titlu, Data, Conținut)', 'error');
+    if (!content) {
+      showMessage('Completează conținutul HTML!', 'error');
       return;
     }
     
-    // Use HTML directly from editor (no conversion needed)
+    // Extract title from HTML (first h1)
+    const title = extractTitleFromHTML(content);
+    
+    // Generate date (today)
+    const date = new Date().toISOString().split('T')[0];
+    
+    // Use HTML directly from editor
     const articleData = {
       title: title,
       date: date,
-      category: category || null,
-      excerpt: excerpt || null,
-      image: image || null,
-      content: content // Already HTML, no conversion
+      category: null,
+      excerpt: null,
+      image: null,
+      content: content // HTML content
     };
     
     saveArticle(articleData);
@@ -1150,38 +1169,56 @@
   // Initialize CodeMirror editor
   function initCodeEditor() {
     const editorContainer = document.getElementById('article-content-editor');
-    if (!editorContainer) return;
-    
-    // Wait for CodeMirror to be available
-    if (typeof CodeMirror === 'undefined') {
-      console.error('CodeMirror not loaded');
+    if (!editorContainer) {
+      console.warn('Editor container not found');
       return;
     }
     
-    // Clear container first
-    editorContainer.innerHTML = '';
+    // Wait for CodeMirror to be available with retry
+    if (typeof CodeMirror === 'undefined') {
+      console.warn('CodeMirror not loaded yet, retrying in 100ms...');
+      setTimeout(initCodeEditor, 100);
+      return;
+    }
     
-    codeEditor = CodeMirror(editorContainer, {
-      value: '<p>Scrie HTML aici...</p>',
-      mode: 'htmlmixed',
-      theme: 'monokai',
-      lineNumbers: true,
-      lineWrapping: true,
-      autoCloseTags: true,
-      matchTags: { bothTags: true },
-      indentUnit: 2,
-      indentWithTabs: false,
-      tabSize: 2
-    });
+    // Only initialize if not already initialized
+    if (codeEditor) {
+      console.log('Editor already initialized');
+      return;
+    }
     
-    // Set minimum height
-    codeEditor.setSize('100%', '400px');
+    try {
+      // Clear container first
+      editorContainer.innerHTML = '';
+      
+      codeEditor = CodeMirror(editorContainer, {
+        value: '<h1>Titlul articolului</h1>\n<p>Scrie conținutul HTML aici...</p>',
+        mode: 'htmlmixed',
+        theme: 'monokai',
+        lineNumbers: true,
+        lineWrapping: true,
+        autoCloseTags: true,
+        matchTags: { bothTags: true },
+        indentUnit: 2,
+        indentWithTabs: false,
+        tabSize: 2,
+        viewportMargin: Infinity,
+        autofocus: true
+      });
+      
+      // Set minimum height (larger for full-screen feel)
+      codeEditor.setSize('100%', '600px');
+      
+      console.log('✅ CodeMirror editor initialized successfully');
+    } catch (error) {
+      console.error('Error initializing CodeMirror:', error);
+    }
   }
   
   // Set editor value (helper function)
   function setEditorValue(value) {
     if (codeEditor) {
-      codeEditor.setValue(value || '<p>Scrie HTML aici...</p>');
+      codeEditor.setValue(value || '<h1>Titlul articolului</h1>\n<p>Scrie conținutul HTML aici...</p>');
     }
   }
   
@@ -1194,12 +1231,6 @@
       setTimeout(initCodeEditor, 100);
     } else {
       showLogin();
-    }
-    
-    // Set default date to today
-    const dateInput = document.getElementById('article-date');
-    if (dateInput) {
-      dateInput.value = new Date().toISOString().split('T')[0];
     }
     
     // Load GitHub config into settings

@@ -277,15 +277,15 @@
   border-radius: 8px;
   overflow: hidden;
   background: #1e1e1e;
-  min-height: 400px;
+  min-height: 600px;
   margin-top: var(--spacing-xs);
 }
 
 .code-editor-wrapper .CodeMirror {
-  height: 400px;
+  height: 600px;
   font-size: 14px;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .code-editor-wrapper .CodeMirror-focused {
@@ -294,7 +294,7 @@
 }
 
 .code-editor-wrapper .CodeMirror-scroll {
-  min-height: 400px;
+  min-height: 600px;
 }
 
 /* Modal */

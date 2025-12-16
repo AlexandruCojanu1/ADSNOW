@@ -99,64 +99,12 @@
 
         <div class="admin-content">
           <div class="admin-form-section">
-            <h2>Adaugă articol nou</h2>
+            <h2>Editor Blog HTML</h2>
             <form id="article-form">
               <div class="form-group">
-                <label for="article-title">Titlu *</label>
-                <input 
-                  type="text" 
-                  id="article-title" 
-                  required
-                  placeholder="Titlul articolului"
-                >
-              </div>
-
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="article-date">Data *</label>
-                  <input 
-                    type="date" 
-                    id="article-date" 
-                    required
-                  >
-                </div>
-
-                <div class="form-group">
-                  <label for="article-category">Categorie</label>
-                  <select id="article-category">
-                    <option value="">Selectează categoria</option>
-                    <option value="Marketing Digital">Marketing Digital</option>
-                    <option value="Web Design">Web Design</option>
-                    <option value="SEO">SEO</option>
-                    <option value="Branding">Branding</option>
-                    <option value="Strategie">Strategie</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="article-excerpt">Rezumat (excerpt)</label>
-                <textarea 
-                  id="article-excerpt" 
-                  rows="3"
-                  placeholder="Scurt rezumat al articolului (opțional)"
-                ></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="article-image">Imagine (URL sau path)</label>
-                <input 
-                  type="text" 
-                  id="article-image" 
-                  placeholder="assets/images/blog/imagine.jpg sau URL complet"
-                >
-                <small>Poți folosi un URL sau o cale relativă către o imagine din assets/images/blog/</small>
-              </div>
-
-              <div class="form-group">
-                <label for="article-content">Conținut HTML *</label>
+                <label for="article-content">Scrie HTML aici *</label>
                 <div id="article-content-editor" class="code-editor-wrapper"></div>
-                <small>Scrie HTML direct aici. Folosește tag-uri HTML standard (p, h1-h6, ul, ol, li, a, img, strong, em, etc.)</small>
+                <small>Scrie HTML complet pentru articol. Titlul va fi extras automat din primul tag &lt;h1&gt;.</small>
               </div>
 
               <div class="form-actions">
