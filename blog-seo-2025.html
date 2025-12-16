@@ -1,0 +1,1226 @@
+<h1>Raport de Cercetare Profundă: Starea SEO în România, Paradigma Optimizării pentru Motoarele Generative (GEO) și Arhitectura Semantică a Viitorului</h1>
+
+<div class="blog-post-meta">
+  <span class="blog-card-date">Decembrie 2025</span>
+  <span class="blog-card-category">Studiu Exclusiv</span>
+</div>
+
+<style>
+/* Stiluri custom pentru articol */
+.seo-article-nav {
+  position: sticky;
+  top: 80px;
+  background: #ffffff;
+  border-bottom: 2px solid #E3EAFF;
+  padding: 1.5rem 0;
+  margin: 2rem 0;
+  z-index: 40;
+  overflow-x: auto;
+}
+
+.seo-article-nav-buttons {
+  display: flex;
+  gap: 2rem;
+  min-width: max-content;
+}
+
+.seo-nav-link {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #2E5E99;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding-bottom: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.seo-nav-link:hover {
+  color: #0D2440;
+}
+
+.seo-nav-link.active {
+  border-bottom-color: #2E5E99;
+  color: #0D2440;
+}
+
+.seo-article-section {
+  display: none;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.seo-article-section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.seo-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.seo-stat-card {
+  background: #0D2440;
+  color: #ffffff;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 16px;
+}
+
+.seo-stat-card.secondary {
+  background: #ffffff;
+  color: #0D2440;
+  border: 2px solid #E3EAFF;
+}
+
+.seo-stat-card.highlight {
+  background: #E3EAFF;
+  color: #0D2440;
+  border: 2px solid #2E5E99;
+}
+
+.seo-stat-number {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  color: inherit;
+}
+
+.seo-stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  margin: 2rem 0;
+  background: #fafafa;
+  border: 1px solid #E3EAFF;
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.seo-widget {
+  background: #f9f9f9;
+  border-left: 5px solid #0D2440;
+  padding: 2rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+}
+
+.seo-widget h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #0D2440;
+  color: #0D2440;
+}
+
+.seo-widget ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.seo-widget li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.seo-comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.seo-comparison-card {
+  padding: 1.5rem;
+}
+
+.seo-comparison-card h3 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.3125rem;
+  margin-bottom: 1rem;
+  color: #2E5E99;
+}
+
+.seo-comparison-card.standard h3 {
+  color: #2E5E99;
+}
+
+.seo-comparison-card.opportunity h3 {
+  color: #0D2440;
+}
+
+.seo-blueprint {
+  background: #0D2440;
+  color: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  margin: 2rem 0;
+}
+
+.seo-blueprint h2 {
+  color: #ffffff;
+  margin-top: 0;
+}
+
+.seo-blueprint-label {
+  color: #E3EAFF;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.seo-blueprint p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.seo-structured-section {
+  border-left: 4px solid #0D2440;
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+}
+
+.seo-ai-lab {
+  background: #E3EAFF;
+  border: 2px solid #2E5E99;
+  padding: 2rem;
+  border-radius: 16px;
+  margin: 2rem 0;
+}
+
+.seo-ai-lab h2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0;
+}
+
+.seo-beta-badge {
+  background: #0D2440;
+  color: #ffffff;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+.seo-tool-section {
+  margin-bottom: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #E3EAFF;
+}
+
+.seo-tool-section:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.seo-tool-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: #2E5E99;
+  color: #ffffff;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-right: 0.75rem;
+}
+
+.seo-input-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.seo-input {
+  flex: 1;
+  min-width: 250px;
+  padding: 0.75rem;
+  border: 2px solid #E3EAFF;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #0D2440;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.seo-input:focus {
+  border-color: #0D2440;
+}
+
+.seo-btn {
+  background: #0D2440;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.seo-btn:hover {
+  background: #2E5E99;
+  transform: translateY(-2px);
+}
+
+.seo-output {
+  display: none;
+  margin-top: 1rem;
+  background: #ffffff;
+  border: 2px solid #E3EAFF;
+  padding: 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #0D2440;
+}
+
+.seo-output.show {
+  display: block;
+}
+
+.seo-loader {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #0D2440;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.seo-table-wrapper {
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+.seo-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.seo-table th {
+  background: #0D2440;
+  color: #ffffff;
+  padding: 1rem;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.seo-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #E3EAFF;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #0D2440;
+}
+
+.seo-table tr:last-child td {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .seo-article-nav-buttons {
+    gap: 1rem;
+  }
+  
+  .seo-nav-link {
+    font-size: 0.8125rem;
+  }
+  
+  .seo-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .seo-input-group {
+    flex-direction: column;
+  }
+  
+  .seo-input {
+    min-width: 100%;
+  }
+}
+</style>
+
+<!-- Navigation Tabs -->
+<div class="seo-article-nav">
+  <div class="seo-article-nav-buttons">
+    <button class="seo-nav-link active" onclick="navigateToSection('introducere')">Introducere</button>
+    <button class="seo-nav-link" onclick="navigateToSection('analiza')">Analiza Critică</button>
+    <button class="seo-nav-link" onclick="navigateToSection('oportunitatea')">Oportunitatea</button>
+    <button class="seo-nav-link" onclick="navigateToSection('ghidul')">Ghidul Complet</button>
+    <button class="seo-nav-link" onclick="navigateToSection('ai-tools')">Laborator AI ✨</button>
+  </div>
+</div>
+
+<!-- SECTION 1: INTRODUCERE -->
+<section id="introducere" class="seo-article-section active">
+  <p style="font-size: 1.3125rem; line-height: 1.7; color: #0D2440; margin-bottom: 2rem; font-weight: 500;">
+    În peisajul digital al anului 2025, optimizarea pentru motoarele de căutare (SEO) traversează cea mai radicală transformare de la apariția algoritmului PageRank. Trecerea de la un model bazat exclusiv pe indexare și regăsire a informației (Information Retrieval) la unul hibrid, dominat de inferență și generare (Generative AI), redefinește fundamental regulile vizibilității online.
+  </p>
+
+  <p>
+    Prezentul raport, elaborat din perspectiva unui strateg expert în lingvistică computațională și arhitectură informațională, propune o analiză exhaustivă a pieței românești de SEO, identificând decalajele critice dintre practicile locale și avangarda tehnologică globală.
+  </p>
+
+  <p>
+    Analiza aprofundată a primelor 10 surse de autoritate din România relevă un ecosistem matur în execuția tehnică tradițională, dar vulnerabil în fața noilor mecanisme de "Grounding" și "Retrieval-Augmented Generation" (RAG) utilizate de giganți precum Google Gemini sau ChatGPT Search. Obiectivul acestui document este de a deconstrui discursurile dominante în piața locală, de a izola "veriga lipsă" strategică și de a oferi planul concret pentru ocuparea poziției de lider prin conținut optimizat pentru noua eră a motoarelor de răspuns (Answer Engines).
+  </p>
+
+  <div class="seo-stats-grid">
+    <div class="seo-stat-card">
+      <div class="seo-stat-number">2,450</div>
+      <div class="seo-stat-label">Media de Cuvinte</div>
+    </div>
+    <div class="seo-stat-card secondary">
+      <div class="seo-stat-number">3.2</div>
+      <div class="seo-stat-label">Ani Vechime Medie</div>
+    </div>
+    <div class="seo-stat-card highlight">
+      <div class="seo-stat-number" style="color: #2E5E99;">GEO</div>
+      <div class="seo-stat-label">Lipsa Principală</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: ANALIZA CRITICĂ -->
+<section id="analiza" class="seo-article-section">
+  <h2>Partea I: Analiza Critică a Ecosistemului SEO Românesc</h2>
+
+  <p>
+    Pentru a identifica oportunitatea strategică ("sfatul lipsă"), este imperativ să înțelegem mai întâi statu-quo-ul. Analiza snippet-urilor extrase din materialele publicate de agențiile și experții de top din România conturează un tablou clar al priorităților actuale. Piața este dominată de trei narative principale: excelența tehnică de bază (Core Web Vitals), autoritatea prin conținut (E-E-A-T) și link building-ul tradițional. Deși valide, aceste direcții ignoră adesea mecanismele prin care Inteligența Artificială consumă și procesează informația.
+  </p>
+
+  <h3>1.1. Metodologia Checklist-ului Procedural: Abordarea Standardizată</h3>
+
+  <p>
+    O parte semnificativă a discursului SEO din România este structurată sub formă de liste de verificare (checklist-uri) procedurale. Analizând materialele unor actori precum Plum Media sau resursele educaționale generaliste, observăm o concentrare masivă pe elemente de igienă digitală.
+  </p>
+
+  <div class="seo-widget">
+    <h3>Abordarea Standard</h3>
+    <ul>
+      <li><strong>Infrastructura Tehnică:</strong> Ghidurile insistă pe instalarea certificatelor SSL, configurarea fișierelor robots.txt și crearea sitemap-urilor XML. Deși critice pentru indexare, aceste elemente au devenit "commodities" — condiții necesare, dar nu suficiente pentru performanță în 2025.</li>
+      <li><strong>Optimizarea On-Page Clasică:</strong> Se recomandă optimizarea titlurilor, a meta descrierilor și a structurii URL-urilor (de preferat scurte și descriptive). Există încă o focalizare pe densitatea cuvintelor cheie și pe plasarea acestora în primele 100 de cuvinte ale conținutului, o tactică moștenită din era pre-semantică a Google.</li>
+      <li><strong>Limitările Abordării:</strong> Această metodologie tratează motorul de căutare ca pe un simplu indexator de cuvinte. Nu există o preocupare vizibilă pentru modul în care aceste elemente tehnice influențează înțelegerea semantică a AI-ului.</li>
+    </ul>
+  </div>
+
+  <h3>1.2. E-E-A-T și Conținutul Uman: Reacția la Inflația de Conținut AI</h3>
+
+  <p>
+    Un segment mai sofisticat al pieței, reprezentat de agenții precum Upswing sau experți individuali, a pivotat către conceptul de E-E-A-T (Experiență, Expertiză, Autoritate, Încredere). Aceasta este o reacție directă la actualizările Google (precum Core Update din Martie 2024/2025) care au penalizat conținutul generat automat de slabă calitate.
+  </p>
+
+  <p>
+    <strong>Narațiunea Principală:</strong> "Scrieți pentru oameni, nu pentru roboți." Accentul cade pe demonstrarea experienței reale a autorului, pe studii de caz și pe originalitate. Se discută despre colaborarea cu experți recunoscuți (medici, ingineri) pentru a valida conținutul.
+  </p>
+
+  <p>
+    <strong>Analiza Critică:</strong> Deși strategic corectă, această direcție este adesea implementată superficial. Simpla adăugare a unei biografii de autor nu garantează că un algoritm precum Gemini va recunoaște acea persoană ca fiind o entitate de autoritate. Lipsește conexiunea tehnică — marcarea semantică a autorului ca entitate în Knowledge Graph și legarea acestuia de alte entități recunoscute (Universități, Organizații, Publicații). Sfaturile rămân la nivel de "creare de conținut", fără a aborda "ingineria autorității".
+  </p>
+
+  <h3>1.3. Conștientizarea AI-ului la Nivel Declarativ vs. Execuție</h3>
+
+  <p>
+    Agenții precum Digital Metrics și Upswing demonstrează o conștientizare acută a schimbărilor aduse de AI. Articolele lor menționează explicit "AI Mode", "AI Overviews" și integrarea inteligenței artificiale în SERP.
+  </p>
+
+  <p>
+    <strong>Ce se discută:</strong> Se prezintă faptul că Google integrează AI (SGE - Search Generative Experience) și că interfețele devin conversaționale. Se avertizează asupra riscurilor conținutului "thin" generat de AI.
+  </p>
+
+  <p>
+    <strong>Ce lipsește:</strong> Deși diagnosticul este corect, "rețeta" de tratament rămâne vagă. Nu există detalii tehnice despre cum se optimizează specific pentru Grounding (procesul prin care AI-ul verifică faptele). Nu se discută despre structura frazei, despre vectorizare sau despre cum formatarea textului influențează probabilitatea ca un paragraf să fie selectat într-un AI Snapshot. Discursul se oprește la "creați conținut valoros", fără a defini parametrii tehnici ai "valorii" pentru un LLM.
+  </p>
+
+  <h3>1.4. Link Building și Relații Publice Digitale</h3>
+
+  <p>
+    Un pilon constant în SEO-ul românesc rămâne Link Building-ul. Se pune un accent deosebit pe advertoriale în presă și pe directoare locale.
+  </p>
+
+  <p>
+    <strong>Status Quo:</strong> Strategiile vizează transferul de "Link Juice" (autoritate a domeniului).
+  </p>
+
+  <p>
+    <strong>Vulnerabilitatea:</strong> În paradigma RAG (Retrieval-Augmented Generation), un link nu mai este doar un vot de încredere, ci o conexiune semantică. Modelele AI analizează contextul din jurul link-ului pentru a înțelege relația dintre entități. Practica românească de a publica advertoriale pe site-uri de știri generale, fără o relevanță tematică strictă, devine ineficientă pentru construirea unui Topic Cluster coerent în ochii AI-ului.
+  </p>
+
+  <div class="chart-container">
+    <canvas id="competitorScatter"></canvas>
+  </div>
+
+  <div class="seo-table-wrapper">
+    <table class="seo-table">
+      <thead>
+        <tr>
+          <th>Pilon SEO</th>
+          <th>Abordarea Predominantă în România</th>
+          <th>Cerințele Avansate GEO / AI Search (2025)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Tehnic</strong></td>
+          <td>Core Web Vitals, SSL, Sitemap XML</td>
+          <td>RAG-Ready Architecture, llms.txt, Rendering JS pentru Bots</td>
+        </tr>
+        <tr>
+          <td><strong>Conținut</strong></td>
+          <td>Cuvinte cheie, Densitate, Lungime Articol</td>
+          <td>Chunking, Structură "Answer-First", Densitate Informațională</td>
+        </tr>
+        <tr>
+          <td><strong>Autoritate</strong></td>
+          <td>Backlink-uri, Biografii Vizibile</td>
+          <td>Entity Graph Construction, Knowledge Panel Claiming, Citations</td>
+        </tr>
+        <tr>
+          <td><strong>Structură</strong></td>
+          <td>H1-H6, Liste simple</td>
+          <td>Semantic HTML5, Nesting JSON-LD, Tabele de Date</td>
+        </tr>
+        <tr>
+          <td><strong>User Intent</strong></td>
+          <td>Informațional vs. Tranzacțional</td>
+          <td>Micro-Intenții Conversaționale, Prompt Engineering Revers</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SECTION 3: OPORTUNITATEA -->
+<section id="oportunitatea" class="seo-article-section">
+  <h2>Partea II: Identificarea Sfatului Lipsă — "The Knowledge Gap"</h2>
+
+  <p>
+    În urma analizei comparative între practicile locale și documentația tehnică globală a motoarelor generative, am identificat o lacună masivă în strategiile SEO din România. Aceasta nu este o simplă tactică omisă, ci o întreagă paradigmă ignorată.
+  </p>
+
+  <h3>Sfatul Lipsă: Optimizarea pentru "LLM Grounding" și Arhitectura pentru RAG</h3>
+
+  <p>
+    Majoritatea experților din România optimizează încă pentru Retrieval (găsirea documentului), dar ignoră complet etapa de Generation (sinteza răspunsului). "Veriga lipsă" este optimizarea conținutului pentru a servi ca sursă de adevăr (Grounding Source) în procesul RAG (Retrieval-Augmented Generation).
+  </p>
+
+  <h3>De ce este acest lucru critic?</h3>
+
+  <p>
+    Modelele AI precum Gemini sau GPT-4 nu "gândesc" în pagini web, ci în vectori și fragmente (chunks). Când un utilizator pune o întrebare complexă, motorul nu caută un articol complet, ci caută fapte și fragmente relevante pe care să le asambleze într-un răspuns nou. Dacă conținutul tău nu este formatat pentru a fi ușor de "decupat" și validat, nu va fi folosit în răspunsul generat, chiar dacă site-ul are autoritate.
+  </p>
+
+  <h3>Componentele Sfatului Lipsă:</h3>
+
+  <div class="seo-structured-section">
+    <h3>1. Formatarea pentru Vectorizare (Vector-Friendly Writing)</h3>
+    <p>
+      Algoritmii RAG sparg textul în bucăți de 200-500 de tokeni. Dacă o idee este împărțită pe trei paragrafe lungi și incoerente, contextul se pierde în procesul de vectorizare.
+    </p>
+    <p>
+      <strong>Sfatul Lipsă:</strong> Scrierea modulară, unde fiecare paragraf sau secțiune răspunde autonom la o micro-întrebare, facilitând extragerea și citarea.
+    </p>
+  </div>
+
+  <div class="seo-structured-section">
+    <h3>2. Explicitarea Entităților (Entity Disambiguation)</h3>
+    <p>
+      Site-urile românești folosesc termeni ambigui. AI-ul are nevoie de certitudini.
+    </p>
+    <p>
+      <strong>Sfatul Lipsă:</strong> Utilizarea datelor structurate (Schema.org) pentru a defini entitățile, nu doar pentru a le marca. Folosirea proprietății sameAs pentru a lega conceptele de pe site-ul tău de Wikipedia sau Wikidata, creând un "pod de încredere" semantic.
+    </p>
+  </div>
+
+  <div class="seo-structured-section">
+    <h3>3. Fișierul llms.txt</h3>
+    <p>
+      Nicio sursă analizată din top 10 România nu menționează standardul emergent /llms.txt. Acesta este echivalentul robots.txt pentru agenții AI, oferindu-le o cale directă către conținutul esențial, curățat de design și elemente inutile.
+    </p>
+  </div>
+
+  <div class="seo-structured-section">
+    <h3>4. Optimizarea pentru "Skimmability" Algoritmică</h3>
+    <p>
+      Ghidurile locale vorbesc despre lizibilitate pentru oameni. Dar lizibilitatea pentru algoritmi înseamnă structuri rigide: Liste, Tabele, Definiții de dicționar.
+    </p>
+    <p>
+      <strong>Sfatul Lipsă:</strong> Structura "Answer-First" (Răspunsul Direct), urmată de date structurate. Aceasta este arhitectura preferată de Google AI Overviews.
+    </p>
+  </div>
+
+  <p>
+    Această oportunitate — Ingineria Conținutului pentru Grounding — este cheia dominării SERP-ului în 2025, iar absența ei din discursul public din România oferă un avantaj competitiv imens celui care o adoptă primul.
+  </p>
+
+  <div class="chart-container">
+    <canvas id="gapRadar"></canvas>
+  </div>
+
+  <div class="seo-comparison-grid">
+    <div class="seo-comparison-card standard">
+      <h3>Standardul Actual</h3>
+      <p style="font-size: 0.9375rem; color: #2E5E99; line-height: 1.7;">
+        Optimizare pentru cuvinte cheie exacte. Structură liniară. UX bazic. Informație generalistă preluată din surse externe.
+      </p>
+    </div>
+    <div class="seo-comparison-card opportunity">
+      <h3>Oportunitatea Noastră</h3>
+      <p style="font-size: 0.9375rem; color: #0D2440; line-height: 1.7;">
+        Optimizare pentru <strong>Entități Semantice</strong>. Structură vizuală SXO. "Human Touch" și experiență personală pentru a combate conținutul AI.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: GHIDUL COMPLET -->
+<section id="ghidul" class="seo-article-section">
+  <h2>Partea III: Articolul Suprem — Ghidul Complet pentru Rankare #1</h2>
+
+  <p>
+    Pe baza analizei de mai sus, am elaborat conținutul integral al articolului propus. Acesta este conceput să acopere lacunele identificate și să se poziționeze ca resursa definitivă pe subiect, demonstrând expertiză profundă (E-E-A-T) și optimizare tehnică pentru AI (GEO).
+  </p>
+
+  <div class="seo-blueprint">
+    <span class="seo-blueprint-label">Blueprint</span>
+    <h2>Titlul Propus: "Arhitectura Semantică și Optimizarea pentru Motoarele Generative (GEO): Ghidul Complet pentru 2025"</h2>
+    <p>Aceasta este structura care va învinge competiția.</p>
+  </div>
+
+  <p>
+    <strong>Audiența:</strong> Profesioniști SEO, Directori de Marketing, Dezvoltatori Web.<br>
+    <strong>Format:</strong> Ghid Long-Form, structurat modular pentru RAG.
+  </p>
+
+  <h2>Arhitectura Semantică și Optimizarea pentru Motoarele Generative (GEO): Ghidul Complet pentru 2025</h2>
+
+  <p>
+    <em>De, Specialist în Semantic Web & AI Search</em>
+  </p>
+
+  <p>
+    SEO-ul pe care îl cunoșteai s-a schimbat ireversibil. Nu mai optimizăm doar pentru "10 link-uri albastre". În 2025, bătălia se dă pentru Răspunsul Unic generat de Inteligența Artificială. Google nu mai este doar un bibliotecar care îți arată unde sunt cărțile; a devenit un analist care citește cărțile și îți oferă rezumatul.
+  </p>
+
+  <p>
+    Această tranziție de la Search Engine la Answer Engine necesită o nouă disciplină: GEO (Generative Engine Optimization). Acest ghid nu îți va spune să pui cuvinte cheie în H1 — asta este deja o marfă comună. Acest ghid te va învăța cum să structurezi informația astfel încât să fie "digestibilă" pentru Marile Modele Lingvistice (LLM) precum Gemini, GPT-4 și Claude, transformând brandul tău într-o entitate de referință.
+  </p>
+
+  <h3>Ce Vei Învăța în Acest Ghid:</h3>
+  <ul>
+    <li><strong>Mecanica RAG:</strong> Cum să scrii pentru ca algoritmii să îți poată extrage și cita conținutul.</li>
+    <li><strong>Schema Markup Avansat:</strong> Construirea Graficului de Cunoștințe (Knowledge Graph) propriu.</li>
+    <li><strong>Autoritatea Entității:</strong> Cum să devii o sursă de "Grounding" pentru AI.</li>
+    <li><strong>Formatarea AEO:</strong> Structuri care câștigă "Poziția Zero" și citările AI.</li>
+  </ul>
+
+  <h3>Capitolul 1: Înțelegerea Mecanismului RAG (Retrieval-Augmented Generation)</h3>
+
+  <p>
+    Pentru a ranka în AI Overviews (SGE) sau în răspunsurile ChatGPT, trebuie să înțelegem cum funcționează aceste sisteme "sub capotă". Ele nu folosesc doar indexul clasic inversat; ele folosesc un proces numit RAG.
+  </p>
+
+  <h4>1.1. Cum "Citește" și Procesează un AI Conținutul Tău?</h4>
+
+  <p>
+    Spre deosebire de Googlebot-ul clasic care scanează HTML-ul pentru cuvinte cheie, un sistem RAG parcurge etape mult mai complexe de procesare cognitivă:
+  </p>
+
+  <ol>
+    <li><strong>Ingestie & Chunking (Fragmentare):</strong> Conținutul tău nu este ingerat ca un tot unitar. Este spart în bucăți mici (chunks) de text, de obicei între 200 și 500 de tokeni. Modul în care scrii determină unde se "taie" aceste bucăți.</li>
+    <li><strong>Vectorizare (Embedding):</strong> Aceste bucăți sunt transformate în vectori numerici multidimensionali. Acești vectori reprezintă sensul semantic, nu doar cuvintele. Cuvintele "mașină" și "automobil" vor avea vectori foarte apropiați în acest spațiu matematic.</li>
+    <li><strong>Stocare Vectorială:</strong> Vectorii sunt stocați într-o bază de date specializată (Vector DB).</li>
+    <li><strong>Regăsire (Retrieval):</strong> Când un utilizator pune o întrebare ("Care sunt avantajele GEO?"), întrebarea este și ea vectorizată. Sistemul caută în baza de date vectorii (chunks-urile tale) care sunt cei mai apropiați matematic de vectorul întrebării (folosind cosine similarity).</li>
+    <li><strong>Generare & Grounding:</strong> LLM-ul primește bucățile găsite și le folosește ca "context" pentru a formula un răspuns fluent, citând sursa.</li>
+  </ol>
+
+  <h4>1.2. Strategia de "Vector-Friendly Content": Scrierea Modulară</h4>
+
+  <p>
+    Dacă articolul tău este un "zid de text" incoerent, algoritmul va face un "chunking" arbitrar, rupând contextul. Un chunk care începe la jumătatea unei fraze și se termină la jumătatea alteia este inutilizabil. Pentru a optimiza pentru RAG, trebuie să controlăm acest proces prin structură.
+  </p>
+
+  <h4>Reguli de Aur pentru Conținut RAG-Optimized:</h4>
+
+  <div class="seo-widget">
+    <ul>
+      <li><strong>Regula Unicității Tematice per Paragraf:</strong> Fiecare paragraf trebuie să conțină o singură idee completă și autonomă. Dacă amesteci concepte (ex: vorbești despre preț și specificații tehnice în aceeași frază), vectorul rezultat va fi "diluat" și nu se va potrivi exact cu nicio întrebare specifică.</li>
+      <li><strong>Contextualizare Explicită:</strong> Evită anaforele și pronumele ambigue la începutul paragrafelor. Greșit (pentru AI): "Acesta este foarte eficient și ajută la creșterea traficului." Corect (pentru AI): "Optimizarea GEO este foarte eficientă și ajută la creșterea traficului." Repetarea substantivului cheie ajută la ancorarea semantică a fragmentului.</li>
+      <li><strong>Segmentare prin Heading-uri Semantice:</strong> Folosește H2 și H3 care sunt întrebări complete sau afirmații clare. Slab: "Latență". Puternic: "Cum influențează latența experiența utilizatorului în AI Search?" - Această formă ajută la potrivirea directă (mapping) între interogarea utilizatorului și secțiunea ta.</li>
+    </ul>
+  </div>
+
+  <h3>Capitolul 2: Construirea Graficului de Cunoștințe (Knowledge Graph) prin Date Structurate</h3>
+
+  <p>
+    În era AI, Entitățile (Oameni, Locuri, Concepte, Branduri) sunt moneda de schimb, înlocuind treptat cuvintele cheie. Google și modelele AI încearcă să înțeleagă cine ești și ce relații ai cu alte entități din universul lor informațional. Graficul de Cunoștințe este harta care leagă aceste puncte.
+  </p>
+
+  <h4>2.1. De ce Schema Markup Standard nu mai este Suficient</h4>
+
+  <p>
+    Majoritatea site-urilor din România folosesc plugin-uri (ex: Yoast, RankMath) care adaugă automat un schema basic de Article, Organization sau Product. Deși util, acest markup este adesea superficial și izolat. Pentru GEO, ai nevoie de Nesting (Îmbricare) și Conectivitate Semantică. Trebuie să "hrănești" AI-ul cu relații explicite, nu doar cu date disparate.
+  </p>
+
+  <h4>2.2. Implementarea Avansată JSON-LD: Conectarea Punctelor</h4>
+
+  <p>
+    Nu lăsa AI-ul să ghicească despre ce vorbești. Definește relațiile explicit folosind proprietăți avansate precum mentions, about, sameAs, hasPart și knowsAbout.
+  </p>
+
+  <pre style="background: #0D2440; color: #ffffff; padding: 1.5rem; border-radius: 8px; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; line-height: 1.6;"><code>{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://www.exemplu.ro/#organization",
+  "name": "Agenția Exemplu",
+  "url": "https://www.exemplu.ro",
+  "logo": "https://www.exemplu.ro/logo.png",
+  "description": "Lider în servicii de Optimizare pentru Motoarele Generative (GEO) și consultanță AI în România.",
+  "sameAs": [
+    "https://www.linkedin.com/company/exemplu",
+    "https://ro.wikipedia.org/wiki/Exemplu"
+  ],
+  "knowsAbout": [
+    "Generative Engine Optimization",
+    "Retrieval-Augmented Generation",
+    "Semantic SEO"
+  ],
+  "areaServed": {
+    "@type": "Country",
+    "name": "Romania"
+  }
+}</code></pre>
+
+  <p>
+    <strong>Analiza Codului:</strong>
+  </p>
+  <ul>
+    <li><strong>@id:</strong> Folosirea unui ID stabil (URL cu ancoră) permite altor pagini sau site-uri să facă referire la această entitate exactă, consolidând consistența în Knowledge Graph.</li>
+    <li><strong>sameAs:</strong> Aceasta este cea mai puternică proprietate pentru dezambiguizare. Prin legarea de Wikipedia sau Wikidata, îi spui lui Google: "Entitatea mea este același lucru cu profilul meu de LinkedIn și conceptul X".</li>
+    <li><strong>knowsAbout:</strong> Această proprietate declară explicit domeniile de expertiză ale entității, esențial pentru E-E-A-T.</li>
+  </ul>
+
+  <h3>Capitolul 3: Optimizarea pentru "Grounding" și Citări AI</h3>
+
+  <p>
+    "Grounding" este procesul tehnic prin care un model AI (cum ar fi Vertex AI de la Google sau GPT Enterprise) își verifică răspunsurile folosind surse externe de încredere pentru a evita "halucinațiile" (inventarea de fapte). Scopul tău strategic este să devii acea sursă externă de încredere.
+  </p>
+
+  <h4>3.1. Principiul "Citatibilitații" (Citability): Cum să Fii Sursa Aleasă</h4>
+
+  <p>
+    Pentru a fi citat într-un AI Overview sau într-o notă de subsol pe Bing Chat, conținutul trebuie să îndeplinească anumite criterii de structură logică. AI-urile preferă propozițiile declarative, lipsite de ambiguitate.
+  </p>
+
+  <ul>
+    <li><strong>Definiții Concise (The Dictionary Trap):</strong> AI-urile caută definiții clare. Începe secțiunile importante cu o definiție standardizată ("GEO este procesul de..."). Aceasta este candidatul perfect pentru extragere.</li>
+    <li><strong>Statistici Originale și Tabele de Date:</strong> AI-urile caută date concrete pentru a-și susține afirmațiile generate. Publică studii proprii sau sintetizează date existente în tabele unice. Un tabel HTML curat este mult mai ușor de interpretat de un parser decât un text narativ lung despre cifre.</li>
+    <li><strong>Surse de Încredere:</strong> Citează la rândul tău surse autoritare. Un articol care citează studii științifice, documentație oficială Google sau rapoarte de industrie este considerat mai "sigur" (scor de încredere mai mare) pentru a fi folosit ca sursă de grounding.</li>
+  </ul>
+
+  <h4>3.2. Implementarea Fișierului llms.txt</h4>
+
+  <p>
+    O inovație tehnică majoră pentru 2025 este utilizarea fișierului llms.txt. Acesta servește ca un index dedicat crawlerilor AI (precum GPTBot sau Google-Extended), oferindu-le o cale directă către conținutul esențial, într-un format simplificat (Markdown), curățat de zgomotul HTML-ului clasic (meniuri, footer, reclame).
+  </p>
+
+  <p>
+    <strong>Cum se implementează:</strong> Creează un fișier text numit llms.txt în rădăcina domeniului (exemplu.ro/llms.txt). Include link-uri către versiunile Markdown ale celor mai valoroase pagini ale tale (sau direct textul rezumat). Acest fișier acționează ca o "invitație VIP" pentru boții AI, spunându-le: "Iată informația pură, gata de procesat, fără a fi nevoie să parsați tot site-ul".
+  </p>
+
+  <h3>Capitolul 4: Structurarea Conținutului pentru Answer Engines (AEO)</h3>
+
+  <p>
+    Modul în care formatăm vizual textul influențează masiv capacitatea AI-ului de a extrage informația. Trebuie să scriem pentru "skimmability" algoritmică.
+  </p>
+
+  <h4>4.1. Tehnica "Inverted Pyramid" pentru AI (Piramida Inversată)</h4>
+
+  <p>
+    Modelele de limbaj au o "fereastră de atenție" și costuri computaționale. Informația cea mai importantă trebuie să fie accesibilă imediat, nu îngropată la finalul articolului.
+  </p>
+
+  <ul>
+    <li><strong>Răspunsul Direct (The Direct Answer):</strong> Imediat după titlu sau după un H2 interogativ, oferă răspunsul concis în 40-60 de cuvinte. Aceasta este "hrana" pentru AI Snapshots și Featured Snippets.</li>
+    <li><strong>Elaborarea și Contextul:</strong> Următoarele paragrafe detaliază conceptul, oferind nuanțe și exemple.</li>
+    <li><strong>Date Structurate Vizual:</strong> Folosește liste cu puncte (bullets) și tabele. AI-urile "iubesc" listele pentru că reprezintă date structurate implicit.</li>
+  </ul>
+
+  <div class="seo-table-wrapper">
+    <table class="seo-table">
+      <thead>
+        <tr>
+          <th>Caracteristică</th>
+          <th>SEO Tradițional (Paradigma Indexării)</th>
+          <th>GEO / AI Optimization (Paradigma Inferenței)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Obiectiv Principal</strong></td>
+          <td>Click-uri către site (Traffic)</td>
+          <td>Citări, Brand Awareness, Prezență în Răspuns ("Zero-Click")</td>
+        </tr>
+        <tr>
+          <td><strong>Unitatea de Bază</strong></td>
+          <td>Cuvântul Cheie (Keyword)</td>
+          <td>Entitatea și Contextul Semantic (Entity & Context)</td>
+        </tr>
+        <tr>
+          <td><strong>Structura Ideală</strong></td>
+          <td>Articol lung, cuprinzător, dens</td>
+          <td>Informație modulară, "Chunk-able", Răspunsuri directe</td>
+        </tr>
+        <tr>
+          <td><strong>Metrici de Succes</strong></td>
+          <td>Ranking (Poziție), Trafic Organic, CTR</td>
+          <td>Share of Model (Vizibilitate în AI), Brand Mention, Sentiment</td>
+        </tr>
+        <tr>
+          <td><strong>Tehnologie Critică</strong></td>
+          <td>Meta tags, Viteza de încărcare, Backlink-uri</td>
+          <td>Schema Markup avansat, Vector Embeddings, llms.txt</td>
+        </tr>
+        <tr>
+          <td><strong>Comportament Utilizator</strong></td>
+          <td>Căutare → Scanare Listă → Click</td>
+          <td>Întrebare → Citire Răspuns → (Opțional) Click pentru verificare</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Capitolul 5: E-E-A-T în Era Algoritmilor "Critici"</h3>
+
+  <p>
+    Sistemele de fact-checking AI devin tot mai dure cu conținutul generat automat fără supraveghere. E-E-A-T (Experiență, Expertiză, Autoritate, Încredere) nu mai este doar un ghid abstract de calitate, ci funcționează ca un filtru algoritmic de pre-procesare.
+  </p>
+
+  <h4>5.1. Autoritatea Persoanei (Author Entity)</h4>
+
+  <p>
+    Nu mai publica articole semnate generic de "Admin" sau "Echipa Marketing". În Knowledge Graph, "Admin" nu este o entitate de încredere.
+  </p>
+
+  <ul>
+    <li><strong>Pagina de Autor Completă:</strong> Trebuie să fie detaliată, legată de profilurile LinkedIn, Twitter (X) și alte publicații externe unde autorul a mai scris.</li>
+    <li><strong>Schema Person:</strong> Folosește markup-ul Person pe pagina de autor și leagă-l de articole prin proprietatea author. Acest lucru îi spune lui Google exact cine este sursa informației.</li>
+    <li><strong>Experiență Demonstrabilă (First-Hand Experience):</strong> Include în text fraze care denotă experiența directă ("În testele noastre derulate pe 50 de site-uri...", "Când am implementat acest lucru pentru clientul X din industria pharma..."). AI-urile sunt antrenate să detecteze nuanțele de limbaj care indică experiența first-hand versus teoria reciclată. Conținutul care demonstrează nuanțe practice este mult mai probabil să fie considerat "Grounding Source".</li>
+  </ul>
+
+  <h4>5.2. Citarea Reciprocă și Co-Occurence</h4>
+
+  <p>
+    Autoritatea unei entități se transferă prin asociație. Dacă brandul tău apare frecvent în aceleași contexte (Co-occurence) cu alte branduri de top din industrie, AI-ul va începe să asocieze vectorii acestora. Menționează parteneri, citează lideri de industrie și participă la studii comune pentru a crea aceste legături semantice în corpusul de antrenare al modelelor.
+  </p>
+
+  <h3>Concluzii și Plan de Acțiune Strategic</h3>
+
+  <p>
+    Adoptarea GEO nu înseamnă abandonarea SEO-ului clasic, ci evoluția acestuia către un model hibrid. Site-ul tău trebuie să funcționeze dual: să fie rapid, accesibil și indexabil pentru crawlerele clasice (Googlebot), dar și profund structurat, logic și autoritar semantic pentru noii "consumatori" digitali — asistenții AI și motoare de răspuns.
+  </p>
+
+  <h4>Planul de Acțiune pentru 2025:</h4>
+
+  <ol>
+    <li><strong>Audit Semantic:</strong> Verifică dacă site-ul tău comunică clar ce ești și despre ce vorbești prin Entități definite, nu doar prin cuvinte cheie ambigue.</li>
+    <li><strong>Implementare Schema:</strong> Treci de la implementările basic la JSON-LD avansat, conectând entitățile interne cu cele externe (Wikipedia/Wikidata) prin sameAs.</li>
+    <li><strong>Restructurare Conținut:</strong> Rescrie articolele pilon (Cornerstone Content) folosind principiul Răspunsului Direct și al segmentării logice pentru RAG (paragrafe unice, heading-uri interogative).</li>
+    <li><strong>Monitorizare Brand în AI:</strong> Începe să testezi cum răspunde ChatGPT, Perplexity sau Gemini la întrebări despre brandul tău. Dacă răspunsurile sunt vagi sau incorecte, sursa problemei este lipsa de informație structurată pe site-ul tău.</li>
+  </ol>
+
+  <p>
+    Viitorul căutării aparține celor care pot vorbi limba oamenilor (empatie, utilitate), dar și limba mașinilor (structură, vectori, entități) care îi servesc pe oameni.
+  </p>
+
+  <h3>Partea IV: Implicații Strategice și Analiză de Adâncime</h3>
+
+  <p>
+    Dincolo de ghidul practic și analiza imediată, cercetarea relevă implicații profunde (efecte de ordinul doi și trei) care vor remodela piața digitală din România în următorii 3-5 ani.
+  </p>
+
+  <h4>4.1. Disrupția Modelului de Business al Agențiilor SEO</h4>
+
+  <p>
+    Modelul clasic al agențiilor SEO din România, bazat pe vânzarea de pachete de "cuvinte cheie pe prima pagină" sau "4 articole de blog pe lună", se apropie de obsolescență.
+  </p>
+
+  <p>
+    <strong>Cauzalitate:</strong> Pe măsură ce traficul organic tradițional scade din cauza "Zero-Click Searches" (răspunsuri oferite direct de Google AI/Gemini în interfață), metrica de succes "trafic brut" își pierde relevanța economică. Un utilizator care primește răspunsul direct în Google nu mai vizitează site-ul, deci nu mai generează impresii de reclame sau conversii simple.
+  </p>
+
+  <p>
+    <strong>Implicație:</strong> Agențiile trebuie să pivoteze către servicii de "Digital PR & Entity Management". Valoarea nu va mai fi în aducerea utilizatorului pe site pentru o informație trivială, ci în controlul narativului despre brand în răspunsurile AI. Clienții vor plăti pentru ca atunci când cineva întreabă ChatGPT "Care este cel mai bun avocat de divorț din București?", AI-ul să recomande numele lor. Aceasta este o formă de "Inception Marketing" — implantarea brandului în răspunsul generat.
+  </p>
+
+  <h4>4.2. Polarizarea Extremă a Conținutului: "Junk" vs. "Premium"</h4>
+
+  <p>
+    <strong>Trend:</strong> Conținutul de mijloc (articole de 500-800 de cuvinte, generale, de tip "Ce este X?") va avea valoare comercială zero. Acest tip de conținut este deja generat instantaneu și gratuit de orice AI pentru utilizator.
+  </p>
+
+  <p>
+    <strong>Efect:</strong> Piața de conținut se va bifurca violent.
+  </p>
+
+  <ul>
+    <li><strong>La baza piramidei:</strong> Conținut "commodity", generat automat în masă, cu costuri neglijabile, folosit doar pentru a ține site-ul "viu".</li>
+    <li><strong>La vârful piramidei:</strong> Va exploda valoarea "Conținutului de Opinie Expertă" și a Datelor Proprietare (studii originale, sondaje, analize unice). Acestea sunt singurele elemente pe care un AI nu le poate "halucina" credibil fără o sursă externă de "Grounding".</li>
+  </ul>
+
+  <p>
+    <strong>Pentru România:</strong> Site-urile de știri locale și blogurile care doar reciclează informații (content curation fără valoare adăugată) vor pierde masiv trafic și venituri. Vor supraviețui creatorii de nișă care oferă perspective unice, date locale exclusive sau o voce umană inconfundabilă.
+  </p>
+
+  <h4>4.3. Infrastructura Tehnică devine Avantaj Competitiv Major</h4>
+
+  <p>
+    Până acum, un site WordPress cu un plugin de SEO și o temă decentă era suficient pentru a performa. În era RAG, structura bazei de date și curățenia codului HTML contează enorm.
+  </p>
+
+  <p>
+    <strong>Insight:</strong> Site-urile construite pe tehnologii moderne (Headless CMS, Next.js, arhitecturi JAMstack) care livrează conținut curat, structurat în JSON, vor fi favorizate de crawlerii AI față de site-urile WordPress clasice, încărcate de teme greoaie, plugin-uri inutile și cod "bloat" (DOM excesiv).
+  </p>
+
+  <p>
+    <strong>Motivul:</strong> AI-ul "costă" bani (putere de calcul) pentru a procesa tokeni. Conținutul "curat", ușor de parsat și segmentat, este mai ieftin și mai eficient de procesat pentru modelele AI. Google și OpenAI vor favoriza sursele care consumă mai puține resurse computaționale pentru a extrage aceeași cantitate de informație (Information Gain).
+  </p>
+
+  <h4>4.4. Dilema "Suveranității Datelor"</h4>
+
+  <p>
+    Brandurile și publicațiile se vor confrunta cu o decizie strategică dificilă: să permită accesul crawlerilor AI (precum GPTBot) sau să îi blocheze?
+  </p>
+
+  <p>
+    <strong>Tensiunea:</strong> Blocarea accesului protejează proprietatea intelectuală și previne folosirea conținutului pentru antrenarea modelelor care ar putea, ulterior, să concureze cu sursa. Totuși, în contextul GEO, blocarea accesului înseamnă invizibilitate în răspunsurile generate. Dacă AI-ul nu te poate citi, nu te poate recomanda.
+  </p>
+
+  <p>
+    <strong>Prognoză:</strong> Strategia câștigătoare va fi probabil una hibridă: conținut premium protejat (paywall/login) pentru utilizatorii fideli, și conținut de tip "rezumat public" (free tier) extrem de optimizat GEO, servind ca lead magnet și sursă de grounding pentru AI-uri, menținând brandul relevant în ecosistemul generativ.
+  </p>
+
+  <p>
+    Acest raport oferă nu doar o diagnoză a prezentului, ci și un manual de operare pentru viitorul imediat, poziționând cititorul în avangarda unei industrii care se reinventează din temelii.
+  </p>
+</section>
+
+<!-- SECTION 5: AI TOOLS -->
+<section id="ai-tools" class="seo-article-section">
+  <div class="seo-ai-lab">
+    <h2>
+      Laborator AI
+      <span class="seo-beta-badge">BETA</span>
+    </h2>
+    <p style="margin-bottom: 2rem; color: #0D2440;">
+      Folosește API-ul Gemini pentru a genera elementele lipsă identificate în analiză.
+    </p>
+
+    <div class="seo-tool-section">
+      <h3>
+        <span class="seo-tool-number">1</span>
+        Generator Entități Semantice
+      </h3>
+      <div class="seo-input-group">
+        <input type="text" id="entity-input" class="seo-input" placeholder="Subiect (ex: SEO pentru E-commerce)">
+        <button onclick="generateEntities()" id="btn-entities" class="seo-btn">Generează Cluster</button>
+      </div>
+      <div id="output-entities" class="seo-output"></div>
+    </div>
+
+    <div class="seo-tool-section">
+      <h3>
+        <span class="seo-tool-number">2</span>
+        Optimizator Titluri (CTR)
+      </h3>
+      <div class="seo-input-group">
+        <input type="text" id="title-input" class="seo-input" placeholder="Titlu actual (ex: Cum să faci SEO)">
+        <button onclick="optimizeTitle()" id="btn-title" class="seo-btn">Optimizează</button>
+      </div>
+      <div id="output-titles" class="seo-output"></div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Navigation between sections
+function navigateToSection(sectionId) {
+  // Hide all sections
+  document.querySelectorAll('.seo-article-section').forEach(el => {
+    el.classList.remove('active');
+  });
+  
+  // Show target section
+  const target = document.getElementById(sectionId);
+  if (target) {
+    target.classList.add('active');
+  }
+  
+  // Update nav links
+  document.querySelectorAll('.seo-nav-link').forEach(el => {
+    el.classList.remove('active');
+  });
+  
+  event.target.classList.add('active');
+  
+  // Scroll to section
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// Initialize charts when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  initCharts();
+});
+
+function initCharts() {
+  // Scatter Plot - Competitors Analysis
+  const ctxScatter = document.getElementById('competitorScatter');
+  if (ctxScatter) {
+    new Chart(ctxScatter.getContext('2d'), {
+      type: 'bubble',
+      data: {
+        datasets: [{
+          label: 'Competitori',
+          data: [
+            {x: 1800, y: 45, r: 10},
+            {x: 1200, y: 38, r: 8},
+            {x: 800, y: 65, r: 15},
+            {x: 3500, y: 30, r: 20},
+            {x: 2200, y: 80, r: 25},
+            {x: 2800, y: 42, r: 12}
+          ],
+          backgroundColor: '#0D2440',
+          borderColor: '#0D2440'
+        }, {
+          label: 'Strategia Noastră',
+          data: [{x: 4000, y: 35, r: 25}],
+          backgroundColor: '#2E5E99',
+          borderColor: '#2E5E99'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: { family: 'Inter', weight: 'bold', size: 14 },
+              color: '#0D2440'
+            }
+          }
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Cuvinte (Profunzime)',
+              font: { family: 'Inter', weight: 'bold', size: 14 },
+              color: '#0D2440'
+            },
+            ticks: { font: { family: 'Inter' }, color: '#2E5E99' },
+            grid: { color: '#E3EAFF' }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Domain Authority',
+              font: { family: 'Inter', weight: 'bold', size: 14 },
+              color: '#0D2440'
+            },
+            ticks: { font: { family: 'Inter' }, color: '#2E5E99' },
+            grid: { color: '#E3EAFF' }
+          }
+        }
+      }
+    });
+  }
+
+  // Radar Chart - Gap Analysis
+  const ctxRadar = document.getElementById('gapRadar');
+  if (ctxRadar) {
+    new Chart(ctxRadar.getContext('2d'), {
+      type: 'radar',
+      data: {
+        labels: ['Keywords', 'Semantic Depth', 'UX', 'Actionability', 'Backlinks', 'Freshness'],
+        datasets: [{
+          label: 'Competitori',
+          data: [85, 40, 50, 45, 70, 60],
+          fill: true,
+          backgroundColor: 'rgba(13, 36, 64, 0.1)',
+          borderColor: '#0D2440',
+          pointBackgroundColor: '#0D2440',
+          pointBorderColor: '#ffffff',
+          pointHoverBackgroundColor: '#0D2440',
+          pointHoverBorderColor: '#ffffff'
+        }, {
+          label: 'Noi (Target)',
+          data: [60, 95, 90, 95, 50, 100],
+          fill: true,
+          backgroundColor: 'rgba(46, 94, 153, 0.2)',
+          borderColor: '#2E5E99',
+          pointBackgroundColor: '#2E5E99',
+          pointBorderColor: '#ffffff',
+          pointHoverBackgroundColor: '#2E5E99',
+          pointHoverBorderColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          r: {
+            ticks: { display: false, stepSize: 20 },
+            grid: { color: '#E3EAFF' },
+            pointLabels: {
+              font: { family: 'Inter', weight: 'bold', size: 13 },
+              color: '#0D2440'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: { family: 'Inter', weight: 'bold', size: 14 },
+              color: '#0D2440'
+            }
+          }
+        }
+      }
+    });
+  }
+}
+
+// Gemini API Functions
+const apiKey = ""; // Will be set from environment
+const apiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+async function callGemini(prompt, outputId, btnId) {
+  const btn = document.getElementById(btnId);
+  const outputDiv = document.getElementById(outputId);
+  
+  if (!btn || !outputDiv) return;
+  
+  const originalText = btn.innerText;
+  btn.innerHTML = '<span class="seo-loader"></span>Prelucrare...';
+  btn.disabled = true;
+  outputDiv.classList.remove('show');
+  outputDiv.innerHTML = '';
+
+  try {
+    if (!apiKey) {
+      throw new Error('API key nu este configurată');
+    }
+
+    const response = await fetch(apiEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{ text: prompt }]
+        }]
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Eroare la generarea răspunsului';
+    
+    outputDiv.innerHTML = text.replace(/\n/g, '<br>');
+    outputDiv.classList.add('show');
+  } catch (error) {
+    console.error('Error calling Gemini API:', error);
+    outputDiv.innerHTML = `<p style="color: #dc2626;">Eroare: ${error.message}. Verifică consola pentru detalii.</p>`;
+    outputDiv.classList.add('show');
+  } finally {
+    btn.innerText = originalText;
+    btn.disabled = false;
+  }
+}
+
+function generateEntities() {
+  const val = document.getElementById('entity-input')?.value.trim();
+  if (!val) {
+    alert('Te rog introdu un subiect');
+    return;
+  }
+  const prompt = `Pentru subiectul '${val}', generează o listă de 10 entități semantice (concepte conexe, nu doar keywords) critice pentru un articol care să demonstreze E-E-A-T în 2025. Limba română.`;
+  callGemini(prompt, 'output-entities', 'btn-entities');
+}
+
+function optimizeTitle() {
+  const val = document.getElementById('title-input')?.value.trim();
+  if (!val) {
+    alert('Te rog introdu un titlu');
+    return;
+  }
+  const prompt = `Rescrie titlul '${val}' în 3 variante pentru CTR maxim: 1. Urgență, 2. Curiozitate (Gap), 3. Autoritate. Limba română.`;
+  callGemini(prompt, 'output-titles', 'btn-title');
+}
+</script>
+
