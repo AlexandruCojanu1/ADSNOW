@@ -1198,7 +1198,6 @@
         lineNumbers: true,
         lineWrapping: true,
         autoCloseTags: true,
-        matchTags: { bothTags: true },
         indentUnit: 2,
         indentWithTabs: false,
         tabSize: 2,
@@ -1206,8 +1205,26 @@
         autofocus: true
       });
       
+      // Enable match tags addon if available
+      if (CodeMirror.commands && CodeMirror.commands.matchTag) {
+        // Add keymap for match tag (Ctrl+Shift+P or Cmd+Shift+P)
+        codeEditor.setOption('extraKeys', {
+          'Ctrl-Shift-P': function(cm) {
+            CodeMirror.commands.matchTag(cm);
+          },
+          'Cmd-Shift-P': function(cm) {
+            CodeMirror.commands.matchTag(cm);
+          }
+        });
+      }
+      
       // Set minimum height (larger for full-screen feel)
       codeEditor.setSize('100%', '600px');
+      
+      // Focus editor after a short delay to ensure it's rendered
+      setTimeout(() => {
+        codeEditor.focus();
+      }, 200);
       
       console.log('✅ CodeMirror editor initialized successfully');
     } catch (error) {
