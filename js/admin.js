@@ -490,6 +490,21 @@
   
   // Generate blog post HTML
   function generateBlogPostHTML(article) {
+    // Check if content is already a complete HTML document
+    const isCompleteHTML = article.content && (
+      article.content.trim().toLowerCase().startsWith('<!doctype') ||
+      article.content.trim().toLowerCase().startsWith('<html')
+    );
+    
+    // If it's already complete HTML, return it as-is
+    if (isCompleteHTML) {
+      console.log('✅ Content is complete HTML document, using as-is');
+      return article.content;
+    }
+    
+    // Otherwise, wrap it in template
+    console.log('✅ Content is HTML fragment, wrapping in template');
+    
     const formattedDate = new Date(article.date).toLocaleDateString('ro-RO', { 
       year: 'numeric', 
       month: 'long', 
