@@ -62,10 +62,10 @@ module.exports = async (req, res) => {
   }
 
   // Verifică dacă URL-ul este valid
-  if (!url.startsWith('https://www.adsnow.ro/')) {
+  if (!url.startsWith('https://adsnow.ro/')) {
     return res.status(400).json({ 
       error: 'Invalid URL',
-      message: 'URL must start with https://www.adsnow.ro/'
+      message: 'URL must start with https://adsnow.ro/'
     });
   }
 

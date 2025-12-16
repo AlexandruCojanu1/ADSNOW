@@ -352,13 +352,13 @@
     let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.adsnow.ro/</loc>
+    <loc>https://adsnow.ro/</loc>
     <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.adsnow.ro/blog</loc>
+    <loc>https://adsnow.ro/blog</loc>
     <lastmod>${today}</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -370,7 +370,7 @@
       const articleDate = article.date ? new Date(article.date).toISOString().split('T')[0] : today;
       sitemap += `
   <url>
-    <loc>https://www.adsnow.ro/blog/${slug}</loc>
+    <loc>https://adsnow.ro/blog/${slug}</loc>
     <lastmod>${articleDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -844,7 +844,7 @@
       
       // Notify Google Indexing API about the new article
       const articleSlug = generateSlug(articleData.title);
-      const articleUrl = `https://www.adsnow.ro/blog/${articleSlug}`;
+      const articleUrl = `https://adsnow.ro/blog/${articleSlug}`;
       await notifyGoogleIndexing(articleUrl);
       
       showMessage('✅ Articolul a fost publicat cu succes pe GitHub! Sitemap-ul a fost actualizat și Google a fost notificat. Vercel va redeploya automat în câteva secunde.', 'success');

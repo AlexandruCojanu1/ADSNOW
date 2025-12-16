@@ -22,7 +22,7 @@ Acest ghid te va ajuta să configurezi Google Indexing API pentru a notifica aut
 ### Pasul 2: Dă Permisiuni Botului (Google Search Console)
 
 1. Deschide fișierul `service_account.json` și copiază adresa de la câmpul `"client_email"` (ceva de genul `indexer-bot@proiect-id.iam.gserviceaccount.com`)
-2. Mergi în **Google Search Console** → Selectează site-ul tău (`www.adsnow.ro`)
+2. Mergi în **Google Search Console** → Selectează site-ul tău (`adsnow.ro`)
 3. Mergi la **Settings** → **Users and permissions**
 4. Click **Add User**
 5. Lipește adresa de email a botului și dă-i permisiunea **Owner** (Proprietar)
