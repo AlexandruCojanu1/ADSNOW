@@ -135,14 +135,6 @@ module.exports = async (req, res) => {
       details: error.response?.data || null,
       url: url
     });
-  } catch (configError) {
-    // Eroare la configurarea service account
-    console.error('❌ Service account configuration error:', configError.message);
-    return res.status(500).json({
-      success: false,
-      error: configError.message,
-      message: 'Please configure GOOGLE_SERVICE_ACCOUNT environment variable on Vercel, or provide service_account.json file for local development.'
-    });
   }
 };
 
