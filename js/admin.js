@@ -340,6 +340,119 @@
     return await response.json();
   }
   
+  // Generate sitemap.xml from articles
+  function generateSitemap(articles) {
+    const today = new Date().toISOString().split('T')[0];
+    
+    let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.adsnow.ro/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.adsnow.ro/blog</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+    
+    // Add each blog post URL
+    articles.forEach(article => {
+      const slug = article.slug || generateSlug(article.title);
+      const articleDate = article.date ? new Date(article.date).toISOString().split('T')[0] : today;
+      sitemap += `
+  <url>
+    <loc>https://www.adsnow.ro/blog/${slug}</loc>
+    <lastmod>${articleDate}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+    });
+    
+    sitemap += `
+</urlset>`;
+    
+    return sitemap;
+  }
+  
+  // Update sitemap.xml on GitHub
+  async function updateSitemap(articles) {
+    try {
+      const config = getGitHubConfig();
+      if (!config.token) {
+        console.warn('GitHub token not configured, skipping sitemap update');
+        return;
+      }
+      
+      const sitemapContent = generateSitemap(articles);
+      
+      // Get current sitemap SHA if it exists
+      let sitemapSha = null;
+      try {
+        const existingSitemap = await getGitHubFile('sitemap.xml');
+        if (existingSitemap) {
+          sitemapSha = existingSitemap.sha;
+        }
+      } catch (error) {
+        // File doesn't exist, that's fine - we'll create it
+        console.log('Sitemap.xml does not exist, will create new file');
+      }
+      
+      // Update sitemap.xml
+      await updateGitHubFile(
+        'sitemap.xml',
+        sitemapContent,
+        sitemapSha || undefined,
+        'Update sitemap.xml with new blog posts'
+      );
+      
+      console.log('✅ Sitemap.xml updated successfully!');
+    } catch (error) {
+      console.error('Error updating sitemap.xml:', error);
+      // Don't throw - sitemap update failure shouldn't break article publishing
+    }
+  }
+  
+  // Notify Google Indexing API about a new/updated URL
+  async function notifyGoogleIndexing(url) {
+    try {
+      // Determine the API endpoint - use current domain for production, or relative path for local dev
+      const apiEndpoint = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? '/api/index-google'
+        : `${window.location.origin}/api/index-google`;
+      
+      console.log('🚀 Notifying Google Indexing API:', url);
+      console.log('   Endpoint:', apiEndpoint);
+      
+      const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url: url })
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok && result.success) {
+        console.log('✅ Google Indexing API notified successfully:', result);
+        return true;
+      } else {
+        console.warn('⚠️ Google Indexing API returned error:', result);
+        // Don't throw - indexing failure shouldn't break article publishing
+        return false;
+      }
+    } catch (error) {
+      console.warn('⚠️ Failed to notify Google Indexing API:', error.message);
+      // Don't throw - indexing failure shouldn't break article publishing
+      // This allows articles to be published even if Google Indexing API is temporarily unavailable
+      return false;
+    }
+  }
+  
   // Generate blog post HTML
   function generateBlogPostHTML(article) {
     const formattedDate = new Date(article.date).toLocaleDateString('ro-RO', { 
@@ -630,7 +743,23 @@
         }
       }
       
-      showMessage('✅ Articolul a fost publicat cu succes pe GitHub! Vercel va redeploya automat în câteva secunde.', 'success');
+      // Update sitemap.xml with all articles (including the new one)
+      try {
+        const fileData = await getGitHubFile(ARTICLES_FILE);
+        if (fileData) {
+          const allArticles = JSON.parse(fileData.content);
+          await updateSitemap(allArticles.articles || []);
+        }
+      } catch (error) {
+        console.warn('Could not update sitemap:', error);
+      }
+      
+      // Notify Google Indexing API about the new article
+      const articleSlug = generateSlug(articleData.title);
+      const articleUrl = `https://www.adsnow.ro/blog/${articleSlug}`;
+      await notifyGoogleIndexing(articleUrl);
+      
+      showMessage('✅ Articolul a fost publicat cu succes pe GitHub! Sitemap-ul a fost actualizat și Google a fost notificat. Vercel va redeploya automat în câteva secunde.', 'success');
       
       // Reload articles list from GitHub (wait a bit for GitHub to process)
       setTimeout(async () => {
@@ -811,7 +940,18 @@
       console.warn('Could not delete blog post HTML file (may not exist):', error);
     }
     
-    showMessage('✅ Articolul a fost șters de pe GitHub!', 'success');
+    // Update sitemap.xml after deletion
+    try {
+      const fileData = await getGitHubFile(ARTICLES_FILE);
+      if (fileData) {
+        const allArticles = JSON.parse(fileData.content);
+        await updateSitemap(allArticles.articles || []);
+      }
+    } catch (error) {
+      console.warn('Could not update sitemap after deletion:', error);
+    }
+    
+    showMessage('✅ Articolul a fost șters de pe GitHub! Sitemap-ul a fost actualizat.', 'success');
     
     setTimeout(() => {
       loadArticles();

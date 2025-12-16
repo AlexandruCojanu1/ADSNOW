@@ -1,0 +1,22 @@
+{
+  "name": "adsnow-blog",
+  "version": "1.0.0",
+  "description": "Blog system with automatic sitemap updates and Google indexing",
+  "main": "index-google.js",
+  "scripts": {
+    "index": "node index-google.js",
+    "build-blog": "node build-blog.js"
+  },
+  "keywords": [
+    "blog",
+    "sitemap",
+    "google-indexing"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "googleapis": "^128.0.0"
+  }
+}
+
+
