@@ -71,6 +71,28 @@ După ce ai adăugat environment variable, trebuie să faci redeploy:
 
 ---
 
+## 🧪 Testare Locală (Opțional)
+
+Dacă vrei să testezi Google Indexing API local (pe calculatorul tău), ai două opțiuni:
+
+**Opțiunea 1: Folosește `.env.local` (Recomandat)**
+- Fișierul `.env.local` a fost deja creat pentru tine cu credențialele corecte
+- Este automat ignorat de Git (nu va fi commitat)
+- Vercel va citi automat acest fișier când rulezi local
+
+**Opțiunea 2: Folosește `service_account.json`**
+- Fișierul `service_account.json` este deja în proiect
+- Este și el ignorat de Git
+- Serverless function-ul va detecta automat fișierul
+
+Pentru a testa local:
+```bash
+cd /Users/alexandrucojanu/Desktop/ADSNOW
+vercel dev
+```
+
+---
+
 ## ✅ Verificare
 
 După redeploy, testează din Admin Panel:
