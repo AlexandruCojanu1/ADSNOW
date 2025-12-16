@@ -476,7 +476,11 @@
         console.log('✅ Google Indexing API notified successfully:', result);
         return true;
       } else {
-        console.warn('⚠️ Google Indexing API returned error:', result);
+        console.error('❌ Google Indexing API Error Details:');
+        console.error('   Status:', response.status);
+        console.error('   Response:', JSON.stringify(result, null, 2));
+        if (result.error) console.error('   Error:', result.error);
+        if (result.details) console.error('   Details:', result.details);
         // Don't throw - indexing failure shouldn't break article publishing
         return false;
       }
