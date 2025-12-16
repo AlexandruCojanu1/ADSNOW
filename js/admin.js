@@ -385,38 +385,68 @@
   
   // Update sitemap.xml on GitHub
   async function updateSitemap(articles) {
-    try {
-      const config = getGitHubConfig();
-      if (!config.token) {
-        console.warn('GitHub token not configured, skipping sitemap update');
-        return;
-      }
-      
-      const sitemapContent = generateSitemap(articles);
-      
-      // Get current sitemap SHA if it exists
-      let sitemapSha = null;
+    const config = getGitHubConfig();
+    if (!config.token) {
+      console.warn('GitHub token not configured, skipping sitemap update');
+      return;
+    }
+    
+    const sitemapContent = generateSitemap(articles);
+    
+    // Retry logic for handling SHA conflicts (same as saveArticle)
+    let retries = 8;
+    let lastError = null;
+    let success = false;
+    
+    while (retries > 0 && !success) {
       try {
-        const existingSitemap = await getGitHubFile('sitemap.xml');
-        if (existingSitemap) {
-          sitemapSha = existingSitemap.sha;
+        // Always reload fresh sitemap SHA before updating
+        let sitemapSha = null;
+        try {
+          const existingSitemap = await getGitHubFile('sitemap.xml');
+          if (existingSitemap) {
+            sitemapSha = existingSitemap.sha;
+            console.log(`[Sitemap Attempt ${9 - retries}/8] Loaded fresh SHA:`, sitemapSha.substring(0, 8) + '...');
+          }
+        } catch (error) {
+          if (error.message.includes('404')) {
+            console.log('Sitemap.xml does not exist, will create new file');
+          }
         }
+        
+        // Update sitemap.xml
+        await updateGitHubFile(
+          'sitemap.xml',
+          sitemapContent,
+          sitemapSha || undefined,
+          'Update sitemap.xml with new blog posts'
+        );
+        
+        success = true;
+        console.log('✅ Sitemap.xml updated successfully!');
+        
       } catch (error) {
-        // File doesn't exist, that's fine - we'll create it
-        console.log('Sitemap.xml does not exist, will create new file');
+        lastError = error;
+        const is409 = error.message.includes('409');
+        console.error(`[Sitemap Attempt ${9 - retries}/8] Failed:`, error.message, is409 ? '(SHA conflict)' : '');
+        
+        if (is409 && retries > 1) {
+          // SHA conflict - wait and retry with fresh SHA
+          const waitTime = (9 - retries) * 1000;
+          console.log(`⏳ Sitemap SHA conflict, waiting ${waitTime}ms before retry...`);
+          await new Promise(resolve => setTimeout(resolve, waitTime));
+          retries--;
+        } else {
+          // Non-409 error or last retry
+          console.error('❌ Failed to update sitemap after all retries:', error);
+          // Don't throw - sitemap update failure shouldn't break article publishing
+          return;
+        }
       }
-      
-      // Update sitemap.xml
-      await updateGitHubFile(
-        'sitemap.xml',
-        sitemapContent,
-        sitemapSha || undefined,
-        'Update sitemap.xml with new blog posts'
-      );
-      
-      console.log('✅ Sitemap.xml updated successfully!');
-    } catch (error) {
-      console.error('Error updating sitemap.xml:', error);
+    }
+    
+    if (!success && lastError) {
+      console.error('❌ Failed to update sitemap after all retries:', lastError);
       // Don't throw - sitemap update failure shouldn't break article publishing
     }
   }
