@@ -314,9 +314,14 @@
     }
     
     const url = `${GITHUB_API_BASE}/repos/${config.repo}/contents/${path}`;
+    
+    // Fix UTF-8 encoding for Romanian characters (ă, â, î, ș, ț)
+    const utf8Content = new TextEncoder().encode(content);
+    const base64Content = btoa(String.fromCharCode(...utf8Content));
+    
     const body = {
       message: message,
-      content: btoa(unescape(encodeURIComponent(content))),
+      content: base64Content,
       branch: config.branch
     };
     
