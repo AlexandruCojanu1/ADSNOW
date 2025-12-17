@@ -508,23 +508,124 @@
       article.content.trim().toLowerCase().startsWith('<html')
     );
     
-    // If it's already complete HTML, inject the back button before </body>
+    // If it's already complete HTML, inject the header and footer
     if (isCompleteHTML) {
-      console.log('✅ Content is complete HTML document, injecting back button');
+      console.log('✅ Content is complete HTML document, injecting header and footer');
       let content = article.content;
       
-      // Inject navigation and back button before </body>
-      const backButtonHTML = `
-    <!-- Blog Navigation -->
-    <div style="max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem;">
-      <a href="/blog" style="display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 1rem; color: #2E5E99; text-decoration: none; transition: color 0.3s ease; padding: 0.75rem 1.5rem; background: #E3EAFF; border-radius: 8px; font-weight: 600;">
-        <span style="font-size: 1.2rem;">←</span> Înapoi la Blog
-      </a>
+      // Extract footer HTML from home page
+      const footerHTML = `
+    <!-- Spline Footer Section / Contact -->
+    <div class="cursor">
+      <div class="big-circle"></div>
+      <div class="small-circle"></div>
     </div>
+
+    <section id="contact" class="section spline-footer hero" data-spline-src="https://unpkg.com/@splinetool/viewer@1.0.51/build/spline-viewer.js" data-split-type-src="https://unpkg.com/split-type">
+      <div class="spline-loader" aria-hidden="true">
+        <div></div><div></div><div></div><div></div>
+      </div>
+      <spline-viewer data-url="https://prod.spline.design/srCEmVK1iTeFHc7f/scene.splinecode"></spline-viewer>
+
+      <header>
+        <nav>
+        </nav>
+      </header>
+
+      <div class="content">
+        <h1>
+          Ești pregătit să-ți construiești<br />identitatea digitală?
+        </h1>
+        <a class="spline-whatsapp" href="https://calendar.app.google/hqtAjUDGLYBM2G8h6" target="_blank" rel="noopener">Aplică acum</a>
+        <div class="text">
+          <div style="flex:1 1 auto;"></div>
+          <p>Aplică acum iar în 24h îți spunem dacă facem click.</p>
+        </div>
+      </div>
+      <div class="spline-legal">
+        <p class="spline-legal-copy">copyright ALGO DIGITAL SOLUTIONS 2025</p>
+        <div class="spline-legal-links">
+          <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener" class="spline-legal-link">Soluționarea litigiilor</a>
+          <span aria-hidden="true" class="spline-legal-separator">•</span>
+          <a href="https://anpc.ro" target="_blank" rel="noopener" class="spline-legal-link">ANPC</a>
+        </div>
+      </div>
+    </section>
     
-</body>`;
+    <!-- Footer Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+    <script type="module">
+      import * as OGL from 'https://cdn.jsdelivr.net/npm/ogl@0.0.79/+esm';
+      window.OGL = OGL;
+      console.log('OGL loaded from ESM', window.OGL);
+    </script>
+    <script>
+      setTimeout(() => {
+        if (window.ogl) {
+          window.OGL = window.ogl;
+          console.log('OGL set from window.ogl');
+        } else if (window.OGL) {
+          console.log('OGL already available');
+        }
+      }, 100);
+    </script>
+    <script src="../js/spline-animations.js" defer></script>
+    <script src="../js/lazy-load.js" defer></script>
+`;
       
-      content = content.replace(/<\/body>/i, backButtonHTML);
+      // Inject header with back buttons after <body> tag
+      const headerHTML = `
+    <!-- Blog Header with Back Buttons -->
+    <header class="blog-article-header" style="position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(13, 36, 64, 0.1);">
+      <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <a href="/blog" style="display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 1rem; color: #2E5E99; text-decoration: none; transition: all 0.3s ease; padding: 0.75rem 1.5rem; background: #E3EAFF; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 12px rgba(13, 36, 64, 0.15);">
+          <span style="font-size: 1.2rem;">←</span> Înapoi la Blog
+        </a>
+        <a href="/" style="display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 1rem; color: #2E5E99; text-decoration: none; transition: all 0.3s ease; padding: 0.75rem 1.5rem; background: #E3EAFF; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 12px rgba(13, 36, 64, 0.15);">
+          <span style="font-size: 1.2rem;">🏠</span> Acasă
+        </a>
+      </div>
+    </header>
+    <style>
+      .blog-article-header a:hover {
+        background: #DEE8FF !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(13, 36, 64, 0.2) !important;
+      }
+      @media (max-width: 768px) {
+        .blog-article-header {
+          padding: 0.75rem 1rem !important;
+        }
+        .blog-article-header a {
+          padding: 0.5rem 1rem !important;
+          font-size: 0.875rem !important;
+        }
+      }
+      /* Add padding to body to account for fixed header */
+      body {
+        padding-top: 80px;
+      }
+      @media (max-width: 768px) {
+        body {
+          padding-top: 70px;
+        }
+      }
+    </style>
+`;
+      
+      // Inject header after <body> tag
+      content = content.replace(/<body[^>]*>/i, (match) => match + headerHTML);
+      
+      // Inject footer before </body> tag
+      content = content.replace(/<\/body>/i, footerHTML + '\n</body>');
+      
+      // Add necessary CSS links if not present
+      if (!content.includes('css/spline.css')) {
+        content = content.replace(/<link[^>]*css\/blog\.css[^>]*>/i, (match) => 
+          match + '\n    <link rel="stylesheet" href="../css/spline.css?v=5">\n    <link rel="stylesheet" href="../css/contact.css?v=4">'
+        );
+      }
+      
       return content;
     }
     
@@ -556,10 +657,49 @@
     <link rel="stylesheet" href="../css/base.css?v=4">
     <link rel="stylesheet" href="../css/pill-nav.css?v=9">
     <link rel="stylesheet" href="../css/blog.css?v=1">
+    <link rel="stylesheet" href="../css/spline.css?v=5">
+    <link rel="stylesheet" href="../css/contact.css?v=4">
     <link rel="stylesheet" href="../css/responsive.css?v=21">
   </head>
   
   <body>
+    <!-- Blog Header with Back Buttons -->
+    <header class="blog-article-header" style="position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 1rem 2rem; box-shadow: 0 2px 10px rgba(13, 36, 64, 0.1);">
+      <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <a href="/blog" style="display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 1rem; color: #2E5E99; text-decoration: none; transition: all 0.3s ease; padding: 0.75rem 1.5rem; background: #E3EAFF; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 12px rgba(13, 36, 64, 0.15);">
+          <span style="font-size: 1.2rem;">←</span> Înapoi la Blog
+        </a>
+        <a href="/" style="display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 1rem; color: #2E5E99; text-decoration: none; transition: all 0.3s ease; padding: 0.75rem 1.5rem; background: #E3EAFF; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 12px rgba(13, 36, 64, 0.15);">
+          <span style="font-size: 1.2rem;">🏠</span> Acasă
+        </a>
+      </div>
+    </header>
+    <style>
+      .blog-article-header a:hover {
+        background: #DEE8FF !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(13, 36, 64, 0.2) !important;
+      }
+      @media (max-width: 768px) {
+        .blog-article-header {
+          padding: 0.75rem 1rem !important;
+        }
+        .blog-article-header a {
+          padding: 0.5rem 1rem !important;
+          font-size: 0.875rem !important;
+        }
+      }
+      /* Add padding to body to account for fixed header */
+      body {
+        padding-top: 80px;
+      }
+      @media (max-width: 768px) {
+        body {
+          padding-top: 70px;
+        }
+      }
+    </style>
+    
     <div class="pill-nav-container">
       <nav class="pill-nav" aria-label="Primary">
         <a class="pill-logo" href="/" aria-label="Home">
@@ -645,15 +785,70 @@
             ${imageUrl ? `<img src="${imageUrl}" alt="${escapeHTML(article.title)}" class="blog-post-image">` : ''}
           </header>
           <div class="blog-post-content">${article.content}</div>
-          <footer class="blog-post-footer">
-            <a href="/blog" class="blog-back-link">← Înapoi la blog</a>
-          </footer>
         </article>
       </div>
     </section>
 
+    <!-- Spline Footer Section / Contact -->
+    <div class="cursor">
+      <div class="big-circle"></div>
+      <div class="small-circle"></div>
+    </div>
+
+    <section id="contact" class="section spline-footer hero" data-spline-src="https://unpkg.com/@splinetool/viewer@1.0.51/build/spline-viewer.js" data-split-type-src="https://unpkg.com/split-type">
+      <div class="spline-loader" aria-hidden="true">
+        <div></div><div></div><div></div><div></div>
+      </div>
+      <spline-viewer data-url="https://prod.spline.design/srCEmVK1iTeFHc7f/scene.splinecode"></spline-viewer>
+
+      <header>
+        <nav>
+        </nav>
+      </header>
+
+      <div class="content">
+        <h1>
+          Ești pregătit să-ți construiești<br />identitatea digitală?
+        </h1>
+        <a class="spline-whatsapp" href="https://calendar.app.google/hqtAjUDGLYBM2G8h6" target="_blank" rel="noopener">Aplică acum</a>
+        <div class="text">
+          <div style="flex:1 1 auto;"></div>
+          <p>Aplică acum iar în 24h îți spunem dacă facem click.</p>
+        </div>
+      </div>
+      <div class="spline-legal">
+        <p class="spline-legal-copy">copyright ALGO DIGITAL SOLUTIONS 2025</p>
+        <div class="spline-legal-links">
+          <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener" class="spline-legal-link">Soluționarea litigiilor</a>
+          <span aria-hidden="true" class="spline-legal-separator">•</span>
+          <a href="https://anpc.ro" target="_blank" rel="noopener" class="spline-legal-link">ANPC</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- External Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+    <!-- OGL Library for FaultyTerminal -->
+    <script type="module">
+      import * as OGL from 'https://cdn.jsdelivr.net/npm/ogl@0.0.79/+esm';
+      window.OGL = OGL;
+      console.log('OGL loaded from ESM', window.OGL);
+    </script>
+    <script>
+      setTimeout(() => {
+        if (window.ogl) {
+          window.OGL = window.ogl;
+          console.log('OGL set from window.ogl');
+        } else if (window.OGL) {
+          console.log('OGL already available');
+        }
+      }, 100);
+    </script>
+    
+    <!-- JavaScript Files -->
     <script src="../js/pill-nav.js" defer></script>
+    <script src="../js/spline-animations.js" defer></script>
+    <script src="../js/lazy-load.js" defer></script>
   </body>
 </html>`;
   }
