@@ -1030,15 +1030,28 @@
       console.warn('Could not delete blog post HTML file (may not exist):', error);
     }
     
-    // Update sitemap.xml after deletion
+    // Update sitemap.xml after deletion with improved reliability
     try {
+      console.log('🗺️ Updating sitemap after article deletion...');
+      
+      // Wait a brief moment for GitHub to propagate the deletion
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Get fresh articles data from GitHub (without the deleted article)
       const fileData = await getGitHubFile(ARTICLES_FILE);
       if (fileData) {
         const allArticles = JSON.parse(fileData.content);
+        console.log(`📊 Found ${allArticles.articles.length} articles remaining for sitemap`);
+        
+        // Update sitemap with remaining articles
         await updateSitemap(allArticles.articles || []);
+        console.log('✅ Sitemap updated successfully after deletion');
+      } else {
+        console.warn('⚠️ Could not load articles for sitemap update after deletion');
       }
     } catch (error) {
-      console.warn('Could not update sitemap after deletion:', error);
+      console.warn('⚠️ Could not update sitemap after deletion:', error);
+      // Don't fail the entire operation if sitemap update fails
     }
     
     showMessage('✅ Articolul a fost șters de pe GitHub! Sitemap-ul a fost actualizat.', 'success');
