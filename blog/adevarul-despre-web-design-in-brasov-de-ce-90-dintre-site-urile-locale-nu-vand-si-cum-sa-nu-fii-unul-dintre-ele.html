@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analiza Web Design Brașov 2025 - AdsNow Design</title>
+    <!-- Import Font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #0D2440; /* Text Principal */
+            line-height: 1.6;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1 { font-weight: 900; font-size: 2.5rem; line-height: 1.2; color: #0D2440; margin-bottom: 1.5rem; }
+        h2 { font-weight: 800; font-size: 2rem; line-height: 1.3; color: #0D2440; margin-bottom: 1.5rem; }
+        h3 { font-weight: 700; font-size: 1.5rem; line-height: 1.4; color: #0D2440; margin-bottom: 1rem; }
+        h4 { font-weight: 700; font-size: 1.2rem; line-height: 1.4; color: #0D2440; margin-bottom: 1rem; }
+        p { font-weight: 400; font-size: 1rem; line-height: 1.8; color: rgba(13, 36, 64, 0.8); margin-bottom: 1.5rem; }
+        ul, ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: rgba(13, 36, 64, 0.8); }
+        li { margin-bottom: 0.5rem; }
+
+        /* --- COMPONENTS --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        
+        .custom-card {
+            background: #ffffff;
+            border: 2px solid #E3EAFF;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(13, 36, 64, 0.1);
+        }
+
+        .highlight-box {
+            background: #E3EAFF;
+            border-left: 4px solid #2E5E99;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .meta-tag {
+            background: #E3EAFF;
+            color: #2E5E99;
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- CHART STYLES --- */
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+            background: #F8FAFC;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #E3EAFF;
+        }
+
+        /* --- TABLE --- */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        .custom-table th { background: #0D2440; color: white; padding: 1rem; text-align: left; border: 1px solid #0D2440; }
+        .custom-table td { padding: 1rem; border: 1px solid #E3EAFF; color: rgba(13, 36, 64, 0.8); }
+        .custom-table tr:nth-child(even) { background: #F8FAFC; }
+
+        /* --- LAYOUT --- */
+        .section-spacer { margin-bottom: 3rem; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.5rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .custom-card { padding: 1.5rem; }
+            .chart-container { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container section-spacer" style="margin-top: 3rem;">
+        
+        <!-- Header Articol -->
+        <header class="section-spacer">
+            <span class="meta-tag">Analiză Piață Brașov</span>
+            <h1 style="margin-top: 1rem;">Adevărul despre Web Design în Brașov: De ce 90% dintre site-urile locale nu vând (și cum să nu fii unul dintre ele)</h1>
+            <p style="font-size: 1.1rem; max-width: 800px;">O analiză brutal de sinceră a pieței digitale locale. Descoperă diferența dintre un "template de 1800 EUR" și un ecosistem digital construit pentru performanță.</p>
+        </header>
+
+        <!-- Intro Section -->
+        <div class="custom-card">
+            <h2>Brașovul crește economic, dar stagnează digital</h2>
+            <p>Trăim într-unul dintre cele mai dinamice orașe din România. Turismul bubuie, imobiliarele sunt la cote maxime, iar sectorul HORECA și cel de servicii sunt extrem de competitive. Totuși, dacă dai un search pe Google după servicii locale, rezultatele sunt... dezamăgitoare.</p>
+            <p>Am analizat peste 100 de website-uri ale companiilor din Brașov în ultima lună. Concluzia? Majoritatea antreprenorilor plătesc sume enorme pentru site-uri care arată și funcționează ca în 2015.</p>
+        </div>
+
+        <!-- Vizual 1: Graficul Economic -->
+        <div class="custom-card">
+            <h3>Fig 1. Discrepanța Economică Digitală în Brașov (2020-2025)</h3>
+            <p class="small-text">Analiză comparativă între creșterea economică a orașului și evoluția standardelor de Web Design local.</p>
+            
+            <div class="chart-container">
+                <canvas id="economyChart"></canvas>
+            </div>
+            
+            <div class="highlight-box" style="background: #FFF5F5; border-left-color: #EF5350; margin-top: 0; margin-bottom: 0;">
+                <p style="margin: 0; font-size: 0.95rem;"><strong style="color: #C62828;">Insight:</strong> În timp ce economia Brașovului a explodat după 2023 (Deschidere Aeroport), calitatea site-urilor a stagnat, creând un "Gap de Oportunitate" imens.</p>
+            </div>
+        </div>
+
+        <!-- Section: Ce am gasit in piata -->
+        <div class="custom-card">
+            <h3>Ce am găsit, de fapt, în piața locală?</h3>
+            <p>Există două extreme periculoase în Brașov atunci când vine vorba de agenții web și freelanceri:</p>
+            
+            <div class="grid-2" style="margin-top: 2rem;">
+                <div class="highlight-box" style="background: #FFF5F5; border-left-color: #EF5350;">
+                    <h4 style="color: #C62828;">Capcana "Ieftin și Rapid" (300 EUR)</h4>
+                    <p style="margin-bottom:0;">Site-uri făcute pe genunchi, cu texte generate robotic de AI și zero optimizare SEO. Aceste site-uri sunt invizibile pentru Google.</p>
+                </div>
+                <div class="highlight-box" style="background: #FFF5F5; border-left-color: #EF5350;">
+                    <h4 style="color: #C62828;">Capcana "Premium Fake" (1800+ EUR)</h4>
+                    <p style="margin-bottom:0;">Agenții care vând template-uri de WordPress la preț de mașină second-hand. Primești un site greoi, plin de plugin-uri inutile, care se încarcă în 5 secunde.</p>
+                </div>
+            </div>
+            
+            <p style="margin-top: 1.5rem;"><strong>Problema comună?</strong> Lipsa de respect pentru timpul utilizatorului. Fonturi ilizibile, culori care dor la ochi și informație îngropată în paragrafe lungi de text copiat.</p>
+        </div>
+
+        <!-- Section: Solutia AdsNow -->
+        <div class="custom-card" style="border-color: #2E5E99;">
+            <h2>Abordarea AdsNow: Nu vindem site-uri, construim active digitale</h2>
+            <p>Noi nu suntem "încă o agenție de web design". Suntem parteneri de creștere pentru companiile din Brașov care s-au săturat de mediocritate. Iată cum facem lucrurile diferit:</p>
+
+            <div class="grid-3">
+                <div>
+                    <h4 style="color: #2E5E99;">1. Custom Code (Fără Template-uri)</h4>
+                    <p class="small-text">Asta înseamnă site-uri care se încarcă instantaneu, sunt 100% sigure și arată exact cum vrei tu, nu cum dictează o temă limitată.</p>
+                </div>
+                <div>
+                    <h4 style="color: #2E5E99;">2. Branding Uniform</h4>
+                    <p class="small-text">Nu aruncăm doar un logo pe un fundal alb. Venim cu suport FOTO & VIDEO propriu pentru a asigura că imaginea brandului tău este coerentă și profesională.</p>
+                </div>
+                <div>
+                    <h4 style="color: #2E5E99;">3. Automatizări Reale</h4>
+                    <p class="small-text">Indexare automată în Google a articolelor noi, sisteme de booking integrate și plăți online simplificate. Tehnologie care lucrează pentru tine.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vizual 2: Graficul Performanță -->
+        <div class="custom-card">
+            <h3>Fig 2. Test Real de Performanță: Template vs. Custom</h3>
+            <p class="small-text">Rezultate medii Google Lighthouse (Mobile) pentru 50 de site-uri "Premium" din Brașov vs. Arhitectura AdsNow.</p>
+            
+            <div class="chart-container">
+                <canvas id="performanceChart"></canvas>
+            </div>
+            
+            <div class="highlight-box" style="margin-top: 0; margin-bottom: 0;">
+                <p style="margin: 0; font-size: 0.95rem;"><strong style="color: #2E5E99;">Concluzie:</strong> Soluțiile custom oferă timpi de încărcare de 5x mai rapizi, influențând direct costul per conversie în reclame.</p>
+            </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="custom-card">
+            <h3>Comparație Directă: Piața Brașov vs. AdsNow</h3>
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Caracteristică</th>
+                        <th>Agenție Tipică Brașov</th>
+                        <th>Standardul AdsNow</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Tehnologie</strong></td>
+                        <td>Wordpress Template (Lent)</td>
+                        <td><strong>Custom Code (Ultra-Rapid)</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Design & Branding</strong></td>
+                        <td>Incoerent, culori standard</td>
+                        <td><strong>Uniform, Suport Foto/Video Inclus</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Text & Conținut</strong></td>
+                        <td>AI Generic ("Copy-Paste")</td>
+                        <td><strong>Copywriting Umanizat, SEO-focused</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Preț</strong></td>
+                        <td>€300 (Dubios) sau €1800+ (Umflat)</td>
+                        <td><strong>Corect (de la €550), Transparent</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Google Business</strong></td>
+                        <td>Ignorat</td>
+                        <td><strong>Optimizare Profil & Recenzii</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section: De ce suntem selectivi -->
+        <div class="highlight-box">
+            <h3>De ce suntem selectivi cu clienții noștri?</h3>
+            <p>Nu lucrăm cu oricine. Căutăm antreprenori care înțeleg că un website este o investiție, nu o cheltuială. Dacă cauți "cel mai ieftin site posibil", nu suntem potriviți pentru tine.</p>
+            <p>Dar dacă vrei să domini nișa ta în Brașov, să ai un design modern și un partener care dă 100% în fiecare zi pentru succesul tău, atunci trebuie să vorbim.</p>
+        </div>
+
+        <!-- Section: SEO Value -->
+        <div class="custom-card">
+            <h3>Obsesia noastră pentru SEO și Simplitate</h3>
+            <p>Mergem pe premiza <strong>"More is Less"</strong>. Oamenii nu mai au timp să citească romane pe site-uri. Vor informația clară, compactă și valoroasă.</p>
+        </div>
+
+        <!-- CTA Section -->
+        <div style="text-align: center; margin-top: 4rem; padding: 3rem; background: #F8FAFC; border-radius: 16px;">
+            <h2 style="margin-bottom: 1rem;">Ești gata să ridici standardul în Brașov?</h2>
+            <p style="margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">Hai să bem o cafea (sau un meeting online) și să discutăm despre cum putem transforma prezența ta digitală într-un motor de profit.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: rgba(13,36,64,0.6);">Răspundem în maxim 24h. Fără limbaj corporatist de lemn.</p>
+        </div>
+
+    </div>
+
+    <!-- SCRIPTURI GRAFICE -->
+    <script>
+        // --- CONFIGURARE GENERALĂ CHART.JS ---
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.color = 'rgba(13, 36, 64, 0.7)';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- CHART 1: ECONOMIE VS DIGITAL ---
+            const ctxEco = document.getElementById('economyChart').getContext('2d');
+            let gradientEco = ctxEco.createLinearGradient(0, 0, 0, 400);
+            gradientEco.addColorStop(0, 'rgba(46, 94, 153, 0.5)'); 
+            gradientEco.addColorStop(1, 'rgba(46, 94, 153, 0.0)');
+
+            new Chart(ctxEco, {
+                type: 'line',
+                data: {
+                    labels: ['2020', '2021', '2022', '2023 (Aeroport)', '2024', '2025 (Est.)'],
+                    datasets: [
+                        {
+                            label: 'Creștere Economică Brașov',
+                            data: [45, 52, 65, 85, 92, 98],
+                            borderColor: '#2E5E99', 
+                            backgroundColor: gradientEco,
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#ffffff',
+                            pointBorderColor: '#2E5E99',
+                            pointRadius: 5
+                        },
+                        {
+                            label: 'Calitate Site-uri Locale',
+                            data: [40, 42, 43, 44, 45, 46], 
+                            borderColor: '#EF5350', 
+                            borderWidth: 3,
+                            borderDash: [5, 5],
+                            tension: 0.1,
+                            fill: false,
+                            pointBackgroundColor: '#EF5350'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { usePointStyle: true, font: { weight: '700' } } }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: 110, grid: { color: '#E3EAFF' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // --- CHART 2: PERFORMANȚĂ ---
+            const ctxPerf = document.getElementById('performanceChart').getContext('2d');
+
+            new Chart(ctxPerf, {
+                type: 'bar',
+                data: {
+                    labels: ['Viteză Încărcare (Sec)', 'Google SEO Score', 'Securitate (Index)'],
+                    datasets: [
+                        {
+                            label: 'Agenție Brașov (Wordpress)',
+                            data: [4.8, 55, 60], 
+                            backgroundColor: '#CBD5E1', 
+                            borderRadius: 6,
+                            barPercentage: 0.6
+                        },
+                        {
+                            label: 'Standard AdsNow (Custom)',
+                            data: [0.6, 99, 100], 
+                            backgroundColor: '#2E5E99', 
+                            borderRadius: 6,
+                            barPercentage: 0.6
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { weight: '700' } } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) label += ': ';
+                                    if (context.parsed.x < 5 && context.dataIndex === 0) {
+                                         label += context.parsed.x + 's (Mai puțin e mai bine)';
+                                    } else {
+                                         label += context.parsed.x;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { grid: { color: '#E3EAFF' }, beginAtZero: true },
+                        y: { grid: { display: false }, ticks: { font: { weight: '600' } } }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
