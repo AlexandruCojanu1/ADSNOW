@@ -128,8 +128,6 @@
       const cardsHTML = articles.map((article, index) => {
         const slug = article.slug || generateSlug(article.title);
         const imageUrl = article.image ? (article.image.startsWith('http') ? article.image : `../${article.image}`) : '../assets/images/favicon.jpeg';
-        // Clean HTML tags from excerpt
-        const excerptText = article.excerpt || (article.content ? article.content.replace(/<[^>]*>/g, '').substring(0, 150) + '...' : '');
         
         console.log(`Rendering article ${index + 1}:`, article.title, 'slug:', slug);
         
@@ -142,7 +140,6 @@
                 ${article.category ? `<span class="blog-card-category">${article.category}</span>` : ''}
               </div>
               <h2 class="blog-card-title">${article.title}</h2>
-              <p class="blog-card-excerpt">${excerptText}</p>
             </div>
           </a>
         `;

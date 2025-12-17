@@ -300,8 +300,11 @@
     }
     
     const data = await response.json();
+    // Properly decode UTF-8 content from base64
+    const base64Content = data.content.replace(/\s/g, '');
+    const decodedContent = decodeURIComponent(escape(atob(base64Content)));
     return {
-      content: atob(data.content.replace(/\s/g, '')),
+      content: decodedContent,
       sha: data.sha
     };
   }
@@ -316,8 +319,8 @@
     const url = `${GITHUB_API_BASE}/repos/${config.repo}/contents/${path}`;
     
     // Fix UTF-8 encoding for Romanian characters (ă, â, î, ș, ț)
-    const utf8Content = new TextEncoder().encode(content);
-    const base64Content = btoa(String.fromCharCode(...utf8Content));
+    // Use proper UTF-8 to Base64 conversion
+    const base64Content = btoa(unescape(encodeURIComponent(content)));
     
     const body = {
       message: message,
@@ -505,10 +508,24 @@
       article.content.trim().toLowerCase().startsWith('<html')
     );
     
-    // If it's already complete HTML, return it as-is
+    // If it's already complete HTML, inject the back button before </body>
     if (isCompleteHTML) {
-      console.log('✅ Content is complete HTML document, using as-is');
-      return article.content;
+      console.log('✅ Content is complete HTML document, injecting back button');
+      let content = article.content;
+      
+      // Inject navigation and back button before </body>
+      const backButtonHTML = `
+    <!-- Blog Navigation -->
+    <div style="max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem;">
+      <a href="/blog" style="display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Inter', sans-serif; font-size: 1rem; color: #2E5E99; text-decoration: none; transition: color 0.3s ease; padding: 0.75rem 1.5rem; background: #E3EAFF; border-radius: 8px; font-weight: 600;">
+        <span style="font-size: 1.2rem;">←</span> Înapoi la Blog
+      </a>
+    </div>
+    
+</body>`;
+      
+      content = content.replace(/<\/body>/i, backButtonHTML);
+      return content;
     }
     
     // Otherwise, wrap it in template
@@ -803,48 +820,27 @@
       }
       
       // Update sitemap.xml with all articles (including the new one)
-      // Add delay and retry logic to ensure GitHub has propagated the changes
+      // Use the data we already have from the successful save
       try {
-        let articlesData = null;
-        let retries = 5;
+        console.log('🗺️ Updating sitemap with latest articles...');
         
-        while (retries > 0 && !articlesData) {
-          try {
-            // Wait a bit for GitHub to propagate changes
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            
-            const fileData = await getGitHubFile(ARTICLES_FILE);
-            if (fileData) {
-              const allArticles = JSON.parse(fileData.content);
-              
-              // Verify the article we just saved is in the list
-              const articleSlug = generateSlug(articleData.title);
-              const articleExists = allArticles.articles.some(a => 
-                (a.slug || generateSlug(a.title)) === articleSlug
-              );
-              
-              if (articleExists) {
-                console.log(`✅ Verified article exists in articles.json, updating sitemap...`);
-                articlesData = allArticles;
-                await updateSitemap(allArticles.articles || []);
-              } else {
-                console.warn(`⚠️ Article not yet in articles.json, retrying... (${6 - retries}/5)`);
-                retries--;
-              }
-            } else {
-              retries--;
-            }
-          } catch (error) {
-            console.warn(`Error loading articles for sitemap (attempt ${6 - retries}/5):`, error);
-            retries--;
-          }
-        }
+        // Wait a brief moment for GitHub to propagate the articles.json changes
+        await new Promise(resolve => setTimeout(resolve, 1500));
         
-        if (!articlesData) {
-          console.error('❌ Could not verify article in articles.json after all retries');
+        // Get fresh articles data from GitHub
+        const fileData = await getGitHubFile(ARTICLES_FILE);
+        if (fileData) {
+          const allArticles = JSON.parse(fileData.content);
+          console.log(`📊 Found ${allArticles.articles.length} articles for sitemap`);
+          
+          // Update sitemap once with all articles
+          await updateSitemap(allArticles.articles || []);
+        } else {
+          console.warn('⚠️ Could not load articles for sitemap update');
         }
       } catch (error) {
-        console.warn('Could not update sitemap:', error);
+        console.warn('⚠️ Could not update sitemap:', error);
+        // Don't fail the entire operation if sitemap update fails
       }
       
       // Notify Google Indexing API about the new article

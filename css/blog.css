@@ -106,11 +106,12 @@
   font-size: clamp(1.3125rem, 2vw, 1.75rem); /* 21px - 28px */
   line-height: 1.382;
   color: #0D2440;
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  flex-grow: 1;
 }
 
 .blog-card-excerpt {
